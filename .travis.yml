@@ -2,3 +2,5 @@ language: java
 notifications:
   email:
     - MateuszLorencki+Travis-CI@gmail.com
+    - kluchus@gmail.com
+    - nexo.1993@gmail.com
