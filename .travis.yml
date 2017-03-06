@@ -4,7 +4,6 @@ jdk:
 os:
   - linux
   - osx
-  - windows
 notifications:
   email:
     - MateuszLorencki+Travis-CI@gmail.com
