@@ -1,3 +1,4 @@
 # Kosodrzewina
 
-to be filled...
+Trawis:
+https://travis-ci.org/mateuszlor/Kosodrzewina
