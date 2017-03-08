@@ -17,7 +17,7 @@ public class IndexController {
 
     @RequestMapping(value = {SLASH + INDEX, SLASH}, method = RequestMethod.GET)
     public String indexPage(){
-        log.info("Strona główna");
+//        log.info("Strona główna");
         return INDEX;
     }
 }
