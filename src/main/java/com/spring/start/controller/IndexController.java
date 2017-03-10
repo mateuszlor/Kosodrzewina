@@ -1,4 +1,4 @@
-package com.spring.start;
+package com.spring.start.controller;
 
 import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Controller;
@@ -13,11 +13,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class IndexController {
 
     private static final String SLASH = "/";
+    private static final String PAGES = "pages";
     private static final String INDEX = "index";
 
-    @RequestMapping(value = {SLASH + INDEX, SLASH}, method = RequestMethod.GET)
+    @RequestMapping(value = {SLASH + INDEX}, method = RequestMethod.GET)
     public String indexPage(){
 //        log.info("Strona główna");
-        return INDEX;
+        return PAGES + SLASH + INDEX;
     }
 }
