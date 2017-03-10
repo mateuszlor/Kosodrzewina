@@ -50,15 +50,15 @@
                     </li>
                     <li>
                         <a class="hrefLink" style="text-decoration: none;" href="/register">
-                            <i class="fa fa-arrow-left fa-fw" aria-hidden="true"></i>
-                            Register
-                            <!--<spring:message code="button.register"/>-->
+                            <i class="fa fa-arrow-left fa-fw" style="float:left;" aria-hidden="true"></i>
+                            <div style="float:left;" th:text="#{button.register}"/>
+                            <div style="clear: both;"/>
                         </a>
                     </li>
                     <li>
                         <a class="hrefLink" href="#" style="text-decoration: none;" onclick="history.go(-1)">
                             <i class="fa fa-arrow-left fa-fw" aria-hidden="true"></i>
-                            Back
+                            <label th:text="#{button.back}"/>
                             <!--<spring:message code="button.back"/>-->
                         </a>
                     </li>
