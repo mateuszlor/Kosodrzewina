@@ -1,12 +1,69 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8"></meta>
-    <title>Menu</title>
-</head>
-<body>
-<div th:fragment="menu">
-    &copy; Menu example
-</div>
-</body>
+    <head>
+        <meta charset="UTF-8"></meta>
+        <title>Menu</title>
+        <script type="text/javascript">
+            var count = 1;
+            function closeNav() {
+                if(count == 0){
+                    document.getElementById("left-menu").style.width = "15%";
+                    document.getElementById("nav-icon").style.left = "15%";
+                    document.getElementById("body").style.width = "80%";
+                    document.getElementById("icon").className = "fa fa-arrow-left fa-2x";
+                    count = 1;
+                }else{
+                    document.getElementById("left-menu").style.width = "0%";
+                    document.getElementById("nav-icon").style.left = "0%";
+                    document.getElementById("body").style.width = "100%";
+                    document.getElementById("icon").className = "fa fa-arrow-right fa-2x";
+                    count = 0;
+                }
+            }
+            $("nav li").click(function ( e ) {
+                e.preventDefault();
+                $(".left-menu ul li a.active").removeClass("active"); //Remove any "active" class
+                $(".left-menu ul li a.active", this).addClass("active"); //Add "active" class to selected tab
+
+                // $(activeTab).show(); //Fade in the active content
+            });
+        </script>
+    </head>
+    <body>
+        <div th:fragment="menu">
+            <!--<div class="nav-icon" id="nav-icon" onclick="closeNav()">-->
+                <!--<span><i class="fa fa-arrow-left fa-2x" id="icon" aria-hidden="true"></i></span>-->
+            <!--</div>-->
+            <div class="left-menu" id="left-menu" >
+                <ul class="ul">
+                    <li>
+                        <h4 class="menu" >
+                            Menu
+                            <!--<spring:message code="menu.text"/>-->
+                        </h4>
+                    </li>
+                    <li>
+                        <a class="hrefLink" style="text-decoration: none;" href="/login">
+                            <i class="fa fa-arrow-left fa-fw" aria-hidden="true"></i>
+                            COS
+                        </a>
+                    </li>
+                    <li>
+                        <a class="hrefLink" style="text-decoration: none;" href="/register">
+                            <i class="fa fa-arrow-left fa-fw" aria-hidden="true"></i>
+                            Register
+                            <!--<spring:message code="button.register"/>-->
+                        </a>
+                    </li>
+                    <li>
+                        <a class="hrefLink" href="#" style="text-decoration: none;" onclick="history.go(-1)">
+                            <i class="fa fa-arrow-left fa-fw" aria-hidden="true"></i>
+                            Back
+                            <!--<spring:message code="button.back"/>-->
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </body>
 </html>
