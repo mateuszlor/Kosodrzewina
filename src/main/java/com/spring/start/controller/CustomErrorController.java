@@ -1,5 +1,6 @@
 package com.spring.start.controller;
 
+import lombok.experimental.var;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ErrorAttributes;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
  */
 @Controller
 @Log4j
+@var
 public class CustomErrorController implements ErrorController {
 
     private static final String SLASH = "/";
@@ -38,16 +40,16 @@ public class CustomErrorController implements ErrorController {
     public String errorPage(Model model) {
         log.info("Strona błędu");
 
-        Map<String, Object> errors = getErrorAttributes(context, true);
+        var errors = getErrorAttributes(context, true);
 
-        boolean hasStacktrace = errors.containsKey("stacktrace");
+        var hasStacktrace = errors.containsKey("stacktrace");
         model.addAttribute("hasStacktrace", hasStacktrace);
 
         if (hasStacktrace) {
             model.addAttribute("stacktrace", errors.get("stacktrace"));
         }
 
-        List<String> errorDetails = errors
+        var errorDetails = errors
                 .keySet()
                 .stream()
                 .map(k -> String.format("%1$s - %2$s", k, errors.get(k)))
@@ -67,7 +69,7 @@ public class CustomErrorController implements ErrorController {
     }
 
     private Map<String, Object> getErrorAttributes(HttpServletRequest request, boolean includeStackTrace) {
-        RequestAttributes requestAttributes = new ServletRequestAttributes(request);
+        var requestAttributes = new ServletRequestAttributes(request);
         return errorAttributes.getErrorAttributes(requestAttributes, includeStackTrace);
     }
 }
