@@ -1,55 +1,32 @@
 <aside class="main-sidebar" th:fragment="menu">
     <section class="sidebar">
-
-        <!--&lt;!&ndash; Sidebar user panel (optional) &ndash;&gt;-->
-        <!--<div class="user-panel">-->
-            <!--<div class="pull-left image">-->
-                <!--<img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">-->
-            <!--</div>-->
-            <!--<div class="pull-left info">-->
-                <!--<p>Alexander Pierce</p>-->
-                <!--&lt;!&ndash; Status &ndash;&gt;-->
-                <!--<a href="#"><i class="fa fa-circle text-success"></i> Online</a>-->
-            <!--</div>-->
-        <!--</div>-->
-
-        <!--&lt;!&ndash; search form (Optional) &ndash;&gt;-->
-        <!--<form action="#" method="get" class="sidebar-form">-->
-            <!--<div class="input-group">-->
-                <!--<input type="text" name="q" class="form-control" placeholder="Search...">-->
-                <!--<span class="input-group-btn">-->
-                <!--<button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>-->
-                <!--</button>-->
-              <!--</span>-->
-            <!--</div>-->
-        <!--</form>-->
-        <!--&lt;!&ndash; /.search form &ndash;&gt;-->
-
-        <!-- Sidebar Menu -->
         <ul class="sidebar-menu">
             <li class="header" th:text="#{menu.headers.menu}">HEADER</li>
             <!-- Optionally, you can add icons to the links -->
             <li>
-                <a href="invalid"><span>Invalid</span></a>
+                <a href="invalid"><i class="fa fa-times" aria-hidden="true" /><span>Invalid</span></a>
             </li>
             <li>
-                <a href="index"><i class="fa fa-link"></i> <span>Index</span></a>
+                <a href="notExists"><i class="fa fa-question" aria-hidden="true" /><span>Not existing</span></a>
             </li>
             <li>
-                <a href="login"><i class="fa fa-link"></i> <span>Index</span></a>
+                <a href="index"><i class="fa fa-home" aria-hidden="true" /> <span>Index</span></a>
             </li>
             <li>
-                <a href="#"><i class="fa fa-link"></i> <span>Example</span></a>
+                <a href="login"><i class="fa fa-sign-in" aria-hidden="true" /> <span>Login</span></a>
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-link" aria-hidden="true" /> <span>Example</span></a>
             </li>
             <li class="treeview">
-                <a href="#"><i class="fa fa-link"></i> <span>Multilevel example</span>
+                <a href="#"><i class="fa fa-arrows-v"></i> <span>Multilevel example</span>
                     <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-                </span>
-                    </a>
+                        <i class="fa fa-angle-left pull-right" />
+                    </span>
+                </a>
                 <ul class="treeview-menu">
-                    <li><a href="#">Link in level 2</a></li>
-                    <li><a href="#">Link in level 2</a></li>
+                    <li><a href="#"><i class="fa fa-arrow-right" aria-hidden="true" />Link in level 2</a></li>
+                    <li><a href="#"><i class="fa fa-arrow-right" aria-hidden="true" />Link in level 2</a></li>
                 </ul>
             </li>
         </ul>

@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Comparator;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -42,6 +41,7 @@ public class CustomErrorController implements ErrorController {
         var errors = getErrorAttributes(context, true);
 
         var stacktraceKey = "trace";
+        var errorCodeKey = "status";
 
         var hasStacktrace = errors.containsKey(stacktraceKey);
         model.addAttribute("hasStacktrace", hasStacktrace);
@@ -50,14 +50,18 @@ public class CustomErrorController implements ErrorController {
             model.addAttribute("stacktrace", errors.get(stacktraceKey));
         }
 
+        if(errors.containsKey(errorCodeKey)) {
+            model.addAttribute("errorCode", errors.get(errorCodeKey));
+        }
+
         var errorDetails = errors
                 .entrySet()
                 .stream()
                 .filter(e -> !e.getKey().equals(stacktraceKey))
-                .sorted(Comparator.comparing(Map.Entry::getKey))
                 .collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue()));
 
-        model.addAttribute("errorDetails", errorDetails);
+
+        model.addAttribute("errorDetails", new TreeMap<>(errorDetails));
 
         log.info(String.format("hasStacktrace = %1$b, details: %2$s", hasStacktrace, errors.toString()));
 
