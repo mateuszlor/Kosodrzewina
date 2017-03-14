@@ -21,7 +21,7 @@
         <script src="https://use.fontawesome.com/30e4d80a01.js"></script>
 
         <meta charset="UTF-8"/>
-        <title>HomePage</title>
+        <title th:text="#{error.page.title}">---</title>
     </head>
     <body>
         <div th:replace="fragments/header :: header" > Header </div>
@@ -29,11 +29,18 @@
             <div th:replace="fragments/menu :: menu"> Menu </div>
         </div>
         <div id="body" style="float:left;padding:20px;width:85%;">
-        <!---->
-
-        TRESC STRONY MA BYC TUTAJ RESZTY SIE NIE RUSZA
-
-        <!---->
+            <div>
+                <label class="error-title" th:text="#{error.page.description}"></label>
+                <div class="error-details">
+                    <div th:text="#{error.page.details}"></div>
+                    <ul>
+                        <li th:each="e : ${errorDetails}" th:text="${e}"></li>
+                    </ul>
+                </div>
+                <div class="stacktrace" th:if="${hasStacktrace}" th:text="#{error.page.stacktrace}">
+                    <pre th:text="${stacktrace}"></pre>
+                </div>
+            </div>
         </div>
         <div if="footer" style="clear:both">
             <div th:replace="fragments/footer :: footer" > Footer </div>
