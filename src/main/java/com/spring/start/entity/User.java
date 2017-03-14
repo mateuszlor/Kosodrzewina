@@ -27,9 +27,9 @@ public class User {
     @Getter @Setter
     private String surname;
 
-    @Column(name = "login", nullable = false)
+    @Column(name = "username", nullable = false)
     @Getter @Setter
-    private String login;
+    private String username;
 
     @Column(name = "password", nullable = false)
     @Getter @Setter
