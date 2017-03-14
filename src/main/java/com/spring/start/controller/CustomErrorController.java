@@ -9,11 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
+import java.util.Comparator;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -42,19 +41,21 @@ public class CustomErrorController implements ErrorController {
 
         var errors = getErrorAttributes(context, true);
 
-        var hasStacktrace = errors.containsKey("stacktrace");
+        var stacktraceKey = "trace";
+
+        var hasStacktrace = errors.containsKey(stacktraceKey);
         model.addAttribute("hasStacktrace", hasStacktrace);
 
         if (hasStacktrace) {
-            model.addAttribute("stacktrace", errors.get("stacktrace"));
+            model.addAttribute("stacktrace", errors.get(stacktraceKey));
         }
 
         var errorDetails = errors
-                .keySet()
+                .entrySet()
                 .stream()
-                .map(k -> String.format("%1$s - %2$s", k, errors.get(k)))
-                .sorted()
-                .collect(Collectors.toList());
+                .filter(e -> !e.getKey().equals(stacktraceKey))
+                .sorted(Comparator.comparing(Map.Entry::getKey))
+                .collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue()));
 
         model.addAttribute("errorDetails", errorDetails);
 
