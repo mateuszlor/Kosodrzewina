@@ -24,3 +24,6 @@ nbdist/
 .nb-gradle/
 mvnw*
 .mvn/
+
+### .properties ###
+application.properties
