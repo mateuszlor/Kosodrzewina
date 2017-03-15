@@ -9,12 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -42,21 +40,28 @@ public class CustomErrorController implements ErrorController {
 
         var errors = getErrorAttributes(context, true);
 
-        var hasStacktrace = errors.containsKey("stacktrace");
+        var stacktraceKey = "trace";
+        var errorCodeKey = "status";
+
+        var hasStacktrace = errors.containsKey(stacktraceKey);
         model.addAttribute("hasStacktrace", hasStacktrace);
 
         if (hasStacktrace) {
-            model.addAttribute("stacktrace", errors.get("stacktrace"));
+            model.addAttribute("stacktrace", errors.get(stacktraceKey));
+        }
+
+        if(errors.containsKey(errorCodeKey)) {
+            model.addAttribute("errorCode", errors.get(errorCodeKey));
         }
 
         var errorDetails = errors
-                .keySet()
+                .entrySet()
                 .stream()
-                .map(k -> String.format("%1$s - %2$s", k, errors.get(k)))
-                .sorted()
-                .collect(Collectors.toList());
+                .filter(e -> !e.getKey().equals(stacktraceKey))
+                .collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue()));
 
-        model.addAttribute("errorDetails", errorDetails);
+
+        model.addAttribute("errorDetails", new TreeMap<>(errorDetails));
 
         log.info(String.format("hasStacktrace = %1$b, details: %2$s", hasStacktrace, errors.toString()));
 

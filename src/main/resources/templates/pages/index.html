@@ -1,42 +1,35 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <script src="js/jquery-3.1.1.min.js" />
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-              integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-              crossorigin="anonymous"/>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-              integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-              crossorigin="anonymous"/>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-                crossorigin="anonymous"></script>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="/fragments/elements :: head"/>
+    <title>Home Page</title>
+</head>
+<body class="skin-blue sidebar-mini">
+<div class="wrapper">
+    <div th:replace="/fragments/header :: header">Header</div>
+    <div th:replace="/fragments/menu :: menu">Menu</div>
+    <div class="content-wrapper">
 
-        <link rel="stylesheet" href="/css/chosen.min.css"/>
-        <link rel="stylesheet" href="/css/custom.css"/>
-
-        <script src="js/validator.min.js"></script>
-        <script src="js/chosen.jquery.min.js"></script>
-        <script src="https://use.fontawesome.com/30e4d80a01.js"></script>
-
-        <meta charset="UTF-8"/>
-        <title>HomePage</title>
-    </head>
-    <body>
-        <div th:replace="fragments/header :: header" > Header </div>
-        <div id="menu" style="float:left;padding-bottom:1px;width:15%;">
-            <div th:replace="fragments/menu :: menu"> Menu </div>
-        </div>
-        <div id="body" style="float:left;padding:20px;width:85%;">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                Tytuł
+                <small>i opis</small>
+            </h1>
+        </section>
         <!---->
 
-        TRESC STRONY MA BYC TUTAJ RESZTY SIE NIE RUSZA
+        <section class="content">
 
-        <!---->
-        </div>
-        <div if="footer" style="clear:both">
-            <div th:replace="fragments/footer :: footer" > Footer </div>
-        </div>
-    </body>
+            <!-- Page Content -->
+
+            TRESC STRONY MA BYC TUTAJ RESZTY SIE NIE RUSZA
+
+            <!---->
+
+        </section>
+    </div>
+    <div th:replace="/fragments/footer :: footer">Footer</div>
+</div>
+</body>
 </html>
