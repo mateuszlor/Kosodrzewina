@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, updatable = false, unique = true)
     @Getter @Setter
     private long id;
@@ -34,5 +34,14 @@ public class User {
     @Column(name = "password", nullable = false)
     @Getter @Setter
     private String password;
+
+    @Column(name = "enabled", nullable = false)
+    @Getter @Setter
+    private boolean enabled;
+
+    @Column(name = "role", nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Getter @Setter
+    private Role role;
 
 }

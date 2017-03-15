@@ -22,14 +22,8 @@ public class LoginController {
     private static final String PAGES = "pages";
     private static final String LOGIN = "login";
 
-    @RequestMapping(value = SLASH + LOGIN, method = RequestMethod.GET)
-    public String loginPage(Model model, String error, String logout){
-        if (error != null)
-            model.addAttribute("error", context.getMessage("error.login.invalidValues",null, null));
-
-        if (logout != null)
-            model.addAttribute("message", context.getMessage("info.logout.successfulLogout",null,null));
-
+    @RequestMapping(value = {SLASH + LOGIN, SLASH}, method = RequestMethod.GET)
+    public String loginPage(){
         return PAGES + SLASH + LOGIN;
     }
 
