@@ -71,3 +71,10 @@ body {
 .table-narrow {
     max-width: 500px;
 }
+
+## NEW
+
+# override AdminLTE
+.alert-success {
+    color: #3c763d;
+}

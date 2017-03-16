@@ -4,7 +4,6 @@ import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -24,6 +23,7 @@ public class LoginController {
 
     @RequestMapping(value = {SLASH + LOGIN, SLASH}, method = RequestMethod.GET)
     public String loginPage(){
+        log.info("Login page");
         return PAGES + SLASH + LOGIN;
     }
 
