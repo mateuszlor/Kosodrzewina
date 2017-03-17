@@ -50,7 +50,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .defaultSuccessUrl("/index", true)
                 .and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login?logout");
+                .logoutSuccessUrl("/login?logout").deleteCookies("JSESSIONID")
+                .and().rememberMe().key("uniqueAndSecret").tokenValiditySeconds(86400);
     }
 
     public void configure(WebSecurity web) throws Exception {
