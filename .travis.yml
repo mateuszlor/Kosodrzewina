@@ -13,3 +13,4 @@ services:
     - mysql
 before_install:
     - sed -i 's/spring.datasource.username =/spring.datasource.username = travis/g' src/main/resources/application.properties
+    - mysql -e 'CREATE DATABASE transport;'
