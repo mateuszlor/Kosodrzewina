@@ -9,3 +9,7 @@ notifications:
     - MateuszLorencki+Travis-CI@gmail.com
     - kluchus@gmail.com
     - nexo.1993@gmail.com
+services:
+    - mysql
+before_install:
+    - sed -i 's/spring.datasource.username =/spring.datasource.username = travis/g' src/main/resources/application.properties
