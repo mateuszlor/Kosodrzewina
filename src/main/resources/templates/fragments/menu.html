@@ -1,10 +1,21 @@
-<aside class="main-sidebar" th:fragment="menu">
+<aside class="main-sidebar" th:fragment="menu" xmlns:th="http://www.w3.org/1999/xhtml">
     <section class="sidebar">
         <ul class="sidebar-menu">
             <li class="header" th:text="#{menu.headers.menu}">HEADER</li>
             <!-- Optionally, you can add icons to the links -->
             <li>
                 <a href="invalid"><i class="fa fa-times" aria-hidden="true" /><span>Invalid</span></a>
+            </li>
+            <li class="treeview">
+                <a href="#"><i class="fa fa-user" aria-hidden="true"/><span th:text="#{menu.customer}"/>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right" />
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a th:href="@{/new-customer}"><i class="fa fa-user-plus" aria-hidden="true"/><span th:text="#{menu.customer.new}"/></a></li>
+                    <li><a href="#"><i class="fa fa-arrow-right" aria-hidden="true" />Link in level 2</a></li>
+                </ul>
             </li>
             <li>
                 <a href="notExists"><i class="fa fa-question" aria-hidden="true" /><span>Not existing</span></a>

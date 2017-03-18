@@ -6,6 +6,7 @@ import com.spring.start.validator.CustomerValidator;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
+import org.hibernate.pretty.MessageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
@@ -28,44 +31,44 @@ public class CustomerController {
     private static final String PAGES = "pages";
     private static final String CUSTOMER = "new-customer";
 
-//    @Autowired
-//    @Getter @Setter
-//    private CustomerService customerService;
-//
-//    @Autowired
-//    @Getter @Setter
-//    private CustomerValidator validator;
+    @Autowired
+    @Getter @Setter
+    private CustomerService customerService;
+
+    @Autowired
+    @Getter @Setter
+    private CustomerValidator validator;
 
     @Autowired
     @Getter @Setter
     private Environment environment;
 
-    @RequestMapping(name = SLASH + CUSTOMER, method = RequestMethod.GET)
-    public String showNewCustomerPage() throws Exception {
+    @RequestMapping(value = SLASH + CUSTOMER, method = RequestMethod.GET)
+    public String showNewCustomerPage(Model model) throws Exception {
 
         log.info("Add new customer page");
         return PAGES + SLASH + CUSTOMER;
     }
 
-//    @RequestMapping(path = SLASH + CUSTOMER, method = RequestMethod.POST)
-//    public String registerAccount(@Valid @ModelAttribute("newCustomer") CustomerDto customerDto,
-//                                  BindingResult bindingResult, Model model) {
-//
-//        validator.validate(customerDto, bindingResult);
-//        if(bindingResult.hasErrors()){
-//            model.addAttribute("error", environment.getProperty("error.form.invalidValues"));
-//            log.info("Wprowadzono niepoprawne wartosci do formularza dodawania nowego klienta");
-//        }
-//        try {
-//            customerService.createCustomer(customerDto);
-//            model.addAttribute("info", "Pomyślnie utworzono nowego klienta");
-//            log.info("Pomyślnie zarejestrowano nowego użytkownika: " + customerDto.getUsername());
-//        } catch (Exception e){
-//            log.error("Nie udało się dodać użytkownika " + customerDto.getName() + "do bazy: " + e);
-//        }
-//
-//        return "redirect:" + SLASH + CUSTOMER;
-//    }
+    @RequestMapping(path = SLASH + CUSTOMER, method = RequestMethod.POST)
+    public String registerAccount(@Valid @ModelAttribute("customer") CustomerDto customerDto,
+                                        BindingResult bindingResult, Model model,
+                                        RedirectAttributes redirectAttributes) {
 
+        validator.validate(customerDto, bindingResult);
+        if(bindingResult.hasErrors()){
+            redirectAttributes.addFlashAttribute("error", environment.getProperty("error.form.invalidValues"));
+            log.info("Wprowadzono niepoprawne wartosci do formularza dodawania nowego klienta");
+            return "redirect:" + SLASH + CUSTOMER;
+        }
+        try {
+            customerService.createCustomer(customerDto);
+            redirectAttributes.addFlashAttribute("info", environment.getProperty("message.customer.success"));
+            log.info("Pomyślnie zarejestrowano nowego użytkownika: " + customerDto.getUsername());
+        } catch (Exception e){
+            log.error("Nie udało się dodać użytkownika " + customerDto.getName() + "do bazy: " + e);
+        }
+        return "redirect:" + SLASH + CUSTOMER;
+    }
 
 }

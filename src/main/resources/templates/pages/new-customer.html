@@ -13,20 +13,59 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Tytuł
-                <small>i opis</small>
+                Dodawanie
+                <small>nowego klienta</small>
             </h1>
         </section>
         <!---->
+        <!-- Alerts-->
+        <!--<div th:if="${error != null or error != empty}" th:replace="fragments/alerts :: alert (type='error', message=${error})">...</div>-->
+        <!--<div th:if="${info != null or info != empty}" th:replace="fragments/alerts :: alert (type='success', message=${info})">...</div>-->
+        <!---->
 
         <section class="content">
-
             <!-- Page Content -->
+                        <div class="box box-warning">
+                <div class="box-header with-border">
+                    <h3 class="box-title" th:text="#{label.customer.new}"/>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <form role="form" th:action="@{/new-customer}" th:object="${customer}" lpformnum="2" method="post">
+                        <!-- text input -->
+                        <div class="form-group">
+                            <label th:text="#{label.name}"/>
+                            <input type="text" class="form-control" id="name" name="name" required="required" th:placeholder="#{label.name}" />
+                            <span class="help-block"></span>
+                        </div>
+                        <div class="form-group">
+                            <label th:text="#{label.surname}"/>
+                            <input type="text" class="form-control" id="surname" name="surname" required="required" th:placeholder="#{label.surname}" />
+                            <span class="help-block"></span>
+                        </div>
+                        <div class="form-group">
+                            <label th:text="#{label.username}"/>
+                            <input type="text" class="form-control" id="username" name="username" th:placeholder="#{label.username}" />
+                            <span class="help-block"></span>
+                        </div>
+                        <div class="form-group">
+                            <label th:text="#{label.phone}"/>
+                            <input type="text" class="form-control" id="phone" name="phone" th:placeholder="#{label.phone}" />
+                            <span class="help-block"></span>
+                        </div>
+                        <!-- textarea -->
+                        <div class="form-group">
+                            <label th:text="#{label.address}">Textarea</label>
+                            <textarea class="form-control" rows="3" id="address" name="address" th:placeholder="#{label.address}"></textarea>
+                            <span class="help-block"></span>
+                        </div>
+                        <button type="submit" class="btn btn-primary" th:text="#{button.add}"/>
 
-            Dodaj
-
+                    </form>
+                </div>
+                <!-- /.box-body -->
+            </div>
             <!---->
-
         </section>
     </div>
     <div th:replace="/fragments/footer :: footer">Footer</div>
