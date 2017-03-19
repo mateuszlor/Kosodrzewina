@@ -3,7 +3,6 @@ jdk:
   - oraclejdk8
 os:
   - linux
-osx_image: xcode8.2
 notifications:
   email:
     - MateuszLorencki+Travis-CI@gmail.com
