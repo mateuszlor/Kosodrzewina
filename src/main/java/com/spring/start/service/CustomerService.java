@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by Vertig0 on 18.03.2017.
  */
@@ -31,6 +33,10 @@ public class CustomerService {
                 .build();
         customerRepository.save(customer);
         log.info("Dodano nowego klienta: " + customer.getUsername());
+    }
+
+    public List<Customer> findAll(){
+        return customerRepository.findAll();
     }
 
 
