@@ -35,6 +35,19 @@ public class CustomerService {
         log.info("Dodano nowego klienta: " + customer.getUsername());
     }
 
+    public void editCustomer(CustomerDto customerDto) {
+
+        Customer customer = Customer.builder().address(customerDto.getAddress())
+                .id(customerDto.getId())
+                .name(customerDto.getName())
+                .surname(customerDto.getSurname())
+                .username(customerDto.getUsername())
+                .phone(customerDto.getPhone())
+                .build();
+        customerRepository.save(customer);
+        log.info("Dokonano edycji klienta: " + customer.getUsername());
+    }
+
     public List<Customer> findAll(){
         return customerRepository.findAll();
     }
@@ -45,6 +58,11 @@ public class CustomerService {
         } catch (Exception e) {
             log.error("Wystąpił błąd przy usuwaniu klienta: " + e);
         }
+    }
+
+    public Customer findCustomerById(long id){
+        Customer customer = customerRepository.findOne(id);
+        return customer;
     }
 
 

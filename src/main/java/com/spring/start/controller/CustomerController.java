@@ -50,7 +50,7 @@ public class CustomerController {
         return PAGES + SLASH + CUSTOMER;
     }
 
-    @RequestMapping(path = SLASH + CUSTOMER, method = RequestMethod.POST)
+    @RequestMapping(path = SLASH + EDIT_CUSTOMER, method = RequestMethod.POST)
     public String registerAccount(@Valid @ModelAttribute("customer") CustomerDto customerDto,
                                         BindingResult bindingResult, Model model,
                                         RedirectAttributes redirectAttributes) {
@@ -59,16 +59,37 @@ public class CustomerController {
         if(bindingResult.hasErrors()){
             redirectAttributes.addFlashAttribute("error", environment.getProperty("error.form.invalidValues"));
             log.info("Wprowadzono niepoprawne wartosci do formularza dodawania nowego klienta");
-            return "redirect:" + SLASH + CUSTOMER;
+            return "redirect:" + SLASH + EDIT_CUSTOMER;
         }
         try {
             customerService.createCustomer(customerDto);
             redirectAttributes.addFlashAttribute("info", environment.getProperty("message.customer.success"));
-            log.info("Pomyślnie zarejestrowano nowego użytkownika: " + customerDto.getUsername());
+            log.info("Pomyślnie zedytowano klienta: " + customerDto.getUsername());
+        } catch (Exception e){
+            log.error("Nie udało się zedytować klienta " + customerDto.getName() + ": " + e);
+        }
+        return "redirect:" + SLASH + CUSTOMERS;
+    }
+
+    @RequestMapping(path = SLASH + CUSTOMER, method = RequestMethod.POST)
+    public String editCustomer(@Valid @ModelAttribute("customer") CustomerDto customerDto,
+                                  BindingResult bindingResult, Model model,
+                                  RedirectAttributes redirectAttributes) {
+
+        validator.validate(customerDto, bindingResult);
+        if(bindingResult.hasErrors()){
+            redirectAttributes.addFlashAttribute("error", environment.getProperty("error.form.invalidValues"));
+            log.info("Wprowadzono niepoprawne wartosci do formularza edycji klienta");
+            return "redirect:" + SLASH + CUSTOMER;
+        }
+        try {
+            customerService.editCustomer(customerDto);
+            redirectAttributes.addFlashAttribute("info", environment.getProperty("message.customer.success"));
+            log.info("Pomyślnie zedytowano klienta: " + customerDto.getUsername());
         } catch (Exception e){
             log.error("Nie udało się dodać użytkownika " + customerDto.getName() + "do bazy: " + e);
         }
-        return "redirect:" + SLASH + CUSTOMER;
+        return "redirect:" + SLASH + CUSTOMERS;
     }
 
     @RequestMapping(value = SLASH + CUSTOMERS, method = RequestMethod.GET)
@@ -80,9 +101,11 @@ public class CustomerController {
     }
 
     @RequestMapping(value = SLASH + EDIT_CUSTOMER + SLASH + "{id}", method = RequestMethod.GET)
-    public String showEditCustomerPage(Model model) {
+    public String showEditCustomerPage(@PathVariable long id, Model model) {
 
-
+        Customer customer = customerService.findCustomerById(id);
+        model.addAttribute("customer", customer);
+        log.info("Edycja klienta: " + customer.getUsername());
         return PAGES + SLASH + EDIT_CUSTOMER;
     }
 

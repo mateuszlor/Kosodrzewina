@@ -12,6 +12,9 @@ import javax.validation.constraints.Min;
 public class CustomerDto {
 
     @Getter @Setter
+    private long id;
+
+    @Getter @Setter
     private String name;
 
     @Getter @Setter
@@ -28,7 +31,8 @@ public class CustomerDto {
 
     public CustomerDto(){}
 
-    public CustomerDto(String name, String surname, String username, String address, String phone) {
+    public CustomerDto(long id, String name, String surname, String username, String address, String phone) {
+        this.id = id;
         this.name = name;
         this.surname = surname;
         this.username = username;
