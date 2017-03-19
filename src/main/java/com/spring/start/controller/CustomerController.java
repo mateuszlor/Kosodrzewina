@@ -12,10 +12,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -89,8 +86,8 @@ public class CustomerController {
         return PAGES + SLASH + EDIT_CUSTOMER;
     }
 
-    @RequestMapping(value = SLASH + DELETE_CUSTOMER + SLASH + "{id}", method = RequestMethod.GET)
-    public String deleteCustomer(@PathVariable long id,
+    @RequestMapping(value = SLASH + DELETE_CUSTOMER, method = RequestMethod.POST)
+    public String deleteCustomer(@RequestParam long id,
                                  Model model) {
         //TODO: czy jesteś pewien?
 

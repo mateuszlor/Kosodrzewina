@@ -46,7 +46,14 @@
                                     <td th:text="${cust.address}"></td>
                                     <td>
                                         <a th:href="@{/edit-customer/{id}(id=${cust.id})}" style="float: left"><button type="button" class="btn btn-block btn-warning btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a>
-                                        <a th:href="@{/delete-customer/{id}(id=${cust.id})}" style="float: left"><button type="button" class="btn btn-block btn-danger btn-xs"><i class="fa fa-trash" aria-hidden="true"></i></button></a>
+
+                                        <div style="float: left">
+                                            <form th:action="@{/delete-customer}" method="post">
+                                                <input type="hidden" name="id" th:value="${cust.id}"/>
+                                                <button type="submit" name="delete" class="btn btn-block btn-danger btn-xs"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                            </form>
+                                        </div>
+
                                         <div style="clear:both;"></div>
                                     </td>
                                 </tr>
