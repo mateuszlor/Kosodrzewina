@@ -1,5 +1,6 @@
 package com.spring.start.controller;
 
+import com.spring.start.entity.Customer;
 import com.spring.start.service.CustomerService;
 import com.spring.start.service.dto.CustomerDto;
 import com.spring.start.validator.CustomerValidator;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -29,6 +31,8 @@ public class CustomerController {
     private static final String PAGES = "pages";
     private static final String CUSTOMER = "new-customer";
     private static final String CUSTOMERS = "customers";
+    private static final String EDIT_CUSTOMER = "edit-customer";
+    private static final String DELETE_CUSTOMER = "delete-customer";
 
     @Autowired
     @Getter @Setter
@@ -76,6 +80,24 @@ public class CustomerController {
         model.addAttribute("customers", customerService.findAll());
         log.info("Lista klientów");
         return PAGES + SLASH + CUSTOMERS;
+    }
+
+    @RequestMapping(value = SLASH + EDIT_CUSTOMER + SLASH + "{id}", method = RequestMethod.GET)
+    public String showEditCustomerPage(Model model) {
+
+
+        return PAGES + SLASH + EDIT_CUSTOMER;
+    }
+
+    @RequestMapping(value = SLASH + DELETE_CUSTOMER + SLASH + "{id}", method = RequestMethod.GET)
+    public String deleteCustomer(@PathVariable long id,
+                                 Model model) {
+        //TODO: czy jesteś pewien?
+
+        //TODO: komunikat o udanym/nieudanym usunieciu klienta
+        customerService.deleteCustomer(id);
+        log.info("Usunięto użytkownika");
+        return "redirect:" + SLASH + CUSTOMERS;
     }
 
 

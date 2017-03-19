@@ -39,5 +39,13 @@ public class CustomerService {
         return customerRepository.findAll();
     }
 
+    public void deleteCustomer(long id) {
+        try {
+            customerRepository.delete(id);
+        } catch (Exception e) {
+            log.error("Wystąpił błąd przy usuwaniu klienta: " + e);
+        }
+    }
+
 
 }

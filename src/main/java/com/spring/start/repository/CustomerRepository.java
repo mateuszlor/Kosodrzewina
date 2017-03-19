@@ -11,7 +11,8 @@ import java.util.List;
 /**
  * Created by Vertig0 on 18.03.2017.
  */
-@Repository
+//@Transactional(propagation = Propagation.MANDATORY)
+    @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long>{
 
     Customer findByUsername(String username);
