@@ -50,8 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .defaultSuccessUrl("/index", true)
                 .and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login?logout").deleteCookies("JSESSIONID")
-                .and().rememberMe().key("uniqueAndSecret").tokenValiditySeconds(86400);
+                .logoutSuccessUrl("/login?logout");
     }
 
     public void configure(WebSecurity web) throws Exception {
@@ -63,6 +62,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .antMatchers("/css/**")
                 .and()
                 .ignoring()
-                .antMatchers("/fonts/**");
+                .antMatchers("/fonts/**")
+                .and()
+                .ignoring()
+                .antMatchers("/register");
     }
 }
