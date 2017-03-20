@@ -65,6 +65,7 @@ public class ControllerHelper {
                 log.warn("No authentication data!");
 
                 user = UserDto.builder()
+                        .id(-1)
                         .name("UNKNOWN")
                         .surname("")
                         .username("???")
@@ -77,6 +78,8 @@ public class ControllerHelper {
 
                 user = userService.getUserDetails(springUser.getUsername());
             }
+
+            session.setAttribute(userKey, user);
 
             log.info("Got user data from database: " + user.getFullName());
         }
