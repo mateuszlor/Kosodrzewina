@@ -1,7 +1,6 @@
 package com.spring.start.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -10,6 +9,9 @@ import javax.validation.constraints.NotNull;
  * Created by Vertig0 on 12.03.2017.
  */
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "users")
 public class User {
 
