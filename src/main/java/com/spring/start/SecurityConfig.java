@@ -31,8 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Autowired
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication().dataSource(dataSource)
-                //TODO: odkomendować gdy będzie jakiś użytkownik stworzony przez rejestracje
-//            .passwordEncoder(passwordEncoder())
+            .passwordEncoder(passwordEncoder())
             .usersByUsernameQuery("select username, password, enabled from users where username=?")
             .authoritiesByUsernameQuery("select username, role from users where username=?");
     }
@@ -47,12 +46,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .formLogin().loginPage("/login")
                 .usernameParameter("username").passwordParameter("password")
                 .failureUrl("/login?error")
-                .defaultSuccessUrl("/index", true)
+                .defaultSuccessUrl("/dashboard", true)
                 .and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/login?logout").deleteCookies("JSESSIONID")
                 .and().rememberMe().key("uniqueAndSecret").tokenValiditySeconds(86400)
-        .and().csrf().disable();
+                .and().csrf().disable();
     }
 
     public void configure(WebSecurity web) throws Exception {

@@ -18,14 +18,14 @@ public class IndexController {
 
     private static final String SLASH = "/";
     private static final String PAGES = "pages";
-    private static final String INDEX = "index";
+    private static final String DASHBOARD = "dashboard";
 
-    @RequestMapping(value = {SLASH + INDEX}, method = RequestMethod.GET)
+    @RequestMapping(value = {SLASH + DASHBOARD}, method = RequestMethod.GET)
     public String get(Model model) {
         log.info("Main page");
 
         ControllerHelper.setUserData(model);
 
-        return PAGES + SLASH + INDEX;
+        return PAGES + SLASH + DASHBOARD;
     }
 }

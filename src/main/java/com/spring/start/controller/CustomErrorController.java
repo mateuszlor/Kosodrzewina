@@ -30,7 +30,7 @@ public class CustomErrorController implements ErrorController {
 
     private static final String SLASH = "/";
     private static final String PAGES = "pages";
-    private static final String INDEX = "index";
+    private static final String DASHBOARD = "dashboard";
     private static final String ERROR = "error";
 
     @Autowired

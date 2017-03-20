@@ -28,6 +28,8 @@ public class LoginController {
     private static final String SLASH = "/";
     private static final String PAGES = "pages";
     private static final String LOGIN = "login";
+    private static final String DASHBOARD = "dashboard";
+
 
     @RequestMapping(value = {SLASH + LOGIN, SLASH}, method = RequestMethod.GET)
     public String loginPage(){
@@ -35,7 +37,7 @@ public class LoginController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         if (!(auth instanceof AnonymousAuthenticationToken)) {
-            return "redirect:/index";
+            return "redirect:" + SLASH + DASHBOARD;
         }
         log.info("Login page");
         return PAGES + SLASH + LOGIN;
