@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:include="/fragments/elements :: head"/>
-    <title>Home Page</title>
+    <title>ERROR</title>
 </head>
 <body class="skin-blue sidebar-mini">
 <div class="wrapper">
@@ -23,7 +23,7 @@
 
             <!-- Page Content -->
             <div>
-                <div class="box">
+                <div class="box box-danger">
                     <div class="box-header">
                         <h3 class="box-title" th:text="#{error.page.details}" />
                     </div>
@@ -36,9 +36,14 @@
                         </table>
                     </div>
                 </div>
-                <div class="box" th:if="${hasStacktrace}">
+                <div class="box box-danger collapsed-box" th:if="${hasStacktrace}">
                     <div class="box-header">
-                        <h3 class="box-title" th:text="#{error.page.stacktrace}" /> 
+                        <h3 class="box-title" th:text="#{error.page.stacktrace}" />
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-plus" />
+                            </button>
+                        </div>
                     </div>
                     <div class="box-body">
                         <pre th:text="${stacktrace}"></pre>
