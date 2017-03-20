@@ -18,8 +18,8 @@ import org.springframework.validation.Validator;
 @Log4j
 public class CustomerValidator implements Validator{
 
-    private static final String TEXT_PATTERN = "([a-zA-Z]|[Łł]){1}([a-z]|[ąęóźćżśł])*";
-    private static final String PHONE_PATTERN = "([0-9]{7,11})";
+    private static final String TEXT_PATTERN = "([a-zA-Z]|[ŁłŻż]){1}([a-z]|[ąęóźćżśł])*";
+    private static final String PHONE_PATTERN = "([0-9]{6,11})";
 
     @Autowired
     @Getter @Setter
