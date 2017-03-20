@@ -1,8 +1,7 @@
 package com.spring.start.service.dto;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import com.spring.start.entity.Role;
+import lombok.*;
 import lombok.experimental.var;
 import lombok.extern.log4j.Log4j;
 
@@ -14,11 +13,19 @@ import lombok.extern.log4j.Log4j;
 @Getter
 @Setter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserDto {
     private long id;
     private String username;
     private String name;
     private String surname;
+    private String password;
+    private String oldPassword;
+    private String newPassword;
+    private String newPassword2;
+    private Role role;
+    private boolean enabled;
 
     public String getFullName(){
         return name + " " + surname;

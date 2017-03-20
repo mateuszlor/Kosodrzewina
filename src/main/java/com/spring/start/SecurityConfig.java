@@ -51,7 +51,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/login?logout").deleteCookies("JSESSIONID")
-                .and().rememberMe().key("uniqueAndSecret").tokenValiditySeconds(86400);
+                .and().rememberMe().key("uniqueAndSecret").tokenValiditySeconds(86400)
+        .and().csrf().disable();
     }
 
     public void configure(WebSecurity web) throws Exception {

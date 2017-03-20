@@ -39,7 +39,7 @@ public class CustomErrorController implements ErrorController {
     @Autowired
     private HttpServletRequest context;
 
-    @RequestMapping(value = SLASH + ERROR, method = RequestMethod.GET)
+    @RequestMapping(value = SLASH + ERROR)
     public String errorPage(Model model) {
 
         ControllerHelper.setUserData(model);

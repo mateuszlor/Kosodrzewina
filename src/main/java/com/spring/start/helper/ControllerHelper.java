@@ -50,18 +50,20 @@ public class ControllerHelper {
         var userKey = "user";
         UserDto user;
 
-        var isUserInfoInSession = Collections.list(session.getAttributeNames())
+        var isValidUserInfoInSession = Collections.list(session.getAttributeNames())
                 .stream()
-                .anyMatch(n->n.equals(userKey));
+                .anyMatch(n -> n.equals(userKey))
+                && ((UserDto) session.getAttribute(userKey))
+                .getId() != -1;
 
-        log.info("isUserInfoInSession: " + isUserInfoInSession);
+        log.info("isValidUserInfoInSession: " + isValidUserInfoInSession);
 
-        if( isUserInfoInSession) {
-            user = (UserDto)session.getAttribute(userKey);
+        if (isValidUserInfoInSession) {
+            user = (UserDto) session.getAttribute(userKey);
         } else {
             var auth = SecurityContextHolder.getContext().getAuthentication();
 
-            if(auth == null) {
+            if (auth == null) {
                 log.warn("No authentication data!");
 
                 user = UserDto.builder()
@@ -70,8 +72,7 @@ public class ControllerHelper {
                         .surname("")
                         .username("???")
                         .build();
-            }
-            else {
+            } else {
                 var springUser = (User) auth.getPrincipal();
 
                 log.info("Got user data from spring security: " + springUser);
@@ -87,5 +88,14 @@ public class ControllerHelper {
         log.info("About to set data into model: " + model);
 
         model.addAttribute("user", user);
+    }
+
+    public static void forceReplaceUserInSession(UserDto user){
+        var userKey = "user";
+        var session = request.getSession();
+        session.removeAttribute(userKey);
+        session.setAttribute(userKey, user);
+
+        log.info("Forced replacing user in session");
     }
 }
