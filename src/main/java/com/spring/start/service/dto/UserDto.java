@@ -15,6 +15,7 @@ import lombok.extern.log4j.Log4j;
 @Setter
 @Builder
 public class UserDto {
+    private long id;
     private String username;
     private String name;
     private String surname;
