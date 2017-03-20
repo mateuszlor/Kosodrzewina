@@ -56,8 +56,7 @@ public class RegisterController {
                                BindingResult bindingResult, Model model,
                                RedirectAttributes redirectAttributes){
 
-        log.info("tworze uzytkowniczka heheszki...");
-
+        
         validator.validate(validationUser, bindingResult);
         if(bindingResult.hasErrors()){
             redirectAttributes.addFlashAttribute("error", environment.getProperty("error.form.invalidValues"));

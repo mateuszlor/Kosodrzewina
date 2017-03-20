@@ -8,6 +8,7 @@ import com.spring.start.service.dto.ValidationUser;
 import lombok.experimental.var;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,12 +24,15 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     public void createUser(ValidationUser validationUser) {
         User user = User.builder()
                 .name(validationUser.getName())
                 .surname(validationUser.getSurname())
                 .username(validationUser.getUsername())
-                .password(validationUser.getPassword())
+                .password(bCryptPasswordEncoder.encode(validationUser.getPassword()))
                 .role(Role.ADMIN)
                 .build();
         userRepository.save(user);
