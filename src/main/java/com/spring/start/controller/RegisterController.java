@@ -1,5 +1,6 @@
 package com.spring.start.controller;
 
+import com.spring.start.helper.ControllerHelper;
 import com.spring.start.service.UserService;
 import com.spring.start.service.dto.ValidationUser;
 import com.spring.start.validators.RegisterValidator;
@@ -46,13 +47,16 @@ public class RegisterController {
     private static final String REGISTER = "register";
 
     @RequestMapping(value = {SLASH + REGISTER, SLASH}, method = RequestMethod.GET)
-    public String registerPage() {
+    public String registerPage(Model model) {
+
+        ControllerHelper.setUserData(model);
+
         log.info("Register page");
         return PAGES + SLASH + REGISTER;
     }
 
     @RequestMapping(value = {SLASH + REGISTER, SLASH}, method = RequestMethod.POST)
-    public String registerUser(@Valid @ModelAttribute("user") ValidationUser validationUser,
+    public String registerUser(@Valid @ModelAttribute("newUser") ValidationUser validationUser,
                                BindingResult bindingResult, Model model,
                                RedirectAttributes redirectAttributes){
 

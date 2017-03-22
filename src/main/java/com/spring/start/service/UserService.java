@@ -1,12 +1,10 @@
 package com.spring.start.service;
 
-import com.spring.start.entity.User;
-import com.spring.start.helper.ControllerHelper;
 import com.spring.start.entity.Role;
 import com.spring.start.entity.User;
+import com.spring.start.helper.ControllerHelper;
 import com.spring.start.repository.UserRepository;
 import com.spring.start.service.dto.UserDto;
-import lombok.extern.log4j.Log4j;
 import com.spring.start.service.dto.ValidationUser;
 import lombok.experimental.var;
 import lombok.extern.log4j.Log4j;
@@ -37,6 +35,7 @@ public class UserService {
                 .username(validationUser.getUsername())
                 .password(bCryptPasswordEncoder.encode(validationUser.getPassword()))
                 .role(Role.ADMIN)
+                .enabled(true)
                 .build();
         userRepository.save(user);
         log.info("Dodano nowego użytkownika: " + user.getUsername());
