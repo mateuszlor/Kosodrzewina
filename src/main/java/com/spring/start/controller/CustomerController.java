@@ -4,7 +4,7 @@ import com.spring.start.entity.Customer;
 import com.spring.start.helper.ControllerHelper;
 import com.spring.start.service.CustomerService;
 import com.spring.start.service.dto.CustomerDto;
-import com.spring.start.validator.CustomerValidator;
+import com.spring.start.validators.CustomerValidator;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;

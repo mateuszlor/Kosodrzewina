@@ -1,4 +1,4 @@
-package com.spring.start.validator;
+package com.spring.start.validators;
 
 import com.spring.start.service.dto.CustomerDto;
 import lombok.Getter;
