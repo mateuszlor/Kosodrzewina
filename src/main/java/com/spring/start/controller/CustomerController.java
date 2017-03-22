@@ -54,14 +54,14 @@ public class CustomerController {
     }
 
     @RequestMapping(path = SLASH + EDIT_CUSTOMER, method = RequestMethod.POST)
-    public String registerAccount(@Valid @ModelAttribute("customer") CustomerDto customerDto,
+    public String editCustomer(@Valid @ModelAttribute("customer") CustomerDto customerDto,
                                         BindingResult bindingResult, Model model,
                                         RedirectAttributes redirectAttributes) {
 
         validator.validate(customerDto, bindingResult);
         if(bindingResult.hasErrors()){
             redirectAttributes.addFlashAttribute("error", environment.getProperty("error.form.invalidValues"));
-            log.info("Wprowadzono niepoprawne wartosci do formularza dodawania nowego klienta");
+            log.info("Wprowadzono niepoprawne wartosci do formularza edycji nowego klienta");
             return "redirect:" + SLASH + EDIT_CUSTOMER;
         }
         try {
@@ -75,14 +75,14 @@ public class CustomerController {
     }
 
     @RequestMapping(path = SLASH + CUSTOMER, method = RequestMethod.POST)
-    public String editCustomer(@Valid @ModelAttribute("customer") CustomerDto customerDto,
+    public String registerCustomer(@Valid @ModelAttribute("customer") CustomerDto customerDto,
                                   BindingResult bindingResult, Model model,
                                   RedirectAttributes redirectAttributes) {
 
         validator.validate(customerDto, bindingResult);
         if(bindingResult.hasErrors()){
             redirectAttributes.addFlashAttribute("error", environment.getProperty("error.form.invalidValues"));
-            log.info("Wprowadzono niepoprawne wartosci do formularza edycji klienta");
+            log.info("Wprowadzono niepoprawne wartosci do formularza dodawania klienta");
             return "redirect:" + SLASH + CUSTOMER;
         }
         try {
