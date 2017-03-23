@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="/fragments/elements :: head"/>
+    <title>Home Page</title>
+    <script>
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+</head>
+<body class="skin-blue sidebar-mini">
+<div class="wrapper">
+    <div th:replace="/fragments/header :: header">Header</div>
+    <div th:replace="/fragments/menu :: menu">Menu</div>
+    <div class="content-wrapper">
+
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                Informacje
+                <small>o samochodzie</small>
+            </h1>
+        </section>
+        <!---->
+        <!-- Alerts-->
+        <!--<div th:if="${error != null or error != empty}" th:replace="fragments/alerts :: alert (type='error', message=${error})">...</div>-->
+        <!--<div th:if="${info != null or info != empty}" th:replace="fragments/alerts :: alert (type='success', message=${info})">...</div>-->
+        <!---->
+
+        <section class="content">
+            <!-- Page Content -->
+            <div class="box" th:object="${car}">
+                <div class="box-header with-border">
+                    <h3 class="box-title" th:text="#{label.overallInformation}"></h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                        <div class="btn-group">
+                            <a th:href="@{/car/{id}/edit(id=*{id})}">
+                                <button type="button" class="btn btn-box-tool" aria-expanded="false" data-toggle="tooltip" data-placement="bottom" title="Edytuj">
+                                    <i class="fa fa-wrench"></i>
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body" style="display: block;">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h3 class="text-center">
+                                <strong th:text="*{brand + ' ' + model}"></strong>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2" th:text="#{label.car.name}"></div>
+                        <div class="col-md-3" th:text="*{name}"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2" th:text="#{label.car.registration_no}"></div>
+                        <div class="col-md-3" th:text="*{registrationNumber}"></div>
+                    </div>
+                </div>
+            </div>
+            <!---->
+        </section>
+    </div>
+    <div th:replace="/fragments/footer :: footer">Footer</div>
+</div>
+</body>
+</html>
