@@ -66,8 +66,26 @@ public class UserService {
 
         userRepository.save(user);
 
-        log.info(String.format("Saved user ID = %s", user.getId()));
+        log.info(String.format("Saved data for user ID = %s", user.getId()));
 
         ControllerHelper.forceReplaceUserInSession(dto);
+    }
+
+    public String getUserPassword(long id) {
+        return userRepository.getUserPassword(id);
+    }
+
+    public void editUserPassword(UserDto dto) {
+        var user = userRepository.findOne(dto.getId());
+
+        var hash = bCryptPasswordEncoder.encode(dto.getNewPassword());
+
+        user.builder()
+                .password(hash)
+                .build();
+
+        userRepository.save(user);
+
+        log.info(String.format("Saved password for user ID = %s", user.getId()));
     }
 }
