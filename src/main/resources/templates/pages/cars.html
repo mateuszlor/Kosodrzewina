@@ -43,7 +43,7 @@
                                     <td th:text="${c.name}"></td>
                                     <td th:text="${c.registrationNumber}"></td>
                                     <td>
-                                        <!--<a th:href="@{/edit-customer/{id}(id=${c.id})}" style="float: left"><button type="button" class="btn btn-block btn-warning btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a>-->
+                                        <a th:href="@{/car/{id}(id=${c.id})}" style="float: left"><button type="button" class="btn btn-block btn-warning btn-xs"><i class="fa fa-info" aria-hidden="true"></i></button></a>
 
                                         <div style="float: left">
                                             <form th:action="@{/delete-car}" method="post">

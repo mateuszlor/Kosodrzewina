@@ -47,9 +47,9 @@ public class CarService {
         }
     }
 
-//    public Car findCarById(long id){
-//        Car car = carRepository.findOne(id);
-//        return car;
-//    }
+    public Car findCarById(long id){
+        Car car = carRepository.findOne(id);
+        return car;
+    }
 
 }

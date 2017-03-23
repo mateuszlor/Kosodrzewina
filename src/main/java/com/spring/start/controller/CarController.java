@@ -1,5 +1,6 @@
 package com.spring.start.controller;
 
+import com.spring.start.entity.Car;
 import com.spring.start.helper.ControllerHelper;
 import com.spring.start.service.CarService;
 import com.spring.start.service.dto.CarDto;
@@ -12,10 +13,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -32,6 +30,7 @@ public class CarController {
     private static final String ADD_NEW_CAR = "new-car";
     private static final String CARS = "cars";
     private static final String DELETE_CAR = "delete-car";
+    private static final String CAR = "car";
 
     @Autowired
     @Getter @Setter
@@ -97,6 +96,16 @@ public class CarController {
         return "redirect:" + SLASH + CARS;
     }
 
+    @RequestMapping(value = SLASH + CAR + SLASH + "{id}", method = RequestMethod.GET)
+    public String showCarPanel(@PathVariable long id, Model model) {
+
+        ControllerHelper.setUserData(model);
+
+        Car car = carService.findCarById(id);
+        model.addAttribute("car", car);
+        log.info("Edycja klienta: " + car.getBrand() + " " + car.getModel());
+        return PAGES + SLASH + CAR;
+    }
 
 
 }
