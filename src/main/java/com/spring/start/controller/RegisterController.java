@@ -46,7 +46,7 @@ public class RegisterController {
     private static final String PAGES = "pages";
     private static final String REGISTER = "register";
 
-    @RequestMapping(value = {SLASH + REGISTER, SLASH}, method = RequestMethod.GET)
+    @RequestMapping(value = {SLASH + REGISTER}, method = RequestMethod.GET)
     public String registerPage(Model model) {
 
         ControllerHelper.setUserData(model);
@@ -55,7 +55,7 @@ public class RegisterController {
         return PAGES + SLASH + REGISTER;
     }
 
-    @RequestMapping(value = {SLASH + REGISTER, SLASH}, method = RequestMethod.POST)
+    @RequestMapping(value = {SLASH + REGISTER}, method = RequestMethod.POST)
     public String registerUser(@Valid @ModelAttribute("newUser") ValidationUser validationUser,
                                BindingResult bindingResult, Model model,
                                RedirectAttributes redirectAttributes){

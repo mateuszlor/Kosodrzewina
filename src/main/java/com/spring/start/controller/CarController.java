@@ -4,10 +4,12 @@ import com.spring.start.entity.Car;
 import com.spring.start.helper.ControllerHelper;
 import com.spring.start.service.CarService;
 import com.spring.start.service.dto.CarDto;
+import com.spring.start.service.dto.CustomerDto;
 import com.spring.start.validators.CarValidator;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
+import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Vertig0 on 21.03.2017.
@@ -31,6 +36,9 @@ public class CarController {
     private static final String CARS = "cars";
     private static final String DELETE_CAR = "delete-car";
     private static final String CAR = "car";
+    private static final String EDIT_CAR_URL = "edit";
+    private static final String EDIT_CAR_HTML = "edit-car";
+
 
     @Autowired
     @Getter @Setter
@@ -81,7 +89,7 @@ public class CarController {
         ControllerHelper.setUserData(model);
 
         model.addAttribute("cars", carService.findAll());
-        log.info("Lista samochodów");
+        log.info(String.format("Lista samochodów"));
         return PAGES + SLASH + CARS;
     }
 
@@ -103,8 +111,40 @@ public class CarController {
 
         Car car = carService.findCarById(id);
         model.addAttribute("car", car);
-        log.info("Strona edycji samochodu: " + car.getBrand() + " " + car.getModel());
+        log.info(String.format("Strona samochodu: %1s %2s", car.getBrand(), car.getModel()));
         return PAGES + SLASH + CAR;
+    }
+
+    @RequestMapping(value = SLASH + CAR + SLASH + "{id}" + SLASH + EDIT_CAR_URL, method = RequestMethod.GET)
+    public String showCarEditPage(@PathVariable long id, Model model){
+
+        ControllerHelper.setUserData(model);
+
+        Car car = carService.findCarById(id);
+        model.addAttribute("car", car);
+        log.info(String.format("Strona edycji: %1s %2s", car.getBrand(), car.getModel()));
+        return PAGES + SLASH + EDIT_CAR_HTML;
+    }
+
+    @RequestMapping(path = SLASH + EDIT_CAR_HTML, method = RequestMethod.POST)
+    public String editCustomer(@Valid @ModelAttribute("car") CarDto carDto,
+                               BindingResult bindingResult, Model model,
+                               RedirectAttributes redirectAttributes) {
+
+        validator.validate(carDto, bindingResult);
+        if(bindingResult.hasErrors()){
+            redirectAttributes.addFlashAttribute("error", environment.getProperty("error.form.invalidValues"));
+            log.info("Wprowadzono niepoprawne wartości do formularza edycji samochodu");
+            return "redirect:" + SLASH + CAR + SLASH + carDto.getId() + SLASH + EDIT_CAR_URL;
+        }
+        try {
+            carService.editCar(carDto);
+            redirectAttributes.addFlashAttribute("info", environment.getProperty("message.customer.success"));
+            log.info("Pomyślnie zedytowano samochód: " + carDto.getBrand());
+        } catch (Exception e){
+            log.error(String.format("Nie udało się zedytować klienta %1s : %2s", carDto.getBrand(), e));
+        }
+        return "redirect:" + SLASH + CAR + SLASH + carDto.getId();
     }
 
 

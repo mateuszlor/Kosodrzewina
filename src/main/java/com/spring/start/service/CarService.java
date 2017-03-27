@@ -1,8 +1,10 @@
 package com.spring.start.service;
 
 import com.spring.start.entity.Car;
+import com.spring.start.entity.Customer;
 import com.spring.start.repository.CarRepository;
 import com.spring.start.service.dto.CarDto;
+import com.spring.start.service.dto.CustomerDto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -50,6 +52,18 @@ public class CarService {
     public Car findCarById(long id){
         Car car = carRepository.findOne(id);
         return car;
+    }
+
+    public void editCar(CarDto carDto) {
+
+        Car car = Car.builder().brand(carDto.getBrand())
+                .id(carDto.getId())
+                .name(carDto.getName())
+                .model(carDto.getModel())
+                .registrationNumber(carDto.getRegistrationNumber())
+                .build();
+        carRepository.save(car);
+        log.info(String.format("Dokonano edycji samochodu: {0} {1}", carDto.getBrand(), carDto.getModel()));
     }
 
 }

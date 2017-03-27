@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="/fragments/elements :: head"/>
+    <title>Home Page</title>
+    <script>
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+</head>
+<body class="skin-blue sidebar-mini">
+<div class="wrapper">
+    <div th:replace="/fragments/header :: header">Header</div>
+    <div th:replace="/fragments/menu :: menu">Menu</div>
+    <div class="content-wrapper">
+
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                Edycja
+                <small>samochodu</small>
+            </h1>
+        </section>
+        <!---->
+        <!-- Alerts-->
+        <!--<div th:if="${error != null or error != empty}" th:replace="fragments/alerts :: alert (type='error', message=${error})">...</div>-->
+        <!--<div th:if="${info != null or info != empty}" th:replace="fragments/alerts :: alert (type='success', message=${info})">...</div>-->
+        <!---->
+
+        <section class="content">
+            <!-- Page Content -->
+            <div class="box box-warning">
+                <div class="box-header with-border">
+                    <h3 class="box-title" th:text="#{label.general.edit}"/>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <form role="form" th:action="@{/edit-car}" th:object="${car}" lpformnum="2" method="post">
+                        <!-- text input -->
+                        <input type="hidden" class="form-control" id="id" name="id" th:value="*{id}" />
+                        <div class="form-group">
+                            <label th:text="#{label.car.brand}"/>
+                            <input type="text" class="form-control" id="brand" name="brand" th:value="*{brand}" required="required" th:placeholder="#{label.car.brand}" />
+                            <span class="help-block"></span>
+                        </div>
+                        <div class="form-group">
+                            <label th:text="#{label.car.model}"/>
+                            <input type="text" class="form-control" id="model" name="model" th:value="*{model}" required="required" th:placeholder="#{label.car.model}" />
+                            <span class="help-block"></span>
+                        </div>
+                        <div class="form-group">
+                            <label th:text="#{label.car.name}"/>
+                            <input type="text" class="form-control" id="name" name="name" th:value="*{name}" th:placeholder="#{label.car.name}" />
+                            <span class="help-block"></span>
+                        </div>
+                        <div class="form-group">
+                            <label th:text="#{label.car.registration_no}"/>
+                            <input type="text" class="form-control" id="registrationNumber" name="registrationNumber" th:value="*{registrationNumber}" th:placeholder="#{label.car.registration_no}" />
+                            <span class="help-block"></span>
+                        </div>
+                        <button type="submit" class="btn btn-primary" th:text="#{button.confirm}"/>
+                    </form>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!---->
+        </section>
+
+
+
+    </div>
+    <div th:replace="/fragments/footer :: footer">Footer</div>
+</div>
+</body>
+</html>

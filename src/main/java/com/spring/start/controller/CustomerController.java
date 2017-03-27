@@ -61,7 +61,7 @@ public class CustomerController {
         validator.validate(customerDto, bindingResult);
         if(bindingResult.hasErrors()){
             redirectAttributes.addFlashAttribute("error", environment.getProperty("error.form.invalidValues"));
-            log.info("Wprowadzono niepoprawne wartosci do formularza edycji nowego klienta");
+            log.info("Wprowadzono niepoprawne wartosci do formularza edycji klienta");
             return "redirect:" + SLASH + EDIT_CUSTOMER;
         }
         try {
