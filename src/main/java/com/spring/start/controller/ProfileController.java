@@ -3,7 +3,7 @@ package com.spring.start.controller;
 import com.spring.start.helper.ControllerHelper;
 import com.spring.start.service.UserService;
 import com.spring.start.service.dto.UserDto;
-import com.spring.start.validator.PasswordValidator;
+import com.spring.start.validators.PasswordValidator;
 import lombok.experimental.var;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
