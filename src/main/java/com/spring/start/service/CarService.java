@@ -65,5 +65,4 @@ public class CarService {
         carRepository.save(car);
         log.info(String.format("Dokonano edycji samochodu: {0} {1}", carDto.getBrand(), carDto.getModel()));
     }
-
 }

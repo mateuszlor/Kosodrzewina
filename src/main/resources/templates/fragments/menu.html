@@ -28,6 +28,17 @@
                     <li><a th:href="@{/cars}"><i class="fa fa-list-ul" aria-hidden="true"></i><span th:text="#{menu.cars}"/></a></li>
                 </ul>
             </li>
+            <li class="treeview">
+                <a href="#"><i class="fa fa-book" aria-hidden="true"></i><span th:text="#{label.dictionary}"/>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right" />
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a th:href="@{/dictionary}"><i class="fa fa-plus" aria-hidden="true"></i><span th:text="#{label.dictionary.new}"/></a></li>
+                    <li><a th:href="@{/dictionaries}"><i class="fa fa-th-list" aria-hidden="true"></i><span th:text="#{label.dictionary.list}"/></a></li>
+                </ul>
+            </li>
             <li>
                 <a href="/notExists"><i class="fa fa-question" aria-hidden="true" /><span>Not existing</span></a>
             </li>
