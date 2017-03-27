@@ -60,11 +60,12 @@ public class RegisterController {
                                BindingResult bindingResult, Model model,
                                RedirectAttributes redirectAttributes){
 
-        
+        ControllerHelper.setUserData(model);
+
         validator.validate(validationUser, bindingResult);
         if(bindingResult.hasErrors()){
             redirectAttributes.addFlashAttribute("error", environment.getProperty("error.form.invalidValues"));
-            log.info("Wprowadzono niepoprawne wartosci do formularza dodawania nowego klienta");
+            log.info("Wprowadzono niepoprawne wartosci do formularza dodawania nowego użytkownika");
             return "redirect:" + SLASH + REGISTER;
         }
         try {

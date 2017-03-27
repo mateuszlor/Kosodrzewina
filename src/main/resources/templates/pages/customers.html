@@ -50,7 +50,25 @@
                                         <div style="float: left">
                                             <form th:action="@{/delete-customer}" method="post">
                                                 <input type="hidden" name="id" th:value="${cust.id}"/>
-                                                <button type="submit" name="delete" class="btn btn-block btn-danger btn-xs"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                                <button type="button" name="delete" class="btn btn-block btn-danger btn-xs" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash" aria-hidden="true"></i></button>
+
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                <h4 class="modal-title" id="myModalLabel" th:text="#{title.modal.customers}"></h4>
+                                                            </div>
+                                                            <div class="modal-body" th:text="#{description.modal.customers}"></div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal" th:text="#{button.reject}"></button>
+                                                                <button type="submit"  class="btn btn-primary" th:text="#{button.accept}"></button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                             </form>
                                         </div>
 
