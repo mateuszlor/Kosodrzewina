@@ -18,7 +18,7 @@ import org.springframework.validation.Validator;
 @Log4j
 public class CarValidator implements Validator {
 
-    private static final String TEXT_PATTERN = "([a-zA-Z]){1}([a-z])*";
+    private static final String TEXT_PATTERN = "([a-zA-Z])([a-z])*(\\s)?([a-z])*";
     private static final String REGISTRATION_NUMBER_PATTERN= "([A-Z]){2,3}(\\s)?([A-Z0-9]){3,5}";
 
     @Autowired

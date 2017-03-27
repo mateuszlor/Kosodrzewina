@@ -49,12 +49,12 @@ public class CarController {
 
         ControllerHelper.setUserData(model);
 
-        log.info("Add new customer page");
+        log.info("Strona dodawania nowego samochodu");
         return PAGES + SLASH + ADD_NEW_CAR;
     }
 
     @RequestMapping(value = SLASH + ADD_NEW_CAR, method = RequestMethod.POST)
-    public String addNewCar(@Valid @ModelAttribute("customer") CarDto carDto,
+    public String addNewCar(@Valid @ModelAttribute("car") CarDto carDto,
                             BindingResult bindingResult, Model model,
                             RedirectAttributes redirectAttributes){
 
@@ -81,7 +81,7 @@ public class CarController {
         ControllerHelper.setUserData(model);
 
         model.addAttribute("cars", carService.findAll());
-        log.info("Lista klientów");
+        log.info("Lista samochodów");
         return PAGES + SLASH + CARS;
     }
 
@@ -103,7 +103,7 @@ public class CarController {
 
         Car car = carService.findCarById(id);
         model.addAttribute("car", car);
-        log.info("Edycja klienta: " + car.getBrand() + " " + car.getModel());
+        log.info("Strona edycji samochodu: " + car.getBrand() + " " + car.getModel());
         return PAGES + SLASH + CAR;
     }
 
