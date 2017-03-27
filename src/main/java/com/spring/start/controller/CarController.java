@@ -39,7 +39,6 @@ public class CarController {
     private static final String EDIT_CAR_URL = "edit";
     private static final String EDIT_CAR_HTML = "edit-car";
 
-
     @Autowired
     @Getter @Setter
     private CarService carService;
@@ -52,8 +51,11 @@ public class CarController {
     @Getter @Setter
     private Environment environment;
 
+    /**
+     *  Metoda wyświatlajaca stronę dodawania nowego samochodu
+     * */
     @RequestMapping(value = SLASH + ADD_NEW_CAR, method = RequestMethod.GET)
-    public String showNewCustomerPage(Model model) throws Exception {
+    public String showNewCarPage(Model model) throws Exception {
 
         ControllerHelper.setUserData(model);
 
@@ -61,6 +63,9 @@ public class CarController {
         return PAGES + SLASH + ADD_NEW_CAR;
     }
 
+    /**
+     *  Metoda służąca do dodawania nowego samochodu do bazy
+     * */
     @RequestMapping(value = SLASH + ADD_NEW_CAR, method = RequestMethod.POST)
     public String addNewCar(@Valid @ModelAttribute("car") CarDto carDto,
                             BindingResult bindingResult, Model model,
@@ -83,8 +88,11 @@ public class CarController {
 
     }
 
+    /**
+     *  Metoda wyświetlajaca stronę z listą samochodów
+     * */
     @RequestMapping(value = SLASH + CARS, method = RequestMethod.GET)
-    public String showCustomersList(Model model){
+    public String showCarList(Model model){
 
         ControllerHelper.setUserData(model);
 
@@ -93,8 +101,11 @@ public class CarController {
         return PAGES + SLASH + CARS;
     }
 
+    /**
+     *  Metoda usuwająca samochów z bazy danych
+     * */
     @RequestMapping(value = SLASH + DELETE_CAR, method = RequestMethod.POST)
-    public String deleteCustomer(@RequestParam long id,
+    public String deleteCar(@RequestParam long id,
                                  Model model) {
         //TODO: czy jesteś pewien?
 
@@ -104,6 +115,9 @@ public class CarController {
         return "redirect:" + SLASH + CARS;
     }
 
+    /**
+     *  Metoda wyświetlająca stronę samochodu
+     * */
     @RequestMapping(value = SLASH + CAR + SLASH + "{id}", method = RequestMethod.GET)
     public String showCarPanel(@PathVariable long id, Model model) {
 
@@ -115,6 +129,9 @@ public class CarController {
         return PAGES + SLASH + CAR;
     }
 
+    /**
+     *  Metoda wyświetlajaca stronę edycji samochodu
+     * */
     @RequestMapping(value = SLASH + CAR + SLASH + "{id}" + SLASH + EDIT_CAR_URL, method = RequestMethod.GET)
     public String showCarEditPage(@PathVariable long id, Model model){
 
@@ -126,8 +143,11 @@ public class CarController {
         return PAGES + SLASH + EDIT_CAR_HTML;
     }
 
+    /**
+     * Metoda edytująca samochód
+     * */
     @RequestMapping(path = SLASH + EDIT_CAR_HTML, method = RequestMethod.POST)
-    public String editCustomer(@Valid @ModelAttribute("car") CarDto carDto,
+    public String editCar(@Valid @ModelAttribute("car") CarDto carDto,
                                BindingResult bindingResult, Model model,
                                RedirectAttributes redirectAttributes) {
 
