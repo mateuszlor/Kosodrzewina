@@ -24,8 +24,6 @@ public class IndexController {
     public String get(Model model) {
         log.info("Main page");
 
-        ControllerHelper.setUserData(model);
-
         return PAGES + SLASH + DASHBOARD;
     }
 }

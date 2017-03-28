@@ -47,8 +47,6 @@ public class CustomerController {
     @RequestMapping(value = SLASH + CUSTOMER, method = RequestMethod.GET)
     public String showNewCustomerPage(Model model) throws Exception {
 
-        ControllerHelper.setUserData(model);
-
         log.info("Add new customer page");
         return PAGES + SLASH + CUSTOMER;
     }
@@ -98,8 +96,6 @@ public class CustomerController {
     @RequestMapping(value = SLASH + CUSTOMERS, method = RequestMethod.GET)
     public String showCustomersList(Model model){
 
-        ControllerHelper.setUserData(model);
-
         model.addAttribute("customers", customerService.findAll());
         log.info("Lista klientów");
         return PAGES + SLASH + CUSTOMERS;
@@ -107,8 +103,6 @@ public class CustomerController {
 
     @RequestMapping(value = SLASH + EDIT_CUSTOMER + SLASH + "{id}", method = RequestMethod.GET)
     public String showEditCustomerPage(@PathVariable long id, Model model) {
-
-        ControllerHelper.setUserData(model);
 
         Customer customer = customerService.findCustomerById(id);
         model.addAttribute("customer", customer);

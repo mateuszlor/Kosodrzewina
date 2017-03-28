@@ -57,8 +57,6 @@ public class CarController {
     @RequestMapping(value = SLASH + ADD_NEW_CAR, method = RequestMethod.GET)
     public String showNewCarPage(Model model) throws Exception {
 
-        ControllerHelper.setUserData(model);
-
         log.info("Strona dodawania nowego samochodu");
         return PAGES + SLASH + ADD_NEW_CAR;
     }
@@ -94,8 +92,6 @@ public class CarController {
     @RequestMapping(value = SLASH + CARS, method = RequestMethod.GET)
     public String showCarList(Model model){
 
-        ControllerHelper.setUserData(model);
-
         model.addAttribute("cars", carService.findAll());
         log.info(String.format("Lista samochodów"));
         return PAGES + SLASH + CARS;
@@ -121,8 +117,6 @@ public class CarController {
     @RequestMapping(value = SLASH + CAR + SLASH + "{id}", method = RequestMethod.GET)
     public String showCarPanel(@PathVariable long id, Model model) {
 
-        ControllerHelper.setUserData(model);
-
         Car car = carService.findCarById(id);
         model.addAttribute("car", car);
         log.info(String.format("Strona samochodu: %1s %2s", car.getBrand(), car.getModel()));
@@ -134,8 +128,6 @@ public class CarController {
      * */
     @RequestMapping(value = SLASH + CAR + SLASH + "{id}" + SLASH + EDIT_CAR_URL, method = RequestMethod.GET)
     public String showCarEditPage(@PathVariable long id, Model model){
-
-        ControllerHelper.setUserData(model);
 
         Car car = carService.findCarById(id);
         model.addAttribute("car", car);
