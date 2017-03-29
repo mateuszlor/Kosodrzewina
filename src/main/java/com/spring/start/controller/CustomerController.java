@@ -1,7 +1,6 @@
 package com.spring.start.controller;
 
 import com.spring.start.entity.Customer;
-import com.spring.start.helper.ControllerHelper;
 import com.spring.start.service.CustomerService;
 import com.spring.start.service.dto.CustomerDto;
 import com.spring.start.validators.CustomerValidator;
@@ -79,17 +78,25 @@ public class CustomerController {
 
         validator.validate(customerDto, bindingResult);
         if(bindingResult.hasErrors()){
-            redirectAttributes.addFlashAttribute("error", environment.getProperty("error.form.invalidValues"));
+            redirectAttributes.addFlashAttribute("info", environment.getProperty("error.form.invalidValues"));
+            redirectAttributes.addFlashAttribute("alertType", "error");
             log.info("Wprowadzono niepoprawne wartosci do formularza dodawania klienta");
             return "redirect:" + SLASH + CUSTOMER;
         }
         try {
             customerService.editCustomer(customerDto);
+            // environment.getProperty("message.customer.success")
             redirectAttributes.addFlashAttribute("info", environment.getProperty("message.customer.success"));
+            redirectAttributes.addFlashAttribute("alertType", "success");
             log.info("Pomyślnie zedytowano klienta: " + customerDto.getUsername());
         } catch (Exception e){
             log.error("Nie udało się dodać użytkownika " + customerDto.getName() + "do bazy: " + e);
+
+            redirectAttributes.addFlashAttribute("info", environment.getProperty("message.customer.error"));
+            redirectAttributes.addFlashAttribute("alertType", "error");
+            return "redirect:" + SLASH + CUSTOMERS;
         }
+
         return "redirect:" + SLASH + CUSTOMERS;
     }
 

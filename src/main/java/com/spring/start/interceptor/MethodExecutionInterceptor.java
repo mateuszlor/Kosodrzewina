@@ -5,6 +5,8 @@ import lombok.extern.log4j.Log4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
 
@@ -15,6 +17,8 @@ import org.springframework.util.StopWatch;
 @Log4j
 @Aspect
 @Component
+@Configuration
+@PropertySource("classpath:i18n/messages.properties")
 public class MethodExecutionInterceptor {
     @Around("execution(* com.spring.start..*.*(..))")
     public Object logTime(ProceedingJoinPoint joinPoint) throws Throwable {
