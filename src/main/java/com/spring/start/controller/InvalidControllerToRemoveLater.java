@@ -22,8 +22,6 @@ public class InvalidControllerToRemoveLater {
     @RequestMapping(value = {SLASH + INVALID}, method = RequestMethod.GET)
     public String get(Model model) throws Exception {
 
-        ControllerHelper.setUserData(model);
-
         log.info("Test page - exception");
         if(true){
             var inner = new RuntimeException("Coś się zadziało ŹLE!!!");

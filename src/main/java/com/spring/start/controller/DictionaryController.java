@@ -46,8 +46,6 @@ public class DictionaryController extends HandlerInterceptorAdapter{
     @RequestMapping(value = SLASH + DICTIONARY, method = RequestMethod.GET)
     public String showDictionaryPage(Model model){
 
-        ControllerHelper.setUserData(model);
-
         log.info("Dodawanie nowego wpisu do słownika");
         return PAGES + SLASH + DICTIONARY;
     }
@@ -61,7 +59,6 @@ public class DictionaryController extends HandlerInterceptorAdapter{
                                        BindingResult bindingResult, Model model,
                                        RedirectAttributes redirectAttributes){
 
-        ControllerHelper.setUserData(model);
         validator.validate(name, bindingResult);
         if(bindingResult.hasErrors()){
             log.info("Wprowadzono niepoprawne wartosci do formularza dodawania nowego wpisu słownikowego");
@@ -80,8 +77,6 @@ public class DictionaryController extends HandlerInterceptorAdapter{
      * */
     @RequestMapping(value = SLASH + DICTIONARIES, method = RequestMethod.GET)
     public String showDictionaryListPage(Model model){
-
-        ControllerHelper.setUserData(model);
 
         model.addAttribute("dictionaries", dictionaryService.findAll());
         log.info("Strona listy słownikowej");
@@ -109,8 +104,6 @@ public class DictionaryController extends HandlerInterceptorAdapter{
     @RequestMapping(value = SLASH + DICTIONARY + SLASH + "{id}", method = RequestMethod.GET)
     public String showEditEntryPage(@PathVariable long id,
                                     Model model){
-
-        ControllerHelper.setUserData(model);
 
         Dictionary dictionary = dictionaryService.findEntryById(id);
         model.addAttribute("dictionary", dictionary);

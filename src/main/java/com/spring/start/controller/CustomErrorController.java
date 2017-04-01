@@ -42,8 +42,6 @@ public class CustomErrorController implements ErrorController {
     @RequestMapping(value = SLASH + ERROR)
     public String errorPage(Model model) {
 
-        ControllerHelper.setUserData(model);
-
         log.info("Error page");
 
         var errors = getErrorAttributes(context, true);

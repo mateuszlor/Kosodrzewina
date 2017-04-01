@@ -44,8 +44,6 @@ public class ProfileController {
     public String get(Model model) {
         log.info("User profile page");
 
-        ControllerHelper.setUserData(model);
-
         return PAGES + SLASH + PROFILE;
     }
 

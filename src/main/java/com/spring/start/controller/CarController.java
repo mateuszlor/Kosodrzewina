@@ -1,15 +1,12 @@
 package com.spring.start.controller;
 
 import com.spring.start.entity.Car;
-import com.spring.start.helper.ControllerHelper;
 import com.spring.start.service.CarService;
 import com.spring.start.service.dto.CarDto;
-import com.spring.start.service.dto.CustomerDto;
 import com.spring.start.validators.CarValidator;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
-import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
@@ -19,9 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by Vertig0 on 21.03.2017.
@@ -56,8 +50,6 @@ public class CarController {
      * */
     @RequestMapping(value = SLASH + ADD_NEW_CAR, method = RequestMethod.GET)
     public String showNewCarPage(Model model) throws Exception {
-
-        ControllerHelper.setUserData(model);
 
         log.info("Strona dodawania nowego samochodu");
         return PAGES + SLASH + ADD_NEW_CAR;
@@ -94,8 +86,6 @@ public class CarController {
     @RequestMapping(value = SLASH + CARS, method = RequestMethod.GET)
     public String showCarList(Model model){
 
-        ControllerHelper.setUserData(model);
-
         model.addAttribute("cars", carService.findAll());
         log.info(String.format("Lista samochodów"));
         return PAGES + SLASH + CARS;
@@ -121,7 +111,6 @@ public class CarController {
     @RequestMapping(value = SLASH + CAR + SLASH + "{id}", method = RequestMethod.GET)
     public String showCarPanel(@PathVariable long id, Model model) {
 
-        ControllerHelper.setUserData(model);
         Car car = carService.findCarById(id);
         model.addAttribute("car", car);
         model.addAttribute("service", car.getService());
@@ -135,8 +124,6 @@ public class CarController {
      * */
     @RequestMapping(value = SLASH + CAR + SLASH + "{id}" + SLASH + EDIT_CAR_URL, method = RequestMethod.GET)
     public String showCarEditPage(@PathVariable long id, Model model){
-
-        ControllerHelper.setUserData(model);
 
         Car car = carService.findCarById(id);
         model.addAttribute("car", car);
