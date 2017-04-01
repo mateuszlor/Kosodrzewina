@@ -65,10 +65,108 @@
                 </div>
             </div>
             <div class="col-md-6">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title" th:text="#{label.service.service}"></h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+                        <!-- /.box-tools -->
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
 
+                        <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap"><div class="row"><div class="col-sm-6"></div><div class="col-sm-6"></div></div><div class="row"><div class="col-sm-12">
+                            <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                                <thead>
+                                <tr role="row">
+                                    <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column descending" aria-sort="ascending" hidden="hidden">Id</th>
+                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" th:text="#{label.general.name}"></th>
+                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" th:text="#{label.executionDate}"></th>
+                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" th:text="#{label.actions}"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr role="row" class="odd" th:each="s : ${service}">
+                                    <td class="sorting_1" hidden="hidden" th:text="${s.id}"></td>
+                                    <td class="sorting_1" th:text="${s.type.name}"></td>
+                                    <td th:text="${s.execute}"></td>
+                                    <td>
+                                        <!--<a th:href="@{/edit-customer/{id}(id=${cust.id})}" style="float: left"><button type="button" class="btn btn-block btn-warning btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a>-->
+
+                                        <!--<div style="float: left">-->
+                                            <!--<form th:action="@{/delete-customer}" method="post">-->
+                                                <!--<input type="hidden" name="id" th:value="${cust.id}"/>-->
+                                                <!--<button type="button" name="delete" class="btn btn-block btn-danger btn-xs" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash" aria-hidden="true"></i></button>-->
+                                            <!--</form>-->
+                                        <!--</div>-->
+                                        <div style="clear:both;"></div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        </div>
+                            <!-- /.box-body -->
+                        </div>
+
+
+                    </div>
+                    <!-- /.box-body -->
+                </div>
             </div>
             <div class="col-md-6">
+                <div class="box box-success">
+                    <div class="box-header with-border">
+                        <h3 class="box-title" th:text="#{label.service.payment}"></h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+                        <!-- /.box-tools -->
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
 
+
+                        <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap"><div class="row"><div class="col-sm-6"></div><div class="col-sm-6"></div></div><div class="row"><div class="col-sm-12">
+                            <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                                <thead>
+                                <tr role="row">
+                                    <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column descending" aria-sort="ascending" hidden="hidden">Id</th>
+                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" th:text="#{label.general.name}"></th>
+                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" th:text="#{label.fromDate}"></th>
+                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" th:text="#{label.toDate}"></th>
+                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" th:text="#{label.actions}"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr role="row" class="odd" th:each="p : ${periodicService}">
+                                    <td class="sorting_1" hidden="hidden" th:text="${p.id}"></td>
+                                    <td class="sorting_1" th:text="${p.type.name}"></td>
+                                    <td th:text="${p.dateFrom}"></td>
+                                    <td th:text="${p.dateTo}"></td>
+                                    <td>
+                                        <!--<a th:href="@{/edit-customer/{id}(id=${cust.id})}" style="float: left"><button type="button" class="btn btn-block btn-warning btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a>-->
+
+                                        <!--<div style="float: left">-->
+                                            <!--<form th:action="@{/delete-customer}" method="post">-->
+                                                <!--<input type="hidden" name="id" th:value="${cust.id}"/>-->
+                                                <!--<button type="button" name="delete" class="btn btn-block btn-danger btn-xs" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash" aria-hidden="true"></i></button>-->
+                                            <!--</form>-->
+                                        <!--</div>-->
+                                        <div style="clear:both;"></div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        </div>
+                            <!-- /.box-body -->
+                        </div>
+                        
+                    </div>
+                    <!-- /.box-body -->
+                </div>
             </div>
             <!---->
         </section>

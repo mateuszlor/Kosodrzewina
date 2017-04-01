@@ -122,9 +122,10 @@ public class CarController {
     public String showCarPanel(@PathVariable long id, Model model) {
 
         ControllerHelper.setUserData(model);
-
         Car car = carService.findCarById(id);
         model.addAttribute("car", car);
+        model.addAttribute("service", car.getService());
+        model.addAttribute("periodicService", car.getPeriodicService());
         log.info(String.format("Strona samochodu: %1s %2s", car.getBrand(), car.getModel()));
         return PAGES + SLASH + CAR;
     }
