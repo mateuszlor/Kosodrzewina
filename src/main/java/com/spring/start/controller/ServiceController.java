@@ -57,8 +57,6 @@ public class ServiceController {
     @RequestMapping(value = SLASH + ADD_SERVICE, method = RequestMethod.GET)
     public String showNewServicePage(Model model) throws Exception {
 
-        ControllerHelper.setUserData(model);
-
         model.addAttribute("cars", carService.findAll());
         model.addAttribute("dictionaries", dictionaryService.findAll());
 
