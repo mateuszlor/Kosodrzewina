@@ -44,6 +44,10 @@ public class UserService {
         log.info("Dodano nowego użytkownika: " + user.getUsername());
     }
 
+    public User getUserById(long id){
+        return userRepository.findOne(id);
+    }
+
     public UserDto getUserDetails(String username) {
         var user = userRepository.findByUsername(username);
         var userDto = UserDto.builder()

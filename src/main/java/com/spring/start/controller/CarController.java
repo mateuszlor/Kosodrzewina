@@ -1,15 +1,12 @@
 package com.spring.start.controller;
 
 import com.spring.start.entity.Car;
-import com.spring.start.helper.ControllerHelper;
 import com.spring.start.service.CarService;
 import com.spring.start.service.dto.CarDto;
-import com.spring.start.service.dto.CustomerDto;
 import com.spring.start.validators.CarValidator;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
-import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
@@ -19,9 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by Vertig0 on 21.03.2017.
@@ -119,6 +113,8 @@ public class CarController {
 
         Car car = carService.findCarById(id);
         model.addAttribute("car", car);
+        model.addAttribute("service", car.getService());
+        model.addAttribute("periodicService", car.getPeriodicService());
         log.info(String.format("Strona samochodu: %1s %2s", car.getBrand(), car.getModel()));
         return PAGES + SLASH + CAR;
     }
