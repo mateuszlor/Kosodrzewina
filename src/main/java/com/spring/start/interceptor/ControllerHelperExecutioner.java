@@ -7,6 +7,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,10 @@ import java.util.stream.Collectors;
 @Aspect
 @Component
 public class ControllerHelperExecutioner {
+
+    @Autowired
+    private ControllerHelper controllerHelper;
+
     @Around("execution(* com.spring.start.controller..*.*(..))")
     public Object userDataSetter(ProceedingJoinPoint joinPoint) throws Throwable {
 
@@ -54,15 +59,9 @@ public class ControllerHelperExecutioner {
                             annotation,
                             model));
 
-                    if (Arrays.stream(annotation.method()).anyMatch(m -> m.equals(RequestMethod.GET)) || annotation.method().length == 0) {
-                        log.info("*** All requirements matched - about to set user data in model");
-                        ControllerHelper.setUserData(model);
-                    } else {
-                        log.warn(String.format("*** Request type not match: %s, should be GET",
-                                String.join(", ", Arrays.stream(annotation.method())
-                                        .map(m -> m.toString())
-                                        .collect(Collectors.toList()))));
-                    }
+                    log.info("*** All requirements matched - about to set user data in model");
+                    controllerHelper.setUserData(model);
+
                 } else {
                     log.warn("*** Annotation not found - skipping");
                 }

@@ -28,6 +28,9 @@ public class UserService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Autowired
+    private ControllerHelper controllerHelper;
+
     public void createUser(ValidationUser validationUser) {
         User user = User.builder()
                 .name(validationUser.getName())
@@ -68,7 +71,7 @@ public class UserService {
 
         log.info(String.format("Saved data for user ID = %s", user.getId()));
 
-        ControllerHelper.forceReplaceUserInSession(dto);
+        controllerHelper.forceReplaceUserInSession(dto);
     }
 
     public String getUserPassword(long id) {
