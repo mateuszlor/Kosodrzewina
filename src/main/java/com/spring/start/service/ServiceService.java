@@ -81,5 +81,34 @@ public class ServiceService {
         return java.sql.Date.valueOf(date);
     }
 
+    public void deleteService(long id) {
+        try {
+            serviceRepository.delete(id);
+        } catch (Exception e) {
+            log.error("Wystąpił błąd przy usuwaniu wpisu serwisowego: " + e);
+        }
+    }
+
+    public void deletePeriodicService(long id) {
+        try {
+            periodicServiceRepository.delete(id);
+        } catch (Exception e) {
+            log.error("Wystąpił błąd przy usuwaniu okresowego wpisu serwisowego: " + e);
+        }
+    }
+
+    public Service findServiceById(long id){
+        try {
+            if (serviceRepository.findOne(id) != null) {
+                return serviceRepository.findOne(id);
+            }else if (periodicServiceRepository.findOne(id) != null) {
+//                return periodicServiceRepository.findOne(id);
+            }
+        } catch (Exception e) {
+            log.error("Wystąpił problem przy pobieraniu serwisu, brak serwisu w bazie");
+        }
+        return null;
+    }
+
 
 }
