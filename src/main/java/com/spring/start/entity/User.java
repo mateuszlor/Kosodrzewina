@@ -37,6 +37,10 @@ public class User {
     @Getter @Setter
     private String password;
 
+    @Column(name = "email", nullable = false)
+    @Getter @Setter
+    private String email;
+
     @Column(name = "enabled", nullable = false)
     @Getter @Setter
     private boolean enabled;

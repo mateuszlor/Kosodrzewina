@@ -37,6 +37,7 @@ public class UserService {
                 .surname(validationUser.getSurname())
                 .username(validationUser.getUsername())
                 .password(bCryptPasswordEncoder.encode(validationUser.getPassword()))
+                .email(validationUser.getEmail())
                 .role(Role.ADMIN)
                 .enabled(true)
                 .build();
@@ -56,6 +57,7 @@ public class UserService {
                 .surname(user.getSurname())
                 .username(username)
                 .password(user.getPassword())
+                .email(user.getEmail())
                 .build();
 
         return userDto;

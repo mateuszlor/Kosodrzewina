@@ -21,6 +21,7 @@ public class UserDto {
     private String name;
     private String surname;
     private String password;
+    private String email;
     private String oldPassword;
     private String newPassword;
     private String newPassword2;
