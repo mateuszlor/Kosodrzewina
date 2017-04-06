@@ -5,14 +5,35 @@
     <title>Home Page</title>
 
     <script type="text/javascript">
-        $(function() {
+        $(document).ready(function() {
             $(".chzn-select").chosen();
             $('.datepicker').datepicker({
                 format: "dd-mm-yyyy",
                 orientation: "right",
                 todayHighlight: true,
-                autoclose: true
+                autoclose: true,
+                weekStart: 1
             });
+
+            $("#type").change(function(){
+                $(this).find("option:selected").each(function(){
+                    var optionValue = $(this).attr("value");
+                    if(optionValue == 'SERVICE'){
+                        $('#dateToField').hide();
+                        $('#executionLabel').show();
+                        $('#fromDateLabel').hide();
+                        $('#SERVICE').hide();
+                        $('#PAYMENT').show();
+                    } else{
+                        $('#dateToField').show();
+                        $('#fromDateLabel').show();
+                        $('#executionLabel').hide();
+                        $('#SERVICE').show();
+                        $('#PAYMENT').hide();
+                    }
+                });
+            }).change();
+
         });
     </script>
 
@@ -49,29 +70,37 @@
                         <div class="form-group">
                             <label th:text="#{menu.car}"/>
                             <select class="form-control chzn-select" name="car" required="required">
-                                <option th:each="car : ${cars}" th:value="${car.id}" th:text="${car.brand + ' ' + car.model + '(' + car.name + ')'}"></option>
+                                <option th:each="car : ${cars}" th:value="${car.id}" th:text="${car.brand + ' ' + car.model + ' (' + car.name + ')'}"></option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label th:text="#{label.dictionary.type}"/>
-                            <select class="form-control chzn-select" name="type" required="required">
-                                <option th:each="type : ${T(com.spring.start.entity.DictionaryType).values()}" th:value="${type}" th:text="${type.displayName}"></option>
+                            <select class="form-control chzn-select" name="type" required="required" id="type">
+                                <option id="typeValue" th:each="type : ${T(com.spring.start.entity.DictionaryType).values()}" th:value="${type}" th:text="${type.displayName}"></option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label th:text="#{label.dictionary.serwisName}"/>
-                            <select class="form-control chzn-select" name="name" required="required">
-                                <option th:each="dict : ${dictionaries}" th:value="${dict.id}" th:text="${dict.name}"></option>
-                            </select>
+                            <label th:text="#{label.dictionary.serwisName}" id="name"/>
+                            <div id="SERVICE">
+                                <select class="form-control chzn-select"  name="name" required="required">
+                                    <option th:each="dict : ${serviceDict}" th:id="${dict.type}" th:value="${dict.id}" th:text="${dict.name}"></option>
+                                </select>
+                            </div>
+                            <div id="PAYMENT">
+                                <select class="form-control chzn-select"  name="name" required="required">
+                                    <option th:each="dict : ${paymentDict}" th:id="${dict.type}" th:value="${dict.id}" th:text="${dict.name}"></option>
+                                </select>
+                            </div>
                         </div>
                         <div class="input-group date">
-                            <label th:text="#{label.toDate}"/>
-                            <input class="form-control datepicker" name="date" th:value="${date}" placeholder="dd-mm-yyyy" type="text" readonly="readonly"/>
+                            <label th:text="#{label.fromDate}" id="fromDateLabel" visible="hidden"/>
+                            <label th:text="#{label.executionDate}" id="executionLabel" visible="visible"/>
+                            <input class="form-control datepicker" id="date" name="date" th:value="${date}" placeholder="dd-mm-yyyy" type="text" readonly="readonly"/>
                             <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
                         </div>
-                        <div class="input-group date">
+                        <div class="input-group date" id="dateToField">
                             <label th:text="#{label.toDate}"/>
-                            <input class="form-control datepicker" name="dateTo" th:value="${dateTo}" placeholder="dd-mm-yyyy" type="text" readonly="readonly"/>
+                            <input class="form-control datepicker" id="dateTo" name="dateTo" th:value="${dateTo}" placeholder="dd-mm-yyyy" type="text" readonly="readonly"/>
                             <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
                         </div>
                         <button type="submit" class="btn btn-primary" th:text="#{button.add}"/>

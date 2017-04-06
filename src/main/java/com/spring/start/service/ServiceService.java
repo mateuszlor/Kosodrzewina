@@ -93,7 +93,7 @@ public class ServiceService {
         try {
             periodicServiceRepository.delete(id);
         } catch (Exception e) {
-            log.error("Wystąpił błąd przy usuwaniu okresowego wpisu serwisowego: " + e);
+            log.error("Wystąpił błąd przy usuwaniu okresowego wpisu serwisowego: {}", e);
         }
     }
 
@@ -101,11 +101,20 @@ public class ServiceService {
         try {
             if (serviceRepository.findOne(id) != null) {
                 return serviceRepository.findOne(id);
-            }else if (periodicServiceRepository.findOne(id) != null) {
-//                return periodicServiceRepository.findOne(id);
             }
         } catch (Exception e) {
-            log.error("Wystąpił problem przy pobieraniu serwisu, brak serwisu w bazie");
+            log.error("Wystąpił problem przy pobieraniu serwisu: {}", e);
+        }
+        return null;
+    }
+
+    public PeriodicService findPeriodicServiceById(long id){
+        try {
+            if (periodicServiceRepository.findOne(id) != null) {
+                return periodicServiceRepository.findOne(id);
+            }
+        } catch (Exception e) {
+            log.error("Wystąpił problem przy pobieraniu okresowego serwisu: {}", e);
         }
         return null;
     }

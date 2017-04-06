@@ -58,7 +58,8 @@ public class ServiceController {
     public String showNewServicePage(Model model) throws Exception {
 
         model.addAttribute("cars", carService.findAll());
-        model.addAttribute("dictionaries", dictionaryService.findAll());
+        model.addAttribute("serviceDict", dictionaryService.getDictionaryiesByType(DictionaryType.SERVICE));
+        model.addAttribute("paymentDict", dictionaryService.getDictionaryiesByType(DictionaryType.PAYMENT));
 
         log.info("Strona dodawania nowego wpisu serwisowego");
         return PAGES + SLASH + ADD_SERVICE;
