@@ -6,19 +6,18 @@ import com.spring.start.repository.PeriodicServiceRepository;
 import com.spring.start.repository.ServiceRepository;
 import com.spring.start.service.dto.ServiceDto;
 import com.spring.start.service.dto.UserDto;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.var;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 /**
  * Created by Vertig0 on 30.03.2017.
@@ -129,5 +128,33 @@ public class ServiceService {
 
     public long getServicesSoonToExpireCount(int days) {
         return periodicServiceRepository.getServicesSoonToExpireCount(days);
+    }
+
+    public List<ServiceDto> getAllServices() {
+        var periodic = periodicServiceRepository.findAll();
+        var oneTime = serviceRepository.findAll();
+
+        var all = StreamSupport.stream(periodic.spliterator(), false)
+                .map(s -> ServiceDto
+                        .builder()
+                        .id(s.getId())
+                        .car(s.getCar().getId())
+                        .date(s.getDateFrom().toString())
+                        .dateTo(s.getDateTo().toString())
+                        .type(s.getType().getName())
+                        .build())
+                .collect(Collectors.toList());
+
+        all.addAll(StreamSupport.stream(oneTime.spliterator(), false)
+                .map(s -> ServiceDto
+                        .builder()
+                        .id(s.getId())
+                        .car(s.getCar().getId())
+                        .date(s.getExecute().toString())
+                        .type(s.getType().getName())
+                        .build())
+                .collect(Collectors.toList()));
+
+        return all;
     }
 }

@@ -1,6 +1,8 @@
 package com.spring.start.service.dto;
 
 import lombok.*;
+import org.joda.time.DateTime;
+import org.joda.time.Interval;
 
 /**
  * Created by Vertig0 on 30.03.2017.
@@ -25,4 +27,9 @@ public class ServiceDto {
     private String dateTo;
 
     private boolean isPeriodic;
+
+    public int getRemainingDays(){
+
+        return new Interval(new DateTime(), new DateTime(dateTo)).toPeriod().getDays();
+    }
 }
