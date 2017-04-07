@@ -126,4 +126,8 @@ public class ServiceService {
                         .type(s.getType().getName()).build())
                 .collect(Collectors.toList());
     }
+
+    public long getServicesSoonToExpireCount(int days) {
+        return periodicServiceRepository.getServicesSoonToExpireCount(days);
+    }
 }

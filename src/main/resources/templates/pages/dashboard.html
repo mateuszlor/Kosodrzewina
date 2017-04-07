@@ -13,19 +13,43 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Tytuł
-                <small>i opis</small>
+                Dashboard
+                <small>kosodrzewina</small>
             </h1>
         </section>
         <!---->
 
         <section class="content">
 
-            <!-- Page Content -->
+            <!-- Widgety -->
 
-            TRESC STRONY MA BYC TUTAJ RESZTY SIE NIE RUSZA
+            <div class="row">
+                <div class="col-lg-5">
+                    <!-- small box -->
+                    <div class="small-box" th:classappend="${expiringServicesCount == 0} ? bg-green : bg-red">
+                        <div class="inner">
+                            <h3 th:text="${expiringServicesCount}" />
+                            <p>Serwisy wygasające w przeciągu 14 dni</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-ios-gear-outline"></i>
+                        </div>
+                        <a href="/services?type=expiring" class="small-box-footer">Info <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+            </div>
 
-            <!---->
+            <!-- Dalsza treść -->
+
+            <div class="row">
+                <!-- Page Content -->
+
+                TRESC STRONY MA BYC TUTAJ RESZTY SIE NIE RUSZA
+
+                <!---->
+            </div>
 
         </section>
     </div>

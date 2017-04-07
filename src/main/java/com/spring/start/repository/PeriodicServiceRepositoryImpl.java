@@ -38,4 +38,19 @@ public class PeriodicServiceRepositoryImpl implements PeriodicServiceRepositoryA
                         && s.getDateTo().after(date))
                 .collect(Collectors.toList());
     }
+
+    public long getServicesSoonToExpireCount(int days) {
+
+        var date = new Date();
+
+        var cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, days);
+        var dateToCheck = cal.getTime();
+
+        return source.periodicServices(em)
+                .filter(s -> s.getDateTo().before(dateToCheck)
+                        && s.getDateTo().after(date))
+                .count();
+    }
 }

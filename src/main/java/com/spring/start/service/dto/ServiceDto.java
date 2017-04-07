@@ -1,10 +1,6 @@
 package com.spring.start.service.dto;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-
-import java.util.Date;
+import lombok.*;
 
 /**
  * Created by Vertig0 on 30.03.2017.
@@ -12,6 +8,8 @@ import java.util.Date;
 @Getter
 @Setter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ServiceDto {
 
     private long id;
@@ -27,5 +25,4 @@ public class ServiceDto {
     private String dateTo;
 
     private boolean isPeriodic;
-
 }
