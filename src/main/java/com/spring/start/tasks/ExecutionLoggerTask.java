@@ -5,6 +5,7 @@ import lombok.experimental.var;
 import lombok.extern.log4j.Log4j;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
+import org.joda.time.format.PeriodFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -30,12 +31,10 @@ public class ExecutionLoggerTask {
         var sb = new StringBuilder();
         sb.append("Statistics:\n\r");
 
-        var duration = new Interval(startDate, new DateTime()).toDuration();
-        sb.append(String.format("\tApplication is running from %s - uptime: %s days %s hours %s seconds\n\r",
+        var period = new Interval(startDate, new DateTime()).toPeriod();
+        sb.append(String.format("\tApplication is running from %s - uptime: %s\n\r",
                 startDate.toString("yyyy.MM.dd HH:mm:ss"),
-                duration.getStandardDays(),
-                duration.getStandardHours(),
-                duration.getStandardSeconds()));
+                period.toString(PeriodFormat.getDefault())));
 
         sb.append("\tTop method execution time: (shortest | average | longest)\n\r");
 
