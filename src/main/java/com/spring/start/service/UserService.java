@@ -13,6 +13,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by Mateusz on 19.03.2017.
  */
@@ -96,5 +98,9 @@ public class UserService {
         userRepository.save(user);
 
         log.info(String.format("Saved password for user ID = %s", user.getId()));
+    }
+
+    public List<String> getEmails() {
+        return userRepository.getEmails();
     }
 }
