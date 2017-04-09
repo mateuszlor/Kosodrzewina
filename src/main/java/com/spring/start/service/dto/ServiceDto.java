@@ -1,33 +1,35 @@
 package com.spring.start.service.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-
-import java.util.Date;
+import lombok.*;
+import org.joda.time.DateTime;
+import org.joda.time.Interval;
 
 /**
  * Created by Vertig0 on 30.03.2017.
  */
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ServiceDto {
 
-    @Getter
-    @Setter
     private long id;
 
-    @Getter @Setter
     private long car;
 
-    @Getter @Setter
     private String type;
 
-    @Getter @Setter
     private long name;
 
-    @Getter @Setter
     private String date;
 
-    @Getter @Setter
     private String dateTo;
 
+    private boolean isPeriodic;
 
+    public int getRemainingDays(){
+
+        return new Interval(new DateTime(), new DateTime(dateTo)).toPeriod().getDays();
+    }
 }

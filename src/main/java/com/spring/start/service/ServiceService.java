@@ -6,16 +6,18 @@ import com.spring.start.repository.PeriodicServiceRepository;
 import com.spring.start.repository.ServiceRepository;
 import com.spring.start.service.dto.ServiceDto;
 import com.spring.start.service.dto.UserDto;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.experimental.var;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 /**
  * Created by Vertig0 on 30.03.2017.
@@ -23,31 +25,22 @@ import java.util.Locale;
 @Transactional
 @org.springframework.stereotype.Service
 @Log4j
+@var
 public class ServiceService {
 
     @Autowired
-    @Getter
-    @Setter
     private ServiceRepository serviceRepository;
 
     @Autowired
-    @Getter
-    @Setter
     private PeriodicServiceRepository periodicServiceRepository;
 
     @Autowired
-    @Getter
-    @Setter
     private DictionaryService dictionaryService;
 
     @Autowired
-    @Getter
-    @Setter
     private UserService userService;
 
     @Autowired
-    @Getter
-    @Setter
     private CarService carService;
 
     public void createService(ServiceDto serviceDto, UserDto userDto) {
@@ -97,7 +90,7 @@ public class ServiceService {
         }
     }
 
-    public Service findServiceById(long id){
+    public Service findServiceById(long id) {
         try {
             if (serviceRepository.findOne(id) != null) {
                 return serviceRepository.findOne(id);
@@ -108,7 +101,7 @@ public class ServiceService {
         return null;
     }
 
-    public PeriodicService findPeriodicServiceById(long id){
+    public PeriodicService findPeriodicServiceById(long id) {
         try {
             if (periodicServiceRepository.findOne(id) != null) {
                 return periodicServiceRepository.findOne(id);
@@ -119,5 +112,49 @@ public class ServiceService {
         return null;
     }
 
+    public List<ServiceDto> getServicesSoonToExpire(int days) {
+        var data = periodicServiceRepository.getServicesSoonToExpire(days);
 
+        return data.stream()
+                .map(s -> ServiceDto
+                        .builder()
+                        .id(s.getId())
+                        .car(s.getCar().getId())
+                        .date(s.getDateFrom().toString())
+                        .dateTo(s.getDateTo().toString())
+                        .type(s.getType().getName()).build())
+                .collect(Collectors.toList());
+    }
+
+    public long getServicesSoonToExpireCount(int days) {
+        return periodicServiceRepository.getServicesSoonToExpireCount(days);
+    }
+
+    public List<ServiceDto> getAllServices() {
+        var periodic = periodicServiceRepository.findAll();
+        var oneTime = serviceRepository.findAll();
+
+        var all = StreamSupport.stream(periodic.spliterator(), false)
+                .map(s -> ServiceDto
+                        .builder()
+                        .id(s.getId())
+                        .car(s.getCar().getId())
+                        .date(s.getDateFrom().toString())
+                        .dateTo(s.getDateTo().toString())
+                        .type(s.getType().getName())
+                        .build())
+                .collect(Collectors.toList());
+
+        all.addAll(StreamSupport.stream(oneTime.spliterator(), false)
+                .map(s -> ServiceDto
+                        .builder()
+                        .id(s.getId())
+                        .car(s.getCar().getId())
+                        .date(s.getExecute().toString())
+                        .type(s.getType().getName())
+                        .build())
+                .collect(Collectors.toList()));
+
+        return all;
+    }
 }
