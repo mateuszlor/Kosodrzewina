@@ -126,6 +126,7 @@ public class ServiceService {
                         .dateTo(s.getDateTo().toString())
                         .type(s.getType().getName())
                         .cost(s.getCost())
+                        .isPeriodic(true)
                         .build())
                 .collect(Collectors.toList());
     }
@@ -147,6 +148,7 @@ public class ServiceService {
                         .dateTo(s.getDateTo().toString())
                         .type(s.getType().getName())
                         .cost(s.getCost())
+                        .isPeriodic(true)
                         .build())
                 .collect(Collectors.toList());
 
@@ -158,6 +160,7 @@ public class ServiceService {
                         .date(s.getExecute().toString())
                         .type(s.getType().getName())
                         .cost(s.getCost())
+                        .isPeriodic(false)
                         .build())
                 .collect(Collectors.toList()));
 

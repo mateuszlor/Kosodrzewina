@@ -46,6 +46,7 @@
                             <tr>
                                 <th>Samochód</th>
                                 <th>Typ</th>
+                                <th>Koszt</th>
                                 <th>Data od</th>
                                 <th>Data do</th>
                                 <th>Status</th>
@@ -55,6 +56,7 @@
                             <tr th:each="s : ${services}">
                                 <td th:text="${s.getCar()}" />
                                 <td th:text="${s.getType()}" />
+                                <td th:text="${s.getCost()}" />
                                 <td th:text="${s.getDate()}" />
                                 <td th:text="${s.getDateTo()}" />
                                 <td>
