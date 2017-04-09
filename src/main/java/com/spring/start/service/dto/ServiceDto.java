@@ -32,8 +32,11 @@ public class ServiceDto {
 
     private BigDecimal cost;
 
-    public int getRemainingDays(){
+    public Integer getRemainingDays(){
 
-        return new Interval(new DateTime(), new DateTime(dateTo)).toPeriod().getDays();
+        if(isPeriodic) {
+            return new Interval(new DateTime(), new DateTime(dateTo)).toPeriod().getDays() + 1;
+        }
+        return null;
     }
 }
