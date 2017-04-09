@@ -50,6 +50,7 @@ public class ServiceService {
                 .type(dictionaryService.findEntryById(serviceDto.getName()))
                 .execute(convertStringToDate(serviceDto.getDate()))
                 .createdBy(userService.getUserById(userDto.getId()))
+                .cost(serviceDto.getCost())
                 .build();
         serviceRepository.save(service);
         log.info("Dodano nowy serwis");
@@ -63,6 +64,7 @@ public class ServiceService {
                 .dateFrom(convertStringToDate(serviceDto.getDate()))
                 .dateTo(convertStringToDate(serviceDto.getDateTo()))
                 .createdBy(userService.getUserById(userDto.getId()))
+                .cost(serviceDto.getCost())
                 .build();
         periodicServiceRepository.save(service);
         log.info("Dodano nowy serwis");
@@ -122,7 +124,9 @@ public class ServiceService {
                         .car(s.getCar().getId())
                         .date(s.getDateFrom().toString())
                         .dateTo(s.getDateTo().toString())
-                        .type(s.getType().getName()).build())
+                        .type(s.getType().getName())
+                        .cost(s.getCost())
+                        .build())
                 .collect(Collectors.toList());
     }
 
@@ -142,6 +146,7 @@ public class ServiceService {
                         .date(s.getDateFrom().toString())
                         .dateTo(s.getDateTo().toString())
                         .type(s.getType().getName())
+                        .cost(s.getCost())
                         .build())
                 .collect(Collectors.toList());
 
@@ -152,6 +157,7 @@ public class ServiceService {
                         .car(s.getCar().getId())
                         .date(s.getExecute().toString())
                         .type(s.getType().getName())
+                        .cost(s.getCost())
                         .build())
                 .collect(Collectors.toList()));
 

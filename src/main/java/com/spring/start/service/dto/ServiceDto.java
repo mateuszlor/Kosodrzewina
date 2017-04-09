@@ -4,6 +4,8 @@ import lombok.*;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
+import java.math.BigDecimal;
+
 /**
  * Created by Vertig0 on 30.03.2017.
  */
@@ -27,6 +29,8 @@ public class ServiceDto {
     private String dateTo;
 
     private boolean isPeriodic;
+
+    private BigDecimal cost;
 
     public int getRemainingDays(){
 
