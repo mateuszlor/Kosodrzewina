@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="/fragments/elements :: head"/>
+    <title>Home Page</title>
+</head>
+<body class="skin-blue sidebar-mini">
+<div class="wrapper">
+    <div th:replace="/fragments/header :: header">Header</div>
+    <div th:replace="/fragments/menu :: menu">Menu</div>
+    <div class="content-wrapper">
+
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                Lista
+                <small>wypożyczeń </small>
+            </h1>
+        </section>
+
+        <section class="content">
+            <!-- Page Content -->
+            <div class="box">
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap"><div class="row"><div class="col-sm-6"></div><div class="col-sm-6"></div></div><div class="row"><div class="col-sm-12">
+                        <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                            <thead>
+                                <tr role="row">
+                                    <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column descending" aria-sort="ascending" hidden="hidden">Id</th>
+                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" th:text="#{menu.car}"></th>
+                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" th:text="#{menu.customer}"></th>
+                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" th:text="#{label.rent.startDate}"></th>
+                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" th:text="#{label.rent.endDate}"></th>
+                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" th:text="#{label.rent.income}"></th>
+                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" th:text="#{label.actions}"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr role="row" class="odd" th:each="rent : ${rents}">
+                                    <td class="sorting_1" hidden="hidden" th:text="${rent.id}"></td>
+                                    <td class="sorting_1" th:text="${rent.car.brand + ' ' + rent.car.model + '(' + rent.car.name + ')'}"></td>
+                                    <td th:text="${rent.customer.name + ' ' + rent.customer.surname}"></td>
+                                    <td th:text="${rent.startDate}"></td>
+                                    <td th:text="${rent.endDate}"></td>
+                                    <td th:text="${rent.income}"></td>
+                                    <td>
+                                        <!--<a th:href="@{/edit-rent/{id}(id=${rent.id})}" style="float: left"><button type="button" class="btn btn-block btn-warning btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a>-->
+
+                                        <!--<div style="float: left">-->
+                                            <!--<form th:action="@{/delete-rent}" method="post">-->
+                                                <!--<input type="hidden" name="id" th:value="${rent.id}"/>-->
+                                                <!--<button type="button" name="delete" class="btn btn-block btn-danger btn-xs" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash" aria-hidden="true"></i></button>-->
+
+                                                <!--&lt;!&ndash; Modal &ndash;&gt;-->
+                                                <!--<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">-->
+                                                    <!--<div class="modal-dialog" role="document">-->
+                                                        <!--<div class="modal-content">-->
+                                                            <!--<div class="modal-header">-->
+                                                                <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+                                                                <!--<h4 class="modal-title" id="myModalLabel" th:text="#{title.modal.customers}"></h4>-->
+                                                            <!--</div>-->
+                                                            <!--<div class="modal-body" th:text="#{description.modal.customers}"></div>-->
+                                                            <!--<div class="modal-footer">-->
+                                                                <!--<button type="button" class="btn btn-default" data-dismiss="modal" th:text="#{button.reject}"></button>-->
+                                                                <!--<button type="submit"  class="btn btn-primary" th:text="#{button.accept}"></button>-->
+                                                            <!--</div>-->
+                                                        <!--</div>-->
+                                                    <!--</div>-->
+                                                <!--</div>-->
+
+                                            <!--</form>-->
+                                        <!--</div>-->
+                                        <!--<div style="clear:both;"></div>-->
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- /.box-body -->
+                </div>
+                </div>
+            </div>
+            <!---->
+        </section>
+    </div>
+    <div th:replace="/fragments/footer :: footer">Footer</div>
+</div>
+</body>
+</html>
