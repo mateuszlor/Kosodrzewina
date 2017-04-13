@@ -1,13 +1,10 @@
 package com.spring.start.repository;
 
-import com.spring.start.helper.JinqSource;
+import com.spring.start.entity.User;
 import lombok.experimental.var;
 import lombok.extern.log4j.Log4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,13 +14,7 @@ import java.util.stream.Collectors;
 @var
 @Log4j
 @Repository()
-public class UserRepositoryImpl implements UserRepositoryAdditional {
-
-    @PersistenceContext
-    private EntityManager em;
-
-    @Autowired
-    private JinqSource source;
+public class UserRepositoryImpl extends BaseAdditionalRepositoryImpl<User> implements UserRepositoryAdditional {
 
     @Override
     public String getUserPassword(long id) {
@@ -31,7 +22,7 @@ public class UserRepositoryImpl implements UserRepositoryAdditional {
         log.info("About to get password for user ID=" + id);
 
         // Issue a query
-        var list = source.users(em)
+        var list = getTable()
                 .where(u -> u.getId() == id)
                 .select(u -> u.getPassword())
                 .limit(1)
@@ -44,7 +35,7 @@ public class UserRepositoryImpl implements UserRepositoryAdditional {
 
     @Override
     public List<String> getEmails() {
-        return source.users(em)
+        return getTable()
                 .where(u -> u.isEnabled())
                 .select(u -> u.getEmail())
                 .distinct()
