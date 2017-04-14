@@ -71,4 +71,10 @@ public class Rent {
     @Getter
     @Setter
     private User createdBy;
+
+    @Column(name = "active", nullable = false)
+    @Getter
+    @Setter
+    private int active;
+
 }

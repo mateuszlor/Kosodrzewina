@@ -8,47 +8,49 @@ import java.util.Date;
 /**
  * Created by Vertig0 on 09.04.2017.
  */
-@Getter
-@Setter
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class RentDto {
 
-    @Getter
-    @Setter
+    public RentDto(RentDto rent) {
+        this.customer = rent.customer;
+        this.car = rent.car;
+        this.startDate = rent.startDate;
+        this.endDate = rent.endDate;
+        this.income = rent.income;
+        this.startCourse = rent.startCourse;
+        this.endCourse = rent.endCourse;
+        this.description = rent.description;
+        this.isTrailer = rent.isTrailer;
+        this.additionalIncome = rent.additionalIncome;
+        this.trailer = rent.trailer;
+    }
+
     private long id;
 
-    @Getter
-    @Setter
     private long customer;
 
-    @Getter
-    @Setter
     private long car;
 
-    @Getter @Setter
     private String startDate;
 
-    @Getter @Setter
     private String endDate;
 
-    @Getter
-    @Setter
     private BigDecimal income;
 
-    @Getter
-    @Setter
     private Long startCourse;
 
-    @Getter
-    @Setter
     private Long endCourse;
 
-    @Getter
-    @Setter
     private String description;
 
+    private Boolean isTrailer = Boolean.FALSE;
+
+    private BigDecimal additionalIncome;
+
+    private long trailer;
 
 
 }

@@ -6,7 +6,17 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
+//            $('.additional').hide();
+            $('#carsOnly').hide();
+
             $(".chzn-select").chosen();
+            $("#isTrailer").click(function(event) {
+                if ($(this).is(":checked")){
+                    $(".additional").show();
+                } else {
+                    $(".additional").hide();
+                }
+            });
             $('.datepicker').datepicker({
                 format: "dd-mm-yyyy",
                 orientation: "right",
@@ -14,6 +24,13 @@
                 autoclose: true,
                 weekStart: 1
             });
+//    TODO: jak się ogarnie przechwytywanie eventów przez icheck to włączyć
+//            $('#isTrailer').iCheck({
+//                checkboxClass: 'icheckbox_square-green',
+//                radioClass: 'iradio_square-green',
+//                increaseArea: '20%' // optional
+//            });
+
         });
     </script>
 
@@ -36,52 +53,152 @@
             <!-- Page Content -->
             <div class="box box-warning">
                 <div class="box-header with-border">
-                    <h3 class="box-title" th:text="#{label.service.new}"/>
+                    <h3 class="box-title" th:text="#{label.rent.newRent}"/>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
                     <form role="form" th:action="@{/add-rent}" lpformnum="2" method="post">
                         <!-- text input -->
-                        <div class="form-group">
-                            <label th:text="#{menu.car}"/>
-                            <select class="form-control chzn-select" name="car" required="required">
-                                <option th:each="car : ${cars}" th:value="${car.id}" th:text="${car.brand + ' ' + car.model + ' (' + car.name + ')'}"></option>
-                            </select>
+
+                        <!--TODO: przy wyborze lawety tutaj są tylko samochody-->
+                        <div class="form-group" id="cars">
+                            <div class="row">
+                                <div class="col-md-3" align="right">
+                                    <label th:text="#{menu.car}"/>
+                                </div>
+                                <div class="col-md-6">
+                                    <select class="form-control chzn-select" name="car" required="required">
+                                        <option th:each="car : ${cars}" th:value="${car.id}" th:text="${car.brand + ' ' + car.model + ' (' + car.name + ')'}"></option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label th:text="#{label.dictionary.type}"/>
-                            <select class="form-control chzn-select" name="customer" required="required" >
-                                <option th:each="customer : ${customers}" th:value="${customer.id}" th:text="${customer.name + ' ' + customer.surname}"></option>
-                            </select>
+                            <div class="row">
+                                <div class="col-md-3" align="right">
+                                    <label th:text="#{label.dictionary.type}"/>
+                                </div>
+                                <div class="col-md-6">
+                                    <select class="form-control chzn-select" name="customer" required="required" >
+                                        <option th:each="customer : ${customers}" th:value="${customer.id}" th:text="${customer.name + ' ' + customer.surname}"></option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
-                        <div class="input-group date">
-                            <label th:text="#{label.rent.startDate}"/>
-                            <input class="form-control datepicker" id="startDate" name="startDate" th:value="${startDate}" placeholder="dd-mm-yyyy" type="text" readonly="readonly"/>
-                            <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                        <!--TODO: daty z godziną, wcześniejsza nie może być późniejsza niż późniejsza i na odwrót-->
+                        <div class="form-group date">
+                            <div class="row">
+                                <div class="col-md-3" align="right">
+                                    <label th:text="#{label.rent.startDate}"/>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input class="form-control datepicker" id="startDate" name="startDate" th:value="${startDate}" placeholder="dd-mm-yyyy" type="text" readonly="readonly"/>
+                                        <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="input-group date">
-                            <label th:text="#{label.rent.endDate}"/>
-                            <input class="form-control datepicker" id="endDate" name="endDate" th:value="${endDate}" placeholder="dd-mm-yyyy" type="text" readonly="readonly"/>
-                            <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                        <div class="form-group date">
+                            <div class="row">
+                                <div class="col-md-3" align="right">
+                                    <label th:text="#{label.rent.endDate}"/>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input class="form-control datepicker" id="endDate" name="endDate" th:value="${endDate}" placeholder="dd-mm-yyyy" type="text" readonly="readonly"/>
+                                        <div class="input-group-addon datepicer"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="input-group" >
-                            <label th:text="#{label.rent.income}"/>
-                            <input class="form-control" id="income" name="income" th:value="${income}" type="text" />
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-3" align="right">
+                                    <label th:text="#{label.rent.income}"/>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-money" aria-hidden="true"></i></span>
+                                        <input class="form-control" id="income" name="income" th:value="${income}" type="number" />
+                                        <span class="input-group-addon" th:text="#{label.general.PLN}"></span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="input-group">
-                            <label th:text="#{label.rent.startCourse}"/>
-                            <input class="form-control" id="startCourse" name="startCourse" th:value="${startCourse}" type="text" />
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-3" align="right">
+                                    <label th:text="#{label.rent.startCourse}"/>
+                                </div>
+                                <div class="col-md-6">
+                                    <input class="form-control" id="startCourse" name="startCourse" th:value="${startCourse}" type="text" />
+                                </div>
+                            </div>
                         </div>
-                        <div class="input-group">
-                            <label th:text="#{label.rent.endCourse}"/>
-                            <input class="form-control" id="endCourse" name="endCourse" th:value="${endCourse}" type="text" />
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-3" align="right">
+                                    <label th:text="#{label.rent.endCourse}"/>
+                                </div>
+                                <div class="col-md-6">
+                                    <input class="form-control" id="endCourse" name="endCourse" th:value="${endCourse}" type="text" />
+                                </div>
+                            </div>
                         </div>
-                        <div class="input-group">
-                            <label th:text="#{label.general.description}"/>
-                            <!--th:field="*{description}"-->
-                            <textarea class="form-control" rows="3" id="description"  name="description" th:placeholder="#{label.general.description}"></textarea>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-3" align="right">
+                                    <label th:text="#{label.general.description}"/>
+                                </div>
+                                <div class="col-md-6">
+                                    <textarea class="form-control" rows="3" id="description"  name="description" th:placeholder="#{label.general.description}"/>
+                                </div>
+                            </div>
                         </div>
-                        <button type="submit" class="btn btn-primary" th:text="#{button.add}"/>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4" align="right">
+                                    <label for="isTrailer" th:text="#{label.trailer}"/>
+                                </div>
+                                <div class="col-md-1">
+                                    <input type="checkbox" name="isTrailer" id="isTrailer"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group additional">
+                            <div class="row">
+                                <div class="col-md-3" align="right">
+                                    <label th:text="#{label.rent.income}"/>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-money" aria-hidden="true"></i></span>
+                                        <input class="form-control" id="additionalIncome" name="additionalIncome" th:value="${additionalIncome}" type="number" />
+                                        <span class="input-group-addon" th:text="#{label.general.PLN}"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--TODO: zmienić klase na additional, pytanie co zrobić by nie znikało przy inicjalizacji-->
+                        <div class="form-group additional">
+                            <div class="row">
+                                <div class="col-md-3" align="right">
+                                    <label th:text="#{menu.car}"/>
+                                </div>
+                                <div class="col-md-6">
+                                    <select class="form-control chzn-select" name="trailer">
+                                        <option th:each="car : ${trailers}" th:value="${car.id}" th:text="${car.brand + '-' + car.name}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5"></div>
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-primary" th:text="#{button.add}"/>
+                            </div>
+                        </div>
                     </form>
                 </div>
                 <!-- /.box-body -->
