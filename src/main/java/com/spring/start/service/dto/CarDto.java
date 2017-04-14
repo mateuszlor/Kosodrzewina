@@ -24,5 +24,8 @@ public class CarDto {
     @Getter @Setter
     private String name;
 
+    @Getter @Setter
+    private Boolean isTrailer;
+
 
 }

@@ -36,7 +36,7 @@ public class CarValidator implements Validator {
         CarDto car = (CarDto) o;
 
         ValidationUtils.rejectIfEmpty(errors, "brand", environment.getProperty("error.emptyField"));
-        ValidationUtils.rejectIfEmpty(errors, "model", environment.getProperty("error.emptyField"));
+//        ValidationUtils.rejectIfEmpty(errors, "model", environment.getProperty("error.emptyField"));
         ValidationUtils.rejectIfEmpty(errors, "registrationNumber", environment.getProperty("error.emptyField"));
 
         if (!car.getBrand().matches(TEXT_PATTERN)){
@@ -44,10 +44,10 @@ public class CarValidator implements Validator {
             log.warn("Nieprawidłowa marka samochodu");
         }
 
-        if (!car.getModel().matches(TEXT_PATTERN)){
-            errors.rejectValue("model", environment.getProperty("error.invalidText"));
-            log.warn("Nieprawidłowy model samochodu");
-        }
+//        if (!car.getModel().matches(TEXT_PATTERN)){
+//            errors.rejectValue("model", environment.getProperty("error.invalidText"));
+//            log.warn("Nieprawidłowy model samochodu");
+//        }
 
         if (!car.getRegistrationNumber().matches(REGISTRATION_NUMBER_PATTERN)){
             errors.rejectValue("registrationNumber", environment.getProperty("error.invalidRegistrationNumber"));
