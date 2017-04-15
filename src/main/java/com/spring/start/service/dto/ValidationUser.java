@@ -18,6 +18,9 @@ public class ValidationUser {
     private String surname;
 
     @Getter @Setter
+    private String email;
+
+    @Getter @Setter
     private String password;
 
     @Getter @Setter
@@ -25,12 +28,13 @@ public class ValidationUser {
 
     public ValidationUser(){}
 
-    public ValidationUser(String username, String name, String surname, String password, String repeatPassword) {
+    public ValidationUser(String username, String name, String surname, String password, String repeatPassword, String email) {
         this.username = username;
         this.name = name;
         this.surname = surname;
         this.password = password;
         this.repeatPassword = repeatPassword;
+        this.email = email;
     }
 
 }

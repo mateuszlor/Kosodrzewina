@@ -1,11 +1,10 @@
 package com.spring.start;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.web.HttpEncodingProperties;
-import org.springframework.boot.web.filter.OrderedCharacterEncodingFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -21,6 +20,8 @@ import javax.sql.DataSource;
  */
 @Configuration
 @EnableWebSecurity
+@EnableScheduling
+@EnableAsync
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
     @Autowired
@@ -67,17 +68,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .and()
                 .ignoring()
                 .antMatchers("/fonts/**");
-    }
-
-    @Autowired
-    private HttpEncodingProperties httpEncodingProperties;
-
-    @Bean
-    public OrderedCharacterEncodingFilter characterEncodingFilter() {
-        OrderedCharacterEncodingFilter filter = new OrderedCharacterEncodingFilter();
-        filter.setEncoding(this.httpEncodingProperties.getCharset().name());
-        filter.setForceEncoding(this.httpEncodingProperties.isForce());
-        filter.setOrder(Ordered.HIGHEST_PRECEDENCE);
-        return filter;
     }
 }

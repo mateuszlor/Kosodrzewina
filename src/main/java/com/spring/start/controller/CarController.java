@@ -1,15 +1,13 @@
 package com.spring.start.controller;
 
 import com.spring.start.entity.Car;
-import com.spring.start.helper.ControllerHelper;
 import com.spring.start.service.CarService;
+import com.spring.start.service.ServiceService;
 import com.spring.start.service.dto.CarDto;
-import com.spring.start.service.dto.CustomerDto;
 import com.spring.start.validators.CarValidator;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
-import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
@@ -19,9 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by Vertig0 on 21.03.2017.
@@ -38,6 +33,8 @@ public class CarController {
     private static final String CAR = "car";
     private static final String EDIT_CAR_URL = "edit";
     private static final String EDIT_CAR_HTML = "edit-car";
+    private static final String DELETE_SERVICE = "delete-service";
+    private static final String DELETE_PERIODIC = "delete-periodic";
 
     @Autowired
     @Getter @Setter
@@ -50,6 +47,11 @@ public class CarController {
     @Autowired
     @Getter @Setter
     private Environment environment;
+
+    @Autowired
+    @Getter
+    @Setter
+    private ServiceService service;
 
     /**
      *  Metoda wyświatlajaca stronę dodawania nowego samochodu
@@ -119,8 +121,35 @@ public class CarController {
 
         Car car = carService.findCarById(id);
         model.addAttribute("car", car);
+        model.addAttribute("service", car.getService());
+        model.addAttribute("periodicService", car.getPeriodicService());
         log.info(String.format("Strona samochodu: %1s %2s", car.getBrand(), car.getModel()));
         return PAGES + SLASH + CAR;
+    }
+    /**
+     *  Metoda usuwająca dany wpis serwisowy
+     **/
+    @RequestMapping(value = SLASH + DELETE_SERVICE, method = RequestMethod.POST)
+    public String deleteService(@RequestParam long id, @RequestParam long carId, Model model) {
+        //TODO: czy jesteś pewien?
+
+        //TODO: komunikat o udanym/nieudanym usunieciu servisu
+        service.deleteService(id);
+        log.info("Pomyślnie usunięto wpis serwisowy");
+        return "redirect:" + SLASH + CAR + SLASH + carId;
+    }
+
+    /**
+     *  Metoda usuwająca dany okresowy wpis serwisowy
+     * */
+    @RequestMapping(value = SLASH + DELETE_PERIODIC, method = RequestMethod.POST)
+    public String deletePeriodicService(@RequestParam long id, @RequestParam long carId, Model model) {
+        //TODO: czy jesteś pewien?
+
+        //TODO: komunikat o udanym/nieudanym usunieciu servisu
+        service.deletePeriodicService(id);
+        log.info("Pomyślnie usunięto okresowy wpis serwisowy");
+        return "redirect:" + SLASH + CAR + SLASH + carId;
     }
 
     /**

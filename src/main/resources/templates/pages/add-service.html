@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="/fragments/elements :: head"/>
+    <title>Home Page</title>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".chzn-select").chosen();
+            $('.datepicker').datepicker({
+                format: "dd-mm-yyyy",
+                orientation: "right",
+                todayHighlight: true,
+                autoclose: true,
+                weekStart: 1
+            });
+
+            $("#type").change(function(){
+                $(this).find("option:selected").each(function(){
+                    var optionValue = $(this).attr("value");
+                    if(optionValue == 'SERVICE'){
+                        $('#dateToField').hide();
+                        $('#executionLabel').show();
+                        $('#fromDateLabel').hide();
+                        $('#SERVICE').hide();
+                        $('#PAYMENT').show();
+                    } else{
+                        $('#dateToField').show();
+                        $('#fromDateLabel').show();
+                        $('#executionLabel').hide();
+                        $('#SERVICE').show();
+                        $('#PAYMENT').hide();
+                    }
+                });
+            }).change();
+
+        });
+    </script>
+
+</head>
+<body class="skin-blue sidebar-mini">
+<div class="wrapper">
+    <div th:replace="/fragments/header :: header">Header</div>
+    <div th:replace="/fragments/menu :: menu">Menu</div>
+    <div class="content-wrapper">
+
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                Dodawanie
+                <small>nowego serwisu</small>
+            </h1>
+        </section>
+        <!---->
+        <!-- Alerts-->
+        <!--<div th:if="${error != null or error != empty}" th:replace="fragments/alerts :: alert (type='error', message=${error})">...</div>-->
+        <!--<div th:if="${info != null or info != empty}" th:replace="fragments/alerts :: alert (type='success', message=${info})">...</div>-->
+        <!---->
+
+        <section class="content">
+            <!-- Page Content -->
+            <div class="box box-warning">
+                <div class="box-header with-border">
+                    <h3 class="box-title" th:text="#{label.service.new}"/>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <form role="form" th:action="@{/add-service}" th:object="${service}" lpformnum="2" method="post">
+                        <!-- text input -->
+                        <div class="form-group">
+                            <label th:text="#{menu.car}"/>
+                            <select class="form-control chzn-select" name="car" required="required">
+                                <option th:each="car : ${cars}" th:value="${car.id}" th:text="${car.brand + ' ' + car.model + ' (' + car.name + ')'}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label th:text="#{label.dictionary.type}"/>
+                            <select class="form-control chzn-select" name="type" required="required" id="type">
+                                <option id="typeValue" th:each="type : ${T(com.spring.start.entity.DictionaryType).values()}" th:value="${type}" th:text="${type.displayName}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label th:text="#{label.dictionary.serwisName}" id="name"/>
+                            <div id="SERVICE">
+                                <select class="form-control chzn-select"  name="name" required="required">
+                                    <option th:each="dict : ${serviceDict}" th:id="${dict.type}" th:value="${dict.id}" th:text="${dict.name}"></option>
+                                </select>
+                            </div>
+                            <div id="PAYMENT">
+                                <select class="form-control chzn-select"  name="name" required="required">
+                                    <option th:each="dict : ${paymentDict}" th:id="${dict.type}" th:value="${dict.id}" th:text="${dict.name}"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="input-group date">
+                            <label th:text="#{label.fromDate}" id="fromDateLabel" visible="hidden"/>
+                            <label th:text="#{label.executionDate}" id="executionLabel" visible="visible"/>
+                            <input class="form-control datepicker" id="date" name="date" th:value="${date}" placeholder="dd-mm-yyyy" type="text" readonly="readonly"/>
+                            <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                        </div>
+                        <div class="input-group date" id="dateToField">
+                            <label th:text="#{label.toDate}"/>
+                            <input class="form-control datepicker" id="dateTo" name="dateTo" th:value="${dateTo}" placeholder="dd-mm-yyyy" type="text" readonly="readonly"/>
+                            <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                        </div>
+                        <button type="submit" class="btn btn-primary" th:text="#{button.add}"/>
+                    </form>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!---->
+        </section>
+    </div>
+    <div th:replace="/fragments/footer :: footer">Footer</div>
+</div>
+</body>
+</html>

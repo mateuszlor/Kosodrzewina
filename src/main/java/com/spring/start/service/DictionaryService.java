@@ -36,6 +36,10 @@ public class DictionaryService {
         return dictionaryRepository.findAll();
     }
 
+    public Iterable<Dictionary> getDictionaryiesByType(DictionaryType type){
+        return dictionaryRepository.getDictionariesByType(type);
+    }
+
     public void deleteEntry(long id) {
         try {
             dictionaryRepository.delete(id);

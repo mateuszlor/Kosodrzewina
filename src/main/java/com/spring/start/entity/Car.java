@@ -3,6 +3,7 @@ package com.spring.start.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Created by Vertig0 on 21.03.2017.
@@ -35,5 +36,13 @@ public class Car {
     @Column(name = "name")
     @Getter @Setter
     private String name;
+
+    @OneToMany(mappedBy = "car")
+    @Getter @Setter
+    Set<PeriodicService> periodicService;
+
+    @OneToMany(mappedBy = "car")
+    @Getter @Setter
+    Set<Service> service;
 
 }

@@ -23,28 +23,18 @@ import java.util.Collections;
 @Component
 public class ControllerHelper {
 
-    private static UserService userService;
+    @Autowired
+    private UserService userService;
 
     @Autowired
-    private UserService userService_auto;
+    private HttpServletRequest request;
 
-    private static HttpServletRequest request;
+    public void setUserData(Model model) {
 
-    @Autowired
-    private HttpServletRequest request_auto;
-
-    @PostConstruct
-    public void init() {
-        var msg = String.format("Initializing ControllerHelper: userService = %s, request = %s", userService_auto, request_auto);
-        log.info(msg);
-        ControllerHelper.userService = userService_auto;
-        ControllerHelper.request = request_auto;
-    }
-
-    public static void setUserData(Model model) {
-
-        var msg = String.format("About to set user data: request = %s, userService = %s, securityContext = %s", request, userService, SecurityContextHolder.getContext().getAuthentication());
-        log.info(msg);
+        log.info(String.format("About to set user data: request = %s, userService = %s, securityContext = %s",
+                request,
+                userService,
+                SecurityContextHolder.getContext().getAuthentication()));
 
         var session = request.getSession();
         var userKey = "user";
@@ -90,7 +80,7 @@ public class ControllerHelper {
         model.addAttribute("user", user);
     }
 
-    public static void forceReplaceUserInSession(UserDto user){
+    public void forceReplaceUserInSession(UserDto user){
         var userKey = "user";
         var session = request.getSession();
         session.removeAttribute(userKey);

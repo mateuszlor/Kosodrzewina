@@ -49,8 +49,6 @@ public class RegisterController {
     @RequestMapping(value = {SLASH + REGISTER}, method = RequestMethod.GET)
     public String registerPage(Model model) {
 
-        ControllerHelper.setUserData(model);
-
         log.info("Register page");
         return PAGES + SLASH + REGISTER;
     }

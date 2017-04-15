@@ -50,6 +50,11 @@ public class RegisterValidator implements Validator {
             log.warn("Nieprawidłowe imie");
         }
 
+        if (!user.getEmail().matches(EMAIL_PATTERN)){
+            errors.rejectValue("email","error.invalidText");
+            log.warn("Nieprawidłowy email");
+        }
+
         if (!user.getSurname().matches(TEXT_PATTERN)){
             errors.rejectValue("surname","error.invalidText");
             log.warn("Nieprawidłowe nazwisko");

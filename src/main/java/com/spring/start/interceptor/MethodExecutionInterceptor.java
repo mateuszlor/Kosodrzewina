@@ -1,5 +1,7 @@
 package com.spring.start.interceptor;
 
+import com.spring.start.helper.ExecutionDetails;
+import lombok.Getter;
 import lombok.experimental.var;
 import lombok.extern.log4j.Log4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -9,6 +11,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Mateusz on 27.03.2017.
@@ -20,6 +25,10 @@ import org.springframework.util.StopWatch;
 @Configuration
 @PropertySource("classpath:i18n/messages.properties")
 public class MethodExecutionInterceptor {
+
+    @Getter
+    private Map<String, ExecutionDetails> methodExecutions = new HashMap<>();
+
     @Around("execution(* com.spring.start..*.*(..))")
     public Object logTime(ProceedingJoinPoint joinPoint) throws Throwable {
         Object result = null;
@@ -45,6 +54,15 @@ public class MethodExecutionInterceptor {
                     methodFullName,
                     isFailed ? "unsuccessfully" : "successfully",
                     sw.getTotalTimeMillis()));
+
+            if(methodExecutions.containsKey(methodFullName)){
+                methodExecutions.get(methodFullName).addExecution(sw.getTotalTimeMillis());
+            }
+            else {
+                var details = new ExecutionDetails();
+                details.addExecution(sw.getTotalTimeMillis());
+                methodExecutions.put(methodFullName, details);
+            }
 
             return result;
         }
