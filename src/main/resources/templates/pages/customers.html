@@ -50,10 +50,10 @@
                                         <div style="float: left">
                                             <form th:action="@{/delete-customer}" method="post">
                                                 <input type="hidden" name="id" th:value="${cust.id}"/>
-                                                <button type="button" name="delete" class="btn btn-block btn-danger btn-xs" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                                <button type="button" name="delete" class="btn btn-block btn-danger btn-xs" data-toggle="modal" th:attr="data-target='#deleteModal' + ${cust.id}"><i class="fa fa-trash" aria-hidden="true"></i></button>
 
                                                 <!-- Modal -->
-                                                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                <div class="modal fade modal-danger" th:id="deleteModal + ${cust.id}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
@@ -62,13 +62,12 @@
                                                             </div>
                                                             <div class="modal-body" th:text="#{description.modal.customers}"></div>
                                                             <div class="modal-footer">
-                                                                <button type="button" class="btn btn-default" data-dismiss="modal" th:text="#{button.reject}"></button>
-                                                                <button type="submit"  class="btn btn-primary" th:text="#{button.accept}"></button>
+                                                                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal" th:text="#{button.reject}"></button>
+                                                                <button type="submit" class="btn btn-outline" th:text="#{button.accept}"></button>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-
                                             </form>
                                         </div>
 
