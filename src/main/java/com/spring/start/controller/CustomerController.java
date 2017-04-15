@@ -113,7 +113,6 @@ public class CustomerController {
     @RequestMapping(value = SLASH + DELETE_CUSTOMER, method = RequestMethod.POST)
     public String deleteCustomer(@RequestParam long id,
                                  Model model) {
-        //TODO: czy jesteś pewien?
 
         //TODO: komunikat o udanym/nieudanym usunieciu klienta
         customerService.deleteCustomer(id);

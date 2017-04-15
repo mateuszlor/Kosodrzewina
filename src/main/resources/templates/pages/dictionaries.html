@@ -43,10 +43,30 @@
                                     <div style="float: left">
                                         <form th:action="@{/delete-entry}" method="post">
                                             <input type="hidden" name="id" th:value="${entry.id}"/>
-                                            <button type="submit" name="action" value="delete" class="btn btn-block btn-danger btn-xs"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                            <button type="button" name="action" value="delete" class="btn btn-block btn-danger btn-xs" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash" aria-hidden="true"></i></button>
+
+                                            <!-- Modal -->
+                                            <div class="modal modal-danger fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                            <h4 class="modal-title" id="myModalLabel" th:text="#{label.service.message.delete.areYouSure}"></h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p th:text="#{label.general.message.deleteData}"></p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-outline pull-left" data-dismiss="modal" th:text="#{button.reject}"></button>
+                                                            <button type="submit" class="btn btn-outline" th:text="#{button.accept}"></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </form>
                                     </div>
-
                                     <div style="clear:both;"></div>
                                 </td>
                             </tr>
