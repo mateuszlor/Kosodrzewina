@@ -92,11 +92,15 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="input-group date">
-                            <label th:text="#{label.fromDate}" id="fromDateLabel" visible="hidden"/>
-                            <label th:text="#{label.executionDate}" id="executionLabel" visible="visible"/>
-                            <input class="form-control datepicker" id="date" name="date" th:value="${date}" placeholder="dd-mm-yyyy" type="text" readonly="readonly"/>
-                            <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                        <div class="form-group date">
+                            <div>
+                                <label th:text="#{label.fromDate}" id="fromDateLabel" visible="hidden"/>
+                                <label th:text="#{label.executionDate}" id="executionLabel" visible="visible"/>
+                            </div>
+                            <div class="input-group">
+                                <input class="form-control datepicker" id="date" name="date" th:value="${date}" placeholder="dd-mm-yyyy" type="text" readonly="readonly"/>
+                                <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                            </div>
                         </div>
                         <div class="input-group date" id="dateToField">
                             <label th:text="#{label.toDate}"/>

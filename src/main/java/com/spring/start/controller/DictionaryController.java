@@ -90,7 +90,6 @@ public class DictionaryController extends HandlerInterceptorAdapter{
     @RequestMapping(value = SLASH + DELETE_DICTIONARY, method = RequestMethod.POST)
     public String deleteEntry(@RequestParam long id,
                             Model model) {
-        //TODO: czy jesteś pewien?
 
         //TODO: komunikat o udanym/nieudanym usunieciu klienta
         dictionaryService.deleteEntry(id);

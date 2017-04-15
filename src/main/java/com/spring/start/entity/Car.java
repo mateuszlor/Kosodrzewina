@@ -25,7 +25,7 @@ public class Car {
     @Getter @Setter
     private String brand;
 
-    @Column(name = "model", nullable = false)
+    @Column(name = "model")
     @Getter @Setter
     private String model;
 
@@ -44,5 +44,9 @@ public class Car {
     @OneToMany(mappedBy = "car")
     @Getter @Setter
     Set<Service> service;
+
+    @Column(name = "is_trailer")
+    @Getter @Setter
+    private Boolean isTrailer = Boolean.FALSE;
 
 }

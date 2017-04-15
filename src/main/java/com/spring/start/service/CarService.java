@@ -32,6 +32,7 @@ public class CarService {
                 .model(carDto.getModel())
                 .name(carDto.getName())
                 .registrationNumber(carDto.getRegistrationNumber())
+                .isTrailer(carDto.getIsTrailer())
                 .build();
         carRepository.save(car);
         log.info("Dodano nowy samochód: " + car.getBrand() + " " + car.getModel() + "(" + car.getName() + ")");
@@ -65,4 +66,9 @@ public class CarService {
         carRepository.save(car);
         log.info(String.format("Dokonano edycji samochodu: {0} {1}", carDto.getBrand(), carDto.getModel()));
     }
+
+    public Iterable<Car> findCarsByIsTrailer(){
+        return carRepository.findCarsByIsTrailerNotNull();
+    }
+
 }
