@@ -77,4 +77,10 @@ public class Rent {
     @Setter
     private int active;
 
+    @ManyToOne
+    @JoinColumn(name = "trailer")
+    @Getter
+    @Setter
+    private Rent trailer;
+
 }

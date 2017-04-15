@@ -39,7 +39,7 @@ public class RentService {
 
 
 
-    public void addRent(RentDto rentDto, UserDto user, Rent trailer) {
+    public Rent addRent(RentDto rentDto, UserDto user, Rent trailer) {
 
         Rent rent = Rent.builder()
                 .car(carService.findCarById(rentDto.getCar()))
@@ -52,13 +52,19 @@ public class RentService {
                 .description(rentDto.getDescription())
                 .createdBy(userService.getUserById(user.getId()))
                 .active(1)
+                .trailer(trailer)
                 .build();
 
-        rentRepository.save(rent);
+        Rent savedRent = rentRepository.save(rent);
+        return savedRent;
     }
 
     public Iterable<Rent> findAll(){
         return rentRepository.findAll();
+    }
+
+    public Rent findById(long id) {
+        return rentRepository.findOne(id);
     }
 
     public void delete(long id){

@@ -39,7 +39,7 @@
                         <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
                             <thead>
                                 <tr role="row">
-                                    <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column descending" aria-sort="ascending" hidden="hidden">Id</th>
+                                    <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column descending" aria-sort="ascending">Id</th>
                                     <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" th:text="#{menu.car}"></th>
                                     <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" th:text="#{menu.customer}"></th>
                                     <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" th:text="#{label.rent.startDate}"></th>
@@ -51,7 +51,7 @@
                             </thead>
                             <tbody>
                                 <tr role="row" class="odd" th:each="rent : ${rents}">
-                                    <td class="sorting_1" hidden="hidden" th:text="${rent.id}"></td>
+                                    <td class="sorting_1" th:text="${rent.id}"></td>
                                     <td class="sorting_1" th:text="${rent.car.brand + ' ' + rent.car.model + '(' + rent.car.name + ')'}"></td>
                                     <td th:text="${rent.customer.name + ' ' + rent.customer.surname}"></td>
                                     <td th:text="${rent.startDate}"></td>
@@ -63,10 +63,10 @@
                                         <div style="float: left">
                                             <form th:action="@{/delete-rent}" method="post">
                                                 <input type="hidden" name="id" th:value="${rent.id}"/>
-                                                <button type="button" name="delete" class="btn btn-block btn-danger btn-xs" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                                <button type="button" name="delete" class="btn btn-block btn-danger btn-xs" data-toggle="modal" th:attr="data-target='#deleteModal' + ${rent.id}"><i class="fa fa-trash" aria-hidden="true"></i></button>
 
                                                 <!-- Modal -->
-                                                <div class="modal modal-danger fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                <div class="modal modal-danger fade" th:id="deleteModal + ${rent.id}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
@@ -90,11 +90,11 @@
                                         <div style="float: left">
                                             <form th:action="@{/return-rent}" method="post">
                                                 <input type="hidden" name="id" th:value="${rent.id}"/>
-                                                <button th:disabled="${rent.active != 1}" type="button" name="return" class="btn btn-block btn-primary btn-xs" data-toggle="modal" data-target="#myModal2" th:text="#{label.general.return}"></button>
+                                                <button th:disabled="${rent.active != 1}" type="button" name="return" class="btn btn-block btn-primary btn-xs" data-toggle="modal" th:attr="data-target='#returnModal' + ${rent.id}" th:text="#{label.general.return}"></button>
 
                                                 <!-- Modal -->
 
-                                                <div class="modal modal-info fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+                                                <div class="modal modal-info fade" th:id="returnModal + ${rent.id}" role="dialog" aria-labelledby="myModalLabel2">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
@@ -104,6 +104,7 @@
                                                                 <h4 class="modal-title" id="myModalLabel2" th:text="#{label.rent.message.return.areYouSure}"></h4>
                                                             </div>
                                                             <div class="modal-body">
+                                                                <input type="text" name="id" th:value="${rent.id}"/>
                                                                 <div class="row">
                                                                     <div class="col-md-2"></div>
                                                                     <div class="col-md-2" align="right">
@@ -112,11 +113,12 @@
                                                                     <div class="col-md-5">
                                                                         <div class="form-group">
                                                                             <div class="input-group date">
-                                                                                <input class="form-control datepicker" id="endDate" name="endDate" th:value="${rent.endDate}" placeholder="dd-mm-yyyy" type="text" readonly="readonly"/>
+                                                                                <input class="form-control datepicker" id="endDate" name="endDate"
+                                                                                       th:value="${#dates.format(rent.endDate, 'dd-MM-yyyy')}"
+                                                                                       placeholder="dd-mm-yyyy" type="text" readonly="readonly"/>
                                                                                 <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
                                                                             </div>
                                                                         </div>
-
                                                                     </div>
                                                                 </div>
                                                                 <div class="row">
@@ -128,6 +130,15 @@
                                                                         <div class="input-group">
                                                                             <input class="form-control" id="endCourse" name="endCourse" th:value="${rent.endCourse}" type="number" />
                                                                         </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-2"></div>
+                                                                    <div class="col-md-4" align="right">
+                                                                        <label for="isTrailer" th:text="#{label.trailer}"/>
+                                                                    </div>
+                                                                    <div class="col-md-1">
+                                                                        <input type="checkbox" name="isTrailer" id="isTrailer"/>
                                                                     </div>
                                                                 </div>
                                                             </div>

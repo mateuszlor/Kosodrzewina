@@ -9,6 +9,7 @@ import com.spring.start.service.RentService;
 import com.spring.start.service.dto.RentDto;
 import com.spring.start.service.dto.UserDto;
 import com.spring.start.validators.RentValidator;
+import com.sun.istack.internal.Nullable;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -71,14 +72,16 @@ public class RentController {
         }
 
         try {
+            Rent savedTraier = null;
             if (rent.getIsTrailer()) {
                 RentDto trailerRent = new RentDto(rent);
                 trailerRent.setIncome(rent.getAdditionalIncome());
                 trailerRent.setCar(rent.getTrailer());
                 //TODO: zrobić powiązanie lawety z samochodem jeśli razem
-                rentService.addRent(trailerRent, (UserDto) request.getSession().getAttribute("user"), null);
+                savedTraier = rentService.addRent(trailerRent, (UserDto) request.getSession().getAttribute("user"), null);
             }
-            rentService.addRent(rent, (UserDto) request.getSession().getAttribute("user"), null);
+            rentService.addRent(rent, (UserDto) request.getSession().getAttribute("user"),
+                    savedTraier != null ? savedTraier : null);
             log.info("Pomyślnie dodano wyporzyczenie");
         } catch (Exception e) {
             log.error("Nie udało się dodać wyporzyczenia: " + e);
@@ -95,7 +98,7 @@ public class RentController {
     }
 
     /**
-     *  Metoda usuwająca wpis słownikowy z bazy danych
+     *  Metoda usuwająca wyporzyczenie z bazy danych
      * */
     @RequestMapping(value = SLASH + DELETE_RENT, method = RequestMethod.POST)
     public String deleteRent(@RequestParam long id,
@@ -106,13 +109,23 @@ public class RentController {
         return "redirect:" + SLASH + RENTS;
     }
 
+    /**
+     * Metoda zwracająca wyporzyczenie
+     * */
     @RequestMapping(value = SLASH + RETURN_RENT, method = RequestMethod.POST)
     public String returnRent(@RequestParam long id,
                              @RequestParam String endDate,
                              @RequestParam Long endCourse,
-                              Model model) {
+                             @RequestParam(defaultValue="false") Boolean isTrailer,
+                             Model model) {
 
         try {
+            if (isTrailer) {
+                Rent trailer = rentService.findById(id).getTrailer();
+                if (trailer != null) {
+                    rentService.returnRent(trailer.getId(), endDate, endCourse);
+                }
+            }
             rentService.returnRent(id, endDate, endCourse);
             log.info("Pomyślnie dokonano zamknięcia wypożyczenia");
         } catch (Exception e){
