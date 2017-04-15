@@ -3,6 +3,7 @@ package com.spring.start.controller;
 import com.spring.start.entity.Car;
 import com.spring.start.entity.DictionaryType;
 import com.spring.start.entity.Rent;
+import com.spring.start.entity.RentStatus;
 import com.spring.start.service.CarService;
 import com.spring.start.service.CustomerService;
 import com.spring.start.service.RentService;
@@ -35,6 +36,7 @@ public class RentController {
     private static final String RENTS = "rents";
     private static final String DELETE_RENT = "delete-rent";
     private static final String RETURN_RENT = "return-rent";
+    private static final String CHAGNE_STATUS = "rent-rent";
 
     @Autowired
     private RentService rentService;
@@ -130,6 +132,19 @@ public class RentController {
             log.info("Pomyślnie dokonano zamknięcia wypożyczenia");
         } catch (Exception e){
             log.error("Zamkniecie wypożyczenia zakończyło się niepowodzeniem: {}", e);
+        }
+        return "redirect:" + SLASH + RENTS;
+    }
+
+    @RequestMapping(value = SLASH + CHAGNE_STATUS, method = RequestMethod.POST)
+    public String changeStatusToRented(@RequestParam long id, Model model) {
+        try {
+            Rent rent = rentService.findById(id);
+            rent.setStatus(RentStatus.RENTED);
+            rentService.updateRent(rent);
+            log.info("Pomyślnie zaktualizowano status wyporzyczenia " + id);
+        } catch (Exception e) {
+            log.error("Wystąpił problem przy zmianie statusu wyporzyczenia {}", e);
         }
         return "redirect:" + SLASH + RENTS;
     }

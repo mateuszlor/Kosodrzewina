@@ -2,6 +2,7 @@ package com.spring.start.service;
 
 import com.spring.start.entity.Car;
 import com.spring.start.entity.Rent;
+import com.spring.start.entity.RentStatus;
 import com.spring.start.repository.RentRepository;
 import com.spring.start.service.dto.CarDto;
 import com.spring.start.service.dto.RentDto;
@@ -51,7 +52,7 @@ public class RentService {
                 .endCourse(rentDto.getEndCourse())
                 .description(rentDto.getDescription())
                 .createdBy(userService.getUserById(user.getId()))
-                .active(1)
+                .status(rentDto.getStatus())
                 .trailer(trailer)
                 .build();
 
@@ -74,12 +75,16 @@ public class RentService {
     public void returnRent(long id, String endDate, Long endCourse){
         Rent rent = rentRepository.findOne(id);
         rent.setEndDate(convertStringToDate(endDate));
-        rent.setActive(2);
+        rent.setStatus(RentStatus.ENDED);
         if (endCourse != null) {
             rent.setEndCourse(endCourse);
         }
         rentRepository.save(rent);
         log.info("Pomyślnie zamknięto wyporzyczenie");
+    }
+
+    public void updateRent(Rent rent) {
+        rentRepository.save(rent);
     }
 
     private Date convertStringToDate(String stringDate) {

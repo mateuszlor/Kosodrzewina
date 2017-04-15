@@ -158,6 +158,18 @@
                         </div>
                         <div class="form-group">
                             <div class="row">
+                                <div class="col-md-3" align="right">
+                                    <label th:text="#{label.dictionary.type}"/>
+                                </div>
+                                <div class="col-md-6">
+                                    <select class="form-control chzn-select" name="status" required="required" id="status">
+                                        <option id="statusOption" th:each="status : ${T(com.spring.start.entity.RentStatus).values()}" th:disabled="${status.level == 3}" th:value="${status}" th:text="${status.displayName}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
                                 <div class="col-md-4" align="right">
                                     <label for="isTrailer" th:text="#{label.trailer}"/>
                                 </div>

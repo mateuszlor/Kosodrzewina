@@ -72,10 +72,11 @@ public class Rent {
     @Setter
     private User createdBy;
 
-    @Column(name = "active", nullable = false)
+    @Column(name = "status", nullable = false)
+    @Enumerated(EnumType.STRING)
     @Getter
     @Setter
-    private int active;
+    private RentStatus status;
 
     @ManyToOne
     @JoinColumn(name = "trailer")

@@ -1,5 +1,6 @@
 package com.spring.start.service.dto;
 
+import com.spring.start.entity.RentStatus;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -26,6 +27,7 @@ public class RentDto {
         this.isTrailer = rent.isTrailer;
         this.additionalIncome = rent.additionalIncome;
         this.trailer = rent.trailer;
+        this.status = rent.status;
     }
 
     private long id;
@@ -51,6 +53,8 @@ public class RentDto {
     private BigDecimal additionalIncome;
 
     private long trailer;
+
+    private RentStatus status;
 
 
 }
