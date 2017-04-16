@@ -1,7 +1,6 @@
 package com.spring.start.repository;
 
 import com.spring.start.entity.Rent;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 /**

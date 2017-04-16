@@ -1,7 +1,5 @@
 package com.spring.start.controller;
 
-import com.spring.start.entity.Car;
-import com.spring.start.entity.DictionaryType;
 import com.spring.start.entity.Rent;
 import com.spring.start.entity.RentStatus;
 import com.spring.start.service.CarService;
@@ -10,18 +8,19 @@ import com.spring.start.service.RentService;
 import com.spring.start.service.dto.RentDto;
 import com.spring.start.service.dto.UserDto;
 import com.spring.start.validators.RentValidator;
-import com.sun.istack.internal.Nullable;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.math.BigDecimal;
 
 /**
  * Created by Vertig0 on 09.04.2017.

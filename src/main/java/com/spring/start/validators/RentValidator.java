@@ -1,6 +1,5 @@
 package com.spring.start.validators;
 
-import com.spring.start.entity.Rent;
 import com.spring.start.service.dto.RentDto;
 import lombok.Getter;
 import lombok.Setter;

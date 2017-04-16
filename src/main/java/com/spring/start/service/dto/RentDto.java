@@ -1,10 +1,12 @@
 package com.spring.start.service.dto;
 
 import com.spring.start.entity.RentStatus;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 /**
  * Created by Vertig0 on 09.04.2017.

@@ -1,6 +1,8 @@
 package com.spring.start.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * Created by Vertig0 on 15.04.2017.

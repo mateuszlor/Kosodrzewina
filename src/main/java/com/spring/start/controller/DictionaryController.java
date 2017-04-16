@@ -2,7 +2,6 @@ package com.spring.start.controller;
 
 import com.spring.start.entity.Dictionary;
 import com.spring.start.entity.DictionaryType;
-import com.spring.start.helper.ControllerHelper;
 import com.spring.start.service.DictionaryService;
 import com.spring.start.validators.DictionaryValidator;
 import lombok.Getter;

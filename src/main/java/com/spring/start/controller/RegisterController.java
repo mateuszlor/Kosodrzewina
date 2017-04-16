@@ -1,6 +1,5 @@
 package com.spring.start.controller;
 
-import com.spring.start.helper.ControllerHelper;
 import com.spring.start.service.UserService;
 import com.spring.start.service.dto.ValidationUser;
 import com.spring.start.validators.RegisterValidator;

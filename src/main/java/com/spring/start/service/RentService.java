@@ -1,10 +1,8 @@
 package com.spring.start.service;
 
-import com.spring.start.entity.Car;
 import com.spring.start.entity.Rent;
 import com.spring.start.entity.RentStatus;
 import com.spring.start.repository.RentRepository;
-import com.spring.start.service.dto.CarDto;
 import com.spring.start.service.dto.RentDto;
 import com.spring.start.service.dto.UserDto;
 import lombok.extern.log4j.Log4j;
@@ -12,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;

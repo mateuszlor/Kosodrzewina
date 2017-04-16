@@ -1,7 +1,6 @@
 package com.spring.start.entity;
 
 import lombok.*;
-import org.joda.time.DateTime;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
