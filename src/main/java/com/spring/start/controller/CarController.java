@@ -105,8 +105,6 @@ public class CarController {
     @RequestMapping(value = SLASH + DELETE_CAR, method = RequestMethod.POST)
     public String deleteCar(@RequestParam long id,
                                  Model model) {
-        //TODO: czy jesteś pewien?
-
         //TODO: komunikat o udanym/nieudanym usunieciu klienta
         carService.deleteCar(id);
         log.info("Pomyślnie usunięto samochód");

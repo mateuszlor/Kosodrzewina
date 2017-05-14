@@ -1,18 +1,14 @@
 package com.spring.start.service;
 
 import com.spring.start.entity.Car;
-import com.spring.start.entity.Customer;
 import com.spring.start.repository.CarRepository;
 import com.spring.start.service.dto.CarDto;
-import com.spring.start.service.dto.CustomerDto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 /**
  * Created by Vertig0 on 22.03.2017.
@@ -32,6 +28,7 @@ public class CarService {
                 .model(carDto.getModel())
                 .name(carDto.getName())
                 .registrationNumber(carDto.getRegistrationNumber())
+                .isTrailer(carDto.getIsTrailer())
                 .build();
         carRepository.save(car);
         log.info("Dodano nowy samochód: " + car.getBrand() + " " + car.getModel() + "(" + car.getName() + ")");
@@ -65,4 +62,9 @@ public class CarService {
         carRepository.save(car);
         log.info(String.format("Dokonano edycji samochodu: {0} {1}", carDto.getBrand(), carDto.getModel()));
     }
+
+    public Iterable<Car> findCarsByIsTrailer(){
+        return carRepository.findCarsByIsTrailerNotNull();
+    }
+
 }
