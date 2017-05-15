@@ -6,6 +6,8 @@ import com.spring.start.helper.ControllerHelper;
 import com.spring.start.repository.UserRepository;
 import com.spring.start.service.dto.UserDto;
 import com.spring.start.service.dto.ValidationUser;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.var;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,8 @@ import java.util.List;
 public class UserService {
 
     @Autowired
+    @Getter
+    @Setter
     private UserRepository userRepository;
 
     @Autowired

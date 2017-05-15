@@ -20,8 +20,6 @@ import static org.mockito.Matchers.any;
 /**
  * Created by Nex0Zero on 2017-05-14.
  */
-//@RunWith(PowerMockRunner.class)
-//@PrepareForTest({Car.class})
 @RunWith(MockitoJUnitRunner.class)
 public class CarServiceTest {
 

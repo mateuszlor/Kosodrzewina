@@ -5,6 +5,8 @@ import com.spring.start.entity.RentStatus;
 import com.spring.start.repository.RentRepository;
 import com.spring.start.service.dto.RentDto;
 import com.spring.start.service.dto.UserDto;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,15 +26,23 @@ import java.util.Locale;
 public class RentService {
 
     @Autowired
+    @Getter
+    @Setter
     private RentRepository rentRepository;
 
     @Autowired
+    @Getter
+    @Setter
     private UserService userService;
 
     @Autowired
+    @Getter
+    @Setter
     private CarService carService;
 
     @Autowired
+    @Getter
+    @Setter
     private CustomerService customerService;
 
 
@@ -84,7 +94,7 @@ public class RentService {
         rentRepository.save(rent);
     }
 
-    private Date convertStringToDate(String stringDate) {
+    public Date convertStringToDate(String stringDate) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.ENGLISH);
         LocalDate date = LocalDate.parse(stringDate, formatter);
         return java.sql.Date.valueOf(date);
