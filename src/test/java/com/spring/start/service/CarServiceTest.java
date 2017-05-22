@@ -35,18 +35,18 @@ public class CarServiceTest {
     @Test
     public void shouldVerifyThat_CreateCar_IsCalled() throws Exception {
         //Arrange
-        Mockito.doNothing().when(carServiceSpy).createCar(carDto);
+        Mockito.doNothing().when(carServiceSpy).save(carDto);
         //Act
-        carServiceSpy.createCar(carDto);
+        carServiceSpy.save(carDto);
         //Assert
-        Mockito.verify(carServiceSpy).createCar(carDto);
+        Mockito.verify(carServiceSpy).save(carDto);
     }
     @Test
     public void shouldVerifyThat_RepositorySave_InCreateCar_IsCalled() throws Exception {
         //Arrange
         carServiceSpy.setCarRepository(carRepository);
         //Act
-        carServiceSpy.createCar(carDto);
+        carServiceSpy.save(carDto);
         //Assert
         Mockito.verify(carRepository).save(any(Car.class));
     }
@@ -73,18 +73,18 @@ public class CarServiceTest {
     @Test
     public void shouldVerifyThat_DeleteCar_IsCalled() {
         //Arrange
-        Mockito.doNothing().when(carServiceSpy).deleteCar(5);
+        Mockito.doNothing().when(carServiceSpy).delete(5);
         //Act
-        carServiceSpy.deleteCar(5);
+        carServiceSpy.delete(5);
         //Assert
-        Mockito.verify(carServiceSpy).deleteCar(5);
+        Mockito.verify(carServiceSpy).delete(5);
     }
     @Test
     public void shouldVerifyThat_RepositoryDelete_InDeleteCar_IsCalled() throws Exception {
         //Arrange
         carServiceSpy.setCarRepository(carRepository);
         //Act
-        carServiceSpy.deleteCar(5);
+        carServiceSpy.delete(5);
         //Assert
         Mockito.verify(carRepository).delete((long) 5);
     }
@@ -92,18 +92,18 @@ public class CarServiceTest {
     @Test
     public void shouldVerifyThat_FindCarById_IsCalled() throws Exception {
         //Arrange
-        Mockito.doReturn(car).when(carServiceSpy).findCarById(5);
+        Mockito.doReturn(car).when(carServiceSpy).findById(5);
         //Act
-        Car retrievedCar = carServiceSpy.findCarById(5);
+        Car retrievedCar = carServiceSpy.findById(5);
         //Assert
-        Mockito.verify(carServiceSpy).findCarById(5);
+        Mockito.verify(carServiceSpy).findById(5);
     }
     @Test
     public void shouldVerifyThat_RepositoryFindOne_InFindCarById_IsCalled() throws Exception {
         //Arrange
         carServiceSpy.setCarRepository(carRepository);
         //Act
-        Car retrievedCar = carServiceSpy.findCarById(5);
+        Car retrievedCar = carServiceSpy.findById(5);
         //Assert
         Mockito.verify(carRepository).findOne((long) 5);
     }
@@ -111,18 +111,18 @@ public class CarServiceTest {
     @Test
     public void shouldVerifyThat_EditCar_IsCalled() throws Exception {
         //Arrange
-        Mockito.doNothing().when(carServiceSpy).editCar(carDto);
+        Mockito.doNothing().when(carServiceSpy).update(carDto);
         //Act
-        carServiceSpy.editCar(carDto);
+        carServiceSpy.update(carDto);
         //Assert
-        Mockito.verify(carServiceSpy).editCar(carDto);
+        Mockito.verify(carServiceSpy).update(carDto);
     }
     @Test
     public void shouldVerifyThat_RepositorySave_InEditCar_IsCalled() throws Exception {
         //Arrange
         carServiceSpy.setCarRepository(carRepository);
         //Act
-        carServiceSpy.editCar(carDto);
+        carServiceSpy.update(carDto);
         //Assert
         Mockito.verify(carRepository).save(any(Car.class));
     }
@@ -151,7 +151,7 @@ public class CarServiceTest {
     @Test(expected=NullPointerException.class)
     public void shouldThrowNullPointerException_whenFindCarByIdIsCalledWithoutContext() throws Exception {
         //Act
-        Car retrievedCar = carServiceSpy.findCarById(5);
+        Car retrievedCar = carServiceSpy.findById(5);
         //Assert
         assertThat(retrievedCar, is(equalTo(car)));
     }

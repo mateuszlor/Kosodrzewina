@@ -2,6 +2,7 @@ package com.spring.start.service;
 
 import com.spring.start.entity.Dictionary;
 import com.spring.start.entity.DictionaryType;
+import com.spring.start.interfaces.BasicDatabaseOperations;
 import com.spring.start.repository.DictionaryRepository;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,14 +17,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @Log4j
-public class DictionaryService {
+public class DictionaryService implements BasicDatabaseOperations<Dictionary>{
 
     @Autowired
     @Getter
     @Setter
     private DictionaryRepository dictionaryRepository;
 
-    public void addEntry(String name, DictionaryType type){
+    public void saveDictionary(String name, DictionaryType type){
         Dictionary car = Dictionary.builder()
                 .name(name)
                 .type(type)
@@ -32,6 +33,7 @@ public class DictionaryService {
         log.info("Dodano nowy wpis słownikowy");
     }
 
+    @Override
     public Iterable<Dictionary> findAll(){
         return dictionaryRepository.findAll();
     }
@@ -40,7 +42,8 @@ public class DictionaryService {
         return dictionaryRepository.getDictionariesByType(type);
     }
 
-    public void deleteEntry(long id) {
+    @Override
+    public void delete(long id) {
         try {
             dictionaryRepository.delete(id);
         } catch (Exception e) {
@@ -48,12 +51,13 @@ public class DictionaryService {
         }
     }
 
-    public Dictionary findEntryById(long id){
+    @Override
+    public Dictionary findById(long id){
         Dictionary entry = dictionaryRepository.findOne(id);
         return entry;
     }
 
-    public void editEntry(long id, String name, DictionaryType type) {
+    public void edit(long id, String name, DictionaryType type) {
 
         Dictionary dictionary = Dictionary.builder()
                 .id(id)
@@ -63,6 +67,5 @@ public class DictionaryService {
         dictionaryRepository.save(dictionary);
         log.info(String.format("Dokonano edycji wpisu"));
     }
-
 
 }

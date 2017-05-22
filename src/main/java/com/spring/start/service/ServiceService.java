@@ -26,7 +26,7 @@ import java.util.stream.StreamSupport;
 @org.springframework.stereotype.Service
 @Log4j
 @var
-public class ServiceService {
+public class ServiceService{
 
     @Autowired
     private ServiceRepository serviceRepository;
@@ -46,10 +46,10 @@ public class ServiceService {
     public void createService(ServiceDto serviceDto, UserDto userDto) {
 
         Service service = Service.builder()
-                .car(carService.findCarById(serviceDto.getCar()))
-                .type(dictionaryService.findEntryById(serviceDto.getName()))
+                .car(carService.findById(serviceDto.getCar()))
+                .type(dictionaryService.findById(serviceDto.getName()))
                 .execute(convertStringToDate(serviceDto.getDate()))
-                .createdBy(userService.getUserById(userDto.getId()))
+                .createdBy(userService.findById(userDto.getId()))
                 .cost(serviceDto.getCost())
                 .build();
         serviceRepository.save(service);
@@ -59,11 +59,11 @@ public class ServiceService {
     public void createPeriodicService(ServiceDto serviceDto, UserDto userDto) {
 
         PeriodicService service = PeriodicService.builder()
-                .car(carService.findCarById(serviceDto.getCar()))
-                .type(dictionaryService.findEntryById(serviceDto.getName()))
+                .car(carService.findById(serviceDto.getCar()))
+                .type(dictionaryService.findById(serviceDto.getName()))
                 .dateFrom(convertStringToDate(serviceDto.getDate()))
                 .dateTo(convertStringToDate(serviceDto.getDateTo()))
-                .createdBy(userService.getUserById(userDto.getId()))
+                .createdBy(userService.findById(userDto.getId()))
                 .cost(serviceDto.getCost())
                 .build();
         periodicServiceRepository.save(service);
@@ -92,7 +92,7 @@ public class ServiceService {
         }
     }
 
-    public Service findServiceById(long id) {
+    public Service findById(long id) {
         try {
             if (serviceRepository.findOne(id) != null) {
                 return serviceRepository.findOne(id);

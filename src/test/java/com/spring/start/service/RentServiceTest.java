@@ -159,16 +159,16 @@ public class RentServiceTest {
     @Test
     public void shouldVerifyThat_UpdateRent_IsCalled() throws Exception {
         //Arrange
-        Mockito.doNothing().when(rentServiceSpy).updateRent(rent);
+        Mockito.doNothing().when(rentServiceSpy).update(rent);
         //Act
-        rentServiceSpy.updateRent(rent);
+        rentServiceSpy.update(rent);
         //Assert
-        Mockito.verify(rentServiceSpy).updateRent(rent);
+        Mockito.verify(rentServiceSpy).update(rent);
     }
     @Test
     public void shouldVerifyThat_RepositorySave_InUpdateRent_IsCalled() throws Exception {
         //Act
-        rentServiceSpy.updateRent(rent);
+        rentServiceSpy.update(rent);
         //Assert
         Mockito.verify(rentRepository).save(rent);
     }

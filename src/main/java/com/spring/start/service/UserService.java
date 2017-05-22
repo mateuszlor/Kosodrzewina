@@ -3,6 +3,7 @@ package com.spring.start.service;
 import com.spring.start.entity.Role;
 import com.spring.start.entity.User;
 import com.spring.start.helper.ControllerHelper;
+import com.spring.start.interfaces.BasicDatabaseOperations;
 import com.spring.start.repository.UserRepository;
 import com.spring.start.service.dto.UserDto;
 import com.spring.start.service.dto.ValidationUser;
@@ -24,7 +25,7 @@ import java.util.List;
 @Service
 @Log4j
 @var
-public class UserService {
+public class UserService implements BasicDatabaseOperations<User>{
 
     @Autowired
     @Getter
@@ -51,7 +52,18 @@ public class UserService {
         log.info("Dodano nowego użytkownika: " + user.getUsername());
     }
 
-    public User getUserById(long id){
+    @Override
+    public void delete(long id) {
+        userRepository.delete(id);
+    }
+
+    @Override
+    public Iterable<User> findAll() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public User findById(long id){
         return userRepository.findOne(id);
     }
 
@@ -68,6 +80,8 @@ public class UserService {
 
         return userDto;
     }
+
+
 
     public void editUserData(UserDto dto) {
 
