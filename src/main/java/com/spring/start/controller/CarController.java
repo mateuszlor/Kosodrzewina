@@ -78,7 +78,7 @@ public class CarController {
             return "redirect:" + SLASH + ADD_NEW_CAR;
         }
         try {
-            carService.createCar(carDto);
+            carService.save(carDto);
 //            redirectAttributes.addFlashAttribute("info", environment.getProperty("message.customer.success"));
             log.info("Pomyślnie dodano samochód: " + carDto.getBrand() + " " + carDto.getModel());
         } catch (Exception e){
@@ -106,7 +106,7 @@ public class CarController {
     public String deleteCar(@RequestParam long id,
                                  Model model) {
         //TODO: komunikat o udanym/nieudanym usunieciu klienta
-        carService.deleteCar(id);
+        carService.delete(id);
         log.info("Pomyślnie usunięto samochód");
         return "redirect:" + SLASH + CARS;
     }
@@ -117,7 +117,7 @@ public class CarController {
     @RequestMapping(value = SLASH + CAR + SLASH + "{id}", method = RequestMethod.GET)
     public String showCarPanel(@PathVariable long id, Model model) {
 
-        Car car = carService.findCarById(id);
+        Car car = carService.findById(id);
         model.addAttribute("car", car);
         model.addAttribute("service", car.getService());
         model.addAttribute("periodicService", car.getPeriodicService());
@@ -156,7 +156,7 @@ public class CarController {
     @RequestMapping(value = SLASH + CAR + SLASH + "{id}" + SLASH + EDIT_CAR_URL, method = RequestMethod.GET)
     public String showCarEditPage(@PathVariable long id, Model model){
 
-        Car car = carService.findCarById(id);
+        Car car = carService.findById(id);
         model.addAttribute("car", car);
         log.info(String.format("Strona edycji: %1s %2s", car.getBrand(), car.getModel()));
         return PAGES + SLASH + EDIT_CAR_HTML;
@@ -177,7 +177,7 @@ public class CarController {
             return "redirect:" + SLASH + CAR + SLASH + carDto.getId() + SLASH + EDIT_CAR_URL;
         }
         try {
-            carService.editCar(carDto);
+            carService.update(carDto);
             redirectAttributes.addFlashAttribute("info", environment.getProperty("message.customer.success"));
             log.info("Pomyślnie zedytowano samochód: " + carDto.getBrand());
         } catch (Exception e){

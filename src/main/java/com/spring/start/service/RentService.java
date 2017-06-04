@@ -2,6 +2,7 @@ package com.spring.start.service;
 
 import com.spring.start.entity.Rent;
 import com.spring.start.entity.RentStatus;
+import com.spring.start.interfaces.BasicDatabaseOperations;
 import com.spring.start.repository.RentRepository;
 import com.spring.start.service.dto.RentDto;
 import com.spring.start.service.dto.UserDto;
@@ -23,7 +24,7 @@ import java.util.Locale;
 @Transactional
 @Service
 @Log4j
-public class RentService {
+public class RentService implements BasicDatabaseOperations<Rent>{
 
     @Autowired
     @Getter
@@ -50,15 +51,15 @@ public class RentService {
     public Rent addRent(RentDto rentDto, UserDto user, Rent trailer) {
 
         Rent rent = Rent.builder()
-                .car(carService.findCarById(rentDto.getCar()))
-                .customer(customerService.findCustomerById(rentDto.getCustomer()))
+                .car(carService.findById(rentDto.getCar()))
+                .customer(customerService.findById(rentDto.getCustomer()))
                 .startDate(convertStringToDate(rentDto.getStartDate()))
                 .endDate(convertStringToDate(rentDto.getEndDate()))
                 .income(rentDto.getIncome())
                 .startCourse(rentDto.getStartCourse())
                 .endCourse(rentDto.getEndCourse())
                 .description(rentDto.getDescription())
-                .createdBy(userService.getUserById(user.getId()))
+                .createdBy(userService.findById(user.getId()))
                 .status(rentDto.getStatus())
                 .trailer(trailer)
                 .build();
@@ -67,14 +68,17 @@ public class RentService {
         return savedRent;
     }
 
+    @Override
     public Iterable<Rent> findAll(){
         return rentRepository.findAll();
     }
 
+    @Override
     public Rent findById(long id) {
         return rentRepository.findOne(id);
     }
 
+    @Override
     public void delete(long id){
         rentRepository.delete(id);
     }
@@ -90,7 +94,7 @@ public class RentService {
         log.info("Pomyślnie zamknięto wyporzyczenie");
     }
 
-    public void updateRent(Rent rent) {
+    public void update(Rent rent) {
         rentRepository.save(rent);
     }
 

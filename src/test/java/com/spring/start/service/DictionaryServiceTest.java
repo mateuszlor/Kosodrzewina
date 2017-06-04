@@ -30,18 +30,18 @@ public class DictionaryServiceTest {
     @Test
     public void shouldVerifyThat_AddEntry_IsCalled() throws Exception {
         //Arrange
-        Mockito.doNothing().when(dictionaryServiceSpy).addEntry("name", DictionaryType.PAYMENT );
+        Mockito.doNothing().when(dictionaryServiceSpy).saveDictionary("name", DictionaryType.PAYMENT );
         //Act
-        dictionaryServiceSpy.addEntry("name", DictionaryType.PAYMENT );
+        dictionaryServiceSpy.saveDictionary("name", DictionaryType.PAYMENT );
         //Assert
-        Mockito.verify(dictionaryServiceSpy).addEntry("name", DictionaryType.PAYMENT );
+        Mockito.verify(dictionaryServiceSpy).saveDictionary("name", DictionaryType.PAYMENT );
     }
     @Test
     public void shouldVerifyThat_RepositorySave_InAddEntry_IsCalled() throws Exception {
         //Arrange
         dictionaryServiceSpy.setDictionaryRepository(dictionaryRepository);
         //Act
-        dictionaryServiceSpy.addEntry("name", DictionaryType.PAYMENT );
+        dictionaryServiceSpy.saveDictionary("name", DictionaryType.PAYMENT );
         //Assert
         Mockito.verify(dictionaryRepository).save(any(Dictionary.class));
     }
@@ -87,18 +87,18 @@ public class DictionaryServiceTest {
     @Test
     public void shouldVerifyThat_DeleteEntry_IsCalled() {
         //Arrange
-        Mockito.doNothing().when(dictionaryServiceSpy).deleteEntry(5);
+        Mockito.doNothing().when(dictionaryServiceSpy).delete(5);
         //Act
-        dictionaryServiceSpy.deleteEntry(5);
+        dictionaryServiceSpy.delete(5);
         //Assert
-        Mockito.verify(dictionaryServiceSpy).deleteEntry(5);
+        Mockito.verify(dictionaryServiceSpy).delete(5);
     }
     @Test
     public void shouldVerifyThat_RepositoryDelete_InDeleteEntry_IsCalled() throws Exception {
         //Arrange
         dictionaryServiceSpy.setDictionaryRepository(dictionaryRepository);
         //Act
-        dictionaryServiceSpy.deleteEntry(5);
+        dictionaryServiceSpy.delete(5);
         //Assert
         Mockito.verify(dictionaryRepository).delete((long) 5);
     }
@@ -106,18 +106,18 @@ public class DictionaryServiceTest {
     @Test
     public void shouldVerifyThat_FindEntryById_IsCalled() throws Exception {
         //Arrange
-        Mockito.doReturn(dictionary).when(dictionaryServiceSpy).findEntryById(5);
+        Mockito.doReturn(dictionary).when(dictionaryServiceSpy).findById(5);
         //Act
-        dictionaryServiceSpy.findEntryById(5);
+        dictionaryServiceSpy.findById(5);
         //Assert
-        Mockito.verify(dictionaryServiceSpy).findEntryById(5);
+        Mockito.verify(dictionaryServiceSpy).findById(5);
     }
     @Test
     public void shouldVerifyThat_RepositoryFindOne_InFindEntryById_IsCalled() throws Exception {
         //Arrange
         dictionaryServiceSpy.setDictionaryRepository(dictionaryRepository);
         //Act
-        dictionaryServiceSpy.findEntryById(5);
+        dictionaryServiceSpy.findById(5);
         //Assert
         Mockito.verify(dictionaryRepository).findOne((long) 5);
     }
@@ -125,18 +125,18 @@ public class DictionaryServiceTest {
     @Test
     public void shouldVerifyThat_EditEntry_IsCalled() throws Exception {
         //Arrange
-        Mockito.doNothing().when(dictionaryServiceSpy).editEntry(5, "name", DictionaryType.PAYMENT);
+        Mockito.doNothing().when(dictionaryServiceSpy).edit(5, "name", DictionaryType.PAYMENT);
         //Act
-        dictionaryServiceSpy.editEntry(5, "name", DictionaryType.PAYMENT);
+        dictionaryServiceSpy.edit(5, "name", DictionaryType.PAYMENT);
         //Assert
-        Mockito.verify(dictionaryServiceSpy).editEntry(5, "name", DictionaryType.PAYMENT);
+        Mockito.verify(dictionaryServiceSpy).edit(5, "name", DictionaryType.PAYMENT);
     }
     @Test
     public void shouldVerifyThat_RepositorySave_InEditEntry_IsCalled() throws Exception {
         //Arrange
         dictionaryServiceSpy.setDictionaryRepository(dictionaryRepository);
         //Act
-        dictionaryServiceSpy.editEntry(5, "name", DictionaryType.PAYMENT);
+        dictionaryServiceSpy.edit(5, "name", DictionaryType.PAYMENT);
         //Assert
         Mockito.verify(dictionaryRepository).save(any(Dictionary.class));
     }

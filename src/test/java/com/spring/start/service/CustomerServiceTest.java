@@ -32,18 +32,18 @@ public class CustomerServiceTest {
     @Test
     public void shouldVerifyThat_CreateCustomer_IsCalled() throws Exception {
         //Arrange
-        Mockito.doNothing().when(customerServiceSpy).createCustomer(customerDto);
+        Mockito.doNothing().when(customerServiceSpy).save(customerDto);
         //Act
-        customerServiceSpy.createCustomer(customerDto);
+        customerServiceSpy.save(customerDto);
         //Assert
-        Mockito.verify(customerServiceSpy).createCustomer(customerDto);
+        Mockito.verify(customerServiceSpy).save(customerDto);
     }
     @Test
     public void shouldVerifyThat_RepositorySave_InCreateCustomer_IsCalled() throws Exception {
         //Arrange
         customerServiceSpy.setCustomerRepository(customerRepository);
         //Act
-        customerServiceSpy.createCustomer(customerDto);
+        customerServiceSpy.save(customerDto);
         //Assert
         Mockito.verify(customerRepository).save(any(Customer.class));
     }
@@ -51,18 +51,18 @@ public class CustomerServiceTest {
     @Test
     public void shouldVerifyThat_EditCustomer_IsCalled() throws Exception {
         //Arrange
-        Mockito.doNothing().when(customerServiceSpy).editCustomer(customerDto);
+        Mockito.doNothing().when(customerServiceSpy).update(customerDto);
         //Act
-        customerServiceSpy.editCustomer(customerDto);
+        customerServiceSpy.update(customerDto);
         //Assert
-        Mockito.verify(customerServiceSpy).editCustomer(customerDto);
+        Mockito.verify(customerServiceSpy).update(customerDto);
     }
     @Test
     public void shouldVerifyThat_RepositorySave_InEditCustomer_IsCalled() throws Exception {
         //Arrange
         customerServiceSpy.setCustomerRepository(customerRepository);
         //Act
-        customerServiceSpy.createCustomer(customerDto);
+        customerServiceSpy.save(customerDto);
         //Assert
         Mockito.verify(customerRepository).save(any(Customer.class));
     }
@@ -89,18 +89,18 @@ public class CustomerServiceTest {
     @Test
     public void shouldVerifyThat_DeleteCustomer_IsCalled() throws Exception {
         //Arrange
-        Mockito.doNothing().when(customerServiceSpy).deleteCustomer(5);
+        Mockito.doNothing().when(customerServiceSpy).delete(5);
         //Act
-        customerServiceSpy.deleteCustomer(5);
+        customerServiceSpy.delete(5);
         //Assert
-        Mockito.verify(customerServiceSpy).deleteCustomer(5);
+        Mockito.verify(customerServiceSpy).delete(5);
     }
     @Test
     public void shouldVerifyThat_RepositoryDelete_InDeleteCustomer_IsCalled() throws Exception {
         //Arrange
         customerServiceSpy.setCustomerRepository(customerRepository);
         //Act
-        customerServiceSpy.deleteCustomer(5);
+        customerServiceSpy.delete(5);
         //Assert
         Mockito.verify(customerRepository).delete((long) 5);
     }
@@ -108,18 +108,18 @@ public class CustomerServiceTest {
     @Test
     public void shouldVerifyThat_FindCustomerById_IsCalled() throws Exception {
         //Arrange
-        Mockito.doReturn(customer).when(customerServiceSpy).findCustomerById(5);
+        Mockito.doReturn(customer).when(customerServiceSpy).findById(5);
         //Act
-        customerServiceSpy.findCustomerById(5);
+        customerServiceSpy.findById(5);
         //Assert
-        Mockito.verify(customerServiceSpy).findCustomerById(5);
+        Mockito.verify(customerServiceSpy).findById(5);
     }
     @Test
     public void shouldVerifyThat_RepositoryFindOne_InFindCustomerById_IsCalled() throws Exception {
         //Arrange
         customerServiceSpy.setCustomerRepository(customerRepository);
         //Act
-        customerServiceSpy.findCustomerById(5);
+        customerServiceSpy.findById(5);
         //Assert
         Mockito.verify(customerRepository).findOne((long) 5);
     }

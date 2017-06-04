@@ -1,6 +1,7 @@
 package com.spring.start.service;
 
 import com.spring.start.entity.Customer;
+import com.spring.start.interfaces.BasicDatabaseOperations;
 import com.spring.start.repository.CustomerRepository;
 import com.spring.start.service.dto.CustomerDto;
 import lombok.Getter;
@@ -18,13 +19,13 @@ import java.util.List;
 @Transactional
 @Service
 @Log4j
-public class CustomerService {
+public class CustomerService implements BasicDatabaseOperations<Customer>{
 
     @Autowired
     @Getter @Setter
     private CustomerRepository customerRepository;
 
-    public void createCustomer(CustomerDto customerDto) {
+    public void save(CustomerDto customerDto) {
         Customer customer = Customer.builder().address(customerDto.getAddress())
                 .name(customerDto.getName())
                 .surname(customerDto.getSurname())
@@ -35,7 +36,7 @@ public class CustomerService {
         log.info("Dodano nowego klienta: " + customer.getUsername());
     }
 
-    public void editCustomer(CustomerDto customerDto) {
+    public void update(CustomerDto customerDto) {
 
         Customer customer = Customer.builder().address(customerDto.getAddress())
                 .id(customerDto.getId())
@@ -48,11 +49,13 @@ public class CustomerService {
         log.info("Dokonano edycji klienta: " + customer.getUsername());
     }
 
+    @Override
     public List<Customer> findAll(){
         return customerRepository.findAll();
     }
 
-    public void deleteCustomer(long id) {
+    @Override
+    public void delete(long id) {
         try {
             customerRepository.delete(id);
         } catch (Exception e) {
@@ -60,7 +63,8 @@ public class CustomerService {
         }
     }
 
-    public Customer findCustomerById(long id){
+    @Override
+    public Customer findById(long id){
         Customer customer = customerRepository.findOne(id);
         return customer;
     }

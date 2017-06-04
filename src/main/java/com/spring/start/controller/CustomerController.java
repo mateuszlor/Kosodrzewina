@@ -62,7 +62,7 @@ public class CustomerController {
             return "redirect:" + SLASH + EDIT_CUSTOMER;
         }
         try {
-            customerService.createCustomer(customerDto);
+            customerService.save(customerDto);
             redirectAttributes.addFlashAttribute("info", environment.getProperty("message.customer.success"));
             log.info("Pomyślnie zedytowano klienta: " + customerDto.getUsername());
         } catch (Exception e){
@@ -84,7 +84,7 @@ public class CustomerController {
             return "redirect:" + SLASH + CUSTOMER;
         }
         try {
-            customerService.editCustomer(customerDto);
+            customerService.update(customerDto);
             // environment.getProperty("message.customer.success")
             redirectAttributes.addFlashAttribute("info", environment.getProperty("message.customer.success"));
             redirectAttributes.addFlashAttribute("alertType", "success");
@@ -111,7 +111,7 @@ public class CustomerController {
     @RequestMapping(value = SLASH + EDIT_CUSTOMER + SLASH + "{id}", method = RequestMethod.GET)
     public String showEditCustomerPage(@PathVariable long id, Model model) {
 
-        Customer customer = customerService.findCustomerById(id);
+        Customer customer = customerService.findById(id);
         model.addAttribute("customer", customer);
         log.info("Edycja klienta: " + customer.getUsername());
         return PAGES + SLASH + EDIT_CUSTOMER;
@@ -122,7 +122,7 @@ public class CustomerController {
                                  Model model) {
 
         //TODO: komunikat o udanym/nieudanym usunieciu klienta
-        customerService.deleteCustomer(id);
+        customerService.delete(id);
         log.info("Usunięto użytkownika");
         return "redirect:" + SLASH + CUSTOMERS;
     }

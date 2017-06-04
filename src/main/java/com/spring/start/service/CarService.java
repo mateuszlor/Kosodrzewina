@@ -1,6 +1,7 @@
 package com.spring.start.service;
 
 import com.spring.start.entity.Car;
+import com.spring.start.interfaces.BasicDatabaseOperations;
 import com.spring.start.repository.CarRepository;
 import com.spring.start.service.dto.CarDto;
 import lombok.Getter;
@@ -16,13 +17,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @Log4j
-public class CarService {
+public class CarService implements BasicDatabaseOperations<Car>{
 
     @Autowired
     @Getter @Setter
     private CarRepository carRepository;
 
-    public void createCar(CarDto carDto){
+    public void save(CarDto carDto){
         Car car = Car.builder()
                 .brand(carDto.getBrand())
                 .model(carDto.getModel())
@@ -34,11 +35,13 @@ public class CarService {
         log.info("Dodano nowy samochód: " + car.getBrand() + " " + car.getModel() + "(" + car.getName() + ")");
     }
 
+    @Override
     public Iterable<Car> findAll(){
         return carRepository.findAll();
     }
 
-    public void deleteCar(long id) {
+    @Override
+    public void delete(long id) {
         try {
             carRepository.delete(id);
         } catch (Exception e) {
@@ -46,12 +49,13 @@ public class CarService {
         }
     }
 
-    public Car findCarById(long id){
+    @Override
+    public Car findById(long id){
         Car car = carRepository.findOne(id);
         return car;
     }
 
-    public void editCar(CarDto carDto) {
+    public void update(CarDto carDto) {
 
         Car car = Car.builder().brand(carDto.getBrand())
                 .id(carDto.getId())

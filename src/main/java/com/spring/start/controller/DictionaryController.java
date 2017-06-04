@@ -64,7 +64,7 @@ public class DictionaryController extends HandlerInterceptorAdapter{
             return "redirect:" + SLASH + DICTIONARY;
         }
         try {
-            dictionaryService.addEntry(name, type);
+            dictionaryService.saveDictionary(name, type);
         } catch (Exception e){
             log.error("Nie udało się dodać nowego wpisu: " + e);
         }
@@ -91,7 +91,7 @@ public class DictionaryController extends HandlerInterceptorAdapter{
                             Model model) {
 
         //TODO: komunikat o udanym/nieudanym usunieciu klienta
-        dictionaryService.deleteEntry(id);
+        dictionaryService.delete(id);
         log.info("Pomyślnie usunięto wpis");
         return "redirect:" + SLASH + DICTIONARIES;
     }
@@ -103,7 +103,7 @@ public class DictionaryController extends HandlerInterceptorAdapter{
     public String showEditEntryPage(@PathVariable long id,
                                     Model model){
 
-        Dictionary dictionary = dictionaryService.findEntryById(id);
+        Dictionary dictionary = dictionaryService.findById(id);
         model.addAttribute("dictionary", dictionary);
         model.addAttribute("action", "edit");
         log.info(String.format("Strona edycji wpisu słownikowego"));
@@ -127,7 +127,7 @@ public class DictionaryController extends HandlerInterceptorAdapter{
             return "redirect:" + PAGES + SLASH + DICTIONARY;
         }
         try {
-            dictionaryService.editEntry(id, name, type);
+            dictionaryService.edit(id, name, type);
             log.info("Pomyślnie zedytowano wpis ");
         } catch (Exception e){
             log.error(String.format("Nie udało się zedytować wpisu %1s", e));

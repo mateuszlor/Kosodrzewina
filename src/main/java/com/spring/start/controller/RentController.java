@@ -140,7 +140,7 @@ public class RentController {
         try {
             Rent rent = rentService.findById(id);
             rent.setStatus(RentStatus.RENTED);
-            rentService.updateRent(rent);
+            rentService.update(rent);
             log.info("Pomyślnie zaktualizowano status wyporzyczenia " + id);
         } catch (Exception e) {
             log.error("Wystąpił problem przy zmianie statusu wyporzyczenia {}", e);
