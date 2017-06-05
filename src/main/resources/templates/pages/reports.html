@@ -58,7 +58,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="input-group">
-                                                <input class="form-control datepicker" id="startDate" name="startDate" th:value="${startDate}" placeholder="dd-mm-yyyy" type="text" readonly="readonly"/>
+                                                <input class="form-control datepicker" id="startDate" name="startDate" th:value="${startDate}" placeholder="dd-mm-yyyy" type="text" readonly="readonly" required="required"/>
                                                 <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
                                             </div>
                                         </div>
@@ -71,8 +71,20 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="input-group">
-                                                <input class="form-control datepicker" id="endDate" name="endDate" th:value="${endDate}" placeholder="dd-mm-yyyy" type="text" readonly="readonly"/>
+                                                <input class="form-control datepicker" id="endDate" name="endDate" th:value="${endDate}" placeholder="dd-mm-yyyy" type="text" readonly="readonly" required="required"/>
                                                 <div class="input-group-addon datepicer"><i class="fa fa-calendar"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3" align="right">
+                                            <label th:text="#{label.general.name}"/>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="input-group">
+                                                <input class="form-control" id="filename" name="filename" th:value="${filename}" type="text"/>
                                             </div>
                                         </div>
                                     </div>
@@ -83,8 +95,8 @@
                                             <label th:text="#{label.reports.type}"/>
                                         </div>
                                         <div class="col-md-6">
-                                            <select class="form-control chzn-select" name="type">
-                                                <option></option>
+                                            <select class="form-control chzn-select" name="type" required="required">
+                                                <option th:each="type : ${T(com.spring.start.entity.ReportType).values()}" th:value="${type}" th:text="${type.label}"></option>
                                             </select>
                                         </div>
                                     </div>

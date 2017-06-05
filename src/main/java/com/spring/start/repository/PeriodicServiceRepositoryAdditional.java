@@ -2,6 +2,7 @@ package com.spring.start.repository;
 
 import com.spring.start.entity.PeriodicService;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,4 +22,6 @@ public interface PeriodicServiceRepositoryAdditional {
      * @return Number of expiring services
      */
     long getServicesSoonToExpireCount(int days);
+
+    List<PeriodicService> getServicesFromPeriodOfTime(Date from, Date to);
 }

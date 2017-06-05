@@ -43,4 +43,11 @@ public class PeriodicServiceRepositoryImpl extends BaseAdditionalRepositoryImpl<
                         && s.getDateTo().after(date))
                 .count();
     }
+
+    @Override
+    public List<PeriodicService> getServicesFromPeriodOfTime(Date from, Date to) {
+        return getTable()
+                .filter(ps -> ps.getDateFrom().after(from) && ps.getDateFrom().before(to))
+                .collect(Collectors.toList());
+    }
 }
