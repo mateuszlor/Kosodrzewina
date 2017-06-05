@@ -56,34 +56,44 @@ public class ServiceReminderTask {
 
         var expiringTasks = serviceService.getServicesSoonToExpire(days);
         var recipientList = userService.getEmails();
-        var cars = carService.findCarsByIdList(expiringTasks
-                        .stream()
-                        .map(t -> t.getCar())
-                        .collect(Collectors.toList()))
-                .stream()
-                .collect(Collectors.toMap(c -> c.getId(), c -> String.format("{} {}", c.getBrand(), c.getModel())));
 
-        var sb = new StringBuilder();
-        sb.append(String.format("W przeciągu %s dni wygasają następujace serwisy:\n\r\n\r", days));
+        if(recipientList.size() > 0 && expiringTasks.size() > 0) {
 
-        expiringTasks.stream()
-                .sorted(Comparator.comparingInt(ServiceDto::getRemainingDays))
-                .map(s -> String.format("\t- %s | %s | do %s (pozostało %s dni)\n\r",
-                        cars.get(s.getCar()),
-                        s.getType(),
-                        s.getDateTo(),
-                        s.getRemainingDays()))
-                .forEach(sb::append);
+            var cars = carService.findCarsByIdList(expiringTasks
+                            .stream()
+                            .map(t -> t.getCar())
+                            .distinct()
+                            .collect(Collectors.toList()))
+                    .stream()
+                    .collect(Collectors.toMap(c -> c.getId(), c -> String.format("{} {}", c.getBrand(), c.getModel())));
 
-        try {
-            var message = getMailStub();
+            var sb = new StringBuilder();
+            sb.append(String.format("W przeciągu %s dni wygasają następujace serwisy:\n\r\n\r", days));
 
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(String.join(",", recipientList)));
-            message.setSubject("[Kosodrzewina] Przypomnienie o wygasających serwisach");
-            message.setText(sb.toString());
-            Transport.send(message);
-        } catch (Exception e) {
-            log.error("Exception during sending email: {}", e);
+            expiringTasks.stream()
+                    .sorted(Comparator.comparingInt(ServiceDto::getRemainingDays))
+                    .map(s -> String.format("\t- %s | %s | do %s (pozostało %s dni)\n\r",
+                            cars.get(s.getCar()),
+                            s.getType(),
+                            s.getDateTo(),
+                            s.getRemainingDays()))
+                    .forEach(sb::append);
+
+            try {
+                var message = getMailStub();
+
+                message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(String.join(",", recipientList)));
+                message.setSubject("[Kosodrzewina] Przypomnienie o wygasających serwisach");
+                message.setText(sb.toString());
+                Transport.send(message);
+            } catch (Exception e) {
+                log.error("Exception during sending email: {}", e);
+            }
+        }
+        else {
+            log.warn(String.format("Skipped expiring services emails sending - %s expiring services to send on %s email addresses",
+                    expiringTasks.size(),
+                    recipientList.size()));
         }
 
         log.info("Service remidner task finished");
