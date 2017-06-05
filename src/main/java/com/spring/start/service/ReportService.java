@@ -12,17 +12,13 @@ import com.spring.start.repository.RentRepository;
 import com.spring.start.repository.ServiceRepository;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.var;
 import lombok.extern.log4j.Log4j;
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.thymeleaf.util.DateUtils;
-
 
 import java.io.IOException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -34,7 +30,8 @@ import java.util.List;
 public class ReportService {
 
     @Autowired
-    @Getter @Setter
+    @Getter
+    @Setter
     private RentRepository rentRepository;
 
     @Autowired
@@ -86,7 +83,7 @@ public class ReportService {
         table.addCell("Data zakończenia");
         // we add the four remaining cells with addCell()
         int iterator = 1;
-        for (Rent rent:data) {
+        for (Rent rent : data) {
             table.addCell(Integer.toString(iterator));
             table.addCell(rent.getCustomer().getFullName());
             table.addCell(rent.getCar().getFullName());
@@ -109,20 +106,22 @@ public class ReportService {
         table.addCell("Data (rozpoczęcia)");
         table.addCell("Data zakończenia");
         int iterator = 1;
-        for (Service service:services) {
+        for (Service service : services) {
             table.addCell(Integer.toString(iterator));
             table.addCell(service.getCar().getFullName());
             table.addCell(service.getType().getName());
-            table.addCell(service.getCost().toString() + "zł");
+            var cost = service.getCost();
+            table.addCell(String.format("%s zł", cost == null ? 0 : cost));
             table.addCell(formatter.format(service.getExecute()));
             table.addCell("");
             iterator++;
         }
-        for (PeriodicService periodicService:periodicServices) {
+        for (PeriodicService periodicService : periodicServices) {
             table.addCell(Integer.toString(iterator));
             table.addCell(periodicService.getCar().getFullName());
             table.addCell(periodicService.getType().getName());
-            table.addCell(periodicService.getCost().toString() + "zł");
+            var cost = periodicService.getCost();
+            table.addCell(String.format("%s zł", cost == null ? 0 : cost));
             table.addCell(formatter.format(periodicService.getDateFrom()));
             table.addCell(formatter.format(periodicService.getDateTo()));
             iterator++;
