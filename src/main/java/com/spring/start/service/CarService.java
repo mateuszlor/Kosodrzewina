@@ -6,10 +6,14 @@ import com.spring.start.repository.CarRepository;
 import com.spring.start.service.dto.CarDto;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.var;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Vertig0 on 22.03.2017.
@@ -17,13 +21,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @Log4j
-public class CarService implements BasicDatabaseOperations<Car>{
+@var
+public class CarService implements BasicDatabaseOperations<Car> {
 
     @Autowired
     @Getter @Setter
     private CarRepository carRepository;
 
-    public void save(CarDto carDto){
+    public void save(CarDto carDto) {
         Car car = Car.builder()
                 .brand(carDto.getBrand())
                 .model(carDto.getModel())
@@ -36,7 +41,7 @@ public class CarService implements BasicDatabaseOperations<Car>{
     }
 
     @Override
-    public Iterable<Car> findAll(){
+    public Iterable<Car> findAll() {
         return carRepository.findAll();
     }
 
@@ -50,7 +55,7 @@ public class CarService implements BasicDatabaseOperations<Car>{
     }
 
     @Override
-    public Car findById(long id){
+    public Car findById(long id) {
         Car car = carRepository.findOne(id);
         return car;
     }
@@ -67,8 +72,26 @@ public class CarService implements BasicDatabaseOperations<Car>{
         log.info(String.format("Dokonano edycji samochodu: {0} {1}", carDto.getBrand(), carDto.getModel()));
     }
 
-    public Iterable<Car> findCarsByIsTrailer(){
+    public Iterable<Car> findCarsByIsTrailer() {
+
         return carRepository.findCarsByIsTrailerNotNull();
+    }
+
+    public List<CarDto> findCarsByIdList(List<Long> ids) {
+
+        var cars = carRepository.findCarsByIds(ids);
+
+        return cars.stream()
+                .map(c -> CarDto
+                        .builder()
+                        .brand(c.getBrand())
+                        .model(c.getModel())
+                        .id(c.getId())
+                        .isTrailer(c.getIsTrailer())
+                        .name(c.getName())
+                        .registrationNumber(c.getRegistrationNumber())
+                        .build())
+                .collect(Collectors.toList());
     }
 
 }
