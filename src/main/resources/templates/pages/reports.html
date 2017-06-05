@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <th:block th:include="/fragments/elements :: head"/>
+        <title>Home Page</title>
+        <script type="text/javascript">
+            $(document).ready(function() {
+//            $('.additional').hide();
+                $('#carsOnly').hide();
+
+                $(".chzn-select").chosen();
+                $("#isTrailer").click(function(event) {
+                    if ($(this).is(":checked")){
+                        $(".additional").show();
+                    } else {
+                        $(".additional").hide();
+                    }
+                });
+                $('.datepicker').datepicker({
+                    format: "dd-mm-yyyy",
+                    orientation: "right",
+                    todayHighlight: true,
+                    autoclose: true,
+                    weekStart: 1
+                });
+
+            });
+        </script>
+    </head>
+    <body class="skin-blue sidebar-mini">
+        <div class="wrapper">
+            <div th:replace="/fragments/header :: header">Header</div>
+            <div th:replace="/fragments/menu :: menu">Menu</div>
+            <div class="content-wrapper">
+
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <h1>
+                        Raporty
+                    </h1>
+                </section>
+
+                <section class="content">
+                    <!-- Page Content -->
+                    <div class="box box-warning">
+                        <div class="box-header with-border">
+                            <h3 class="box-title" th:text="#{label.rent.newRent}"/>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <form role="form" th:action="@{/reports/generate}" lpformnum="2" method="post">
+                                <!-- text input -->
+
+                                <div class="form-group date">
+                                    <div class="row">
+                                        <div class="col-md-3" align="right">
+                                            <label th:text="#{label.rent.startDate}"/>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="input-group">
+                                                <input class="form-control datepicker" id="startDate" name="startDate" th:value="${startDate}" placeholder="dd-mm-yyyy" type="text" readonly="readonly"/>
+                                                <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group date">
+                                    <div class="row">
+                                        <div class="col-md-3" align="right">
+                                            <label th:text="#{label.rent.endDate}"/>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="input-group">
+                                                <input class="form-control datepicker" id="endDate" name="endDate" th:value="${endDate}" placeholder="dd-mm-yyyy" type="text" readonly="readonly"/>
+                                                <div class="input-group-addon datepicer"><i class="fa fa-calendar"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3" align="right">
+                                            <label th:text="#{label.reports.type}"/>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <select class="form-control chzn-select" name="type">
+                                                <option></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5"></div>
+                                    <div class="col-md-2">
+                                        <button type="submit" class="btn btn-primary" th:text="#{button.add}"/>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!---->
+                </section>
+            </div>
+            <div th:replace="/fragments/footer :: footer">Footer</div>
+        </div>
+    </body>
+</html>

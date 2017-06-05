@@ -49,4 +49,8 @@ public class Car {
     @Getter @Setter
     private Boolean isTrailer = Boolean.FALSE;
 
+    public String getFullName() {
+        return this.getBrand() + " " + this.getModel() + "'" + this.getName() + "'";
+    }
+
 }

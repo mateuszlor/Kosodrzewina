@@ -40,4 +40,8 @@ public class Customer {
     @Getter @Setter
     private String phone;
 
+    public String getFullName() {
+        return this.getName() + " " + this.getSurname();
+    }
+
 }
