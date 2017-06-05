@@ -65,7 +65,7 @@ public class ServiceReminderTask {
                             .distinct()
                             .collect(Collectors.toList()))
                     .stream()
-                    .collect(Collectors.toMap(c -> c.getId(), c -> String.format("{} {}", c.getBrand(), c.getModel())));
+                    .collect(Collectors.toMap(c -> c.getId(), c -> String.format("%s %s", c.getBrand(), c.getModel())));
 
             var sb = new StringBuilder();
             sb.append(String.format("W przeciągu %s dni wygasają następujace serwisy:\n\r\n\r", days));
