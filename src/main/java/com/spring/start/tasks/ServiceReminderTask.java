@@ -1,5 +1,7 @@
+
 package com.spring.start.tasks;
 
+import com.spring.start.service.CarService;
 import com.spring.start.service.ServiceService;
 import com.spring.start.service.UserService;
 import com.spring.start.service.dto.ServiceDto;
@@ -18,6 +20,7 @@ import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
 import java.util.Comparator;
 import java.util.Properties;
+import java.util.stream.Collectors;
 
 /**
  * Created by Mateusz on 01.04.2017.
@@ -36,6 +39,9 @@ public class ServiceReminderTask {
     private UserService userService;
 
     @Autowired
+    private CarService carService;
+
+    @Autowired
     private Environment environment;
 
     @Async
@@ -50,6 +56,12 @@ public class ServiceReminderTask {
 
         var expiringTasks = serviceService.getServicesSoonToExpire(days);
         var recipientList = userService.getEmails();
+        var cars = carService.findCarsByIdList(expiringTasks
+                        .stream()
+                        .map(t -> t.getCar())
+                        .collect(Collectors.toList()))
+                .stream()
+                .collect(Collectors.toMap(c -> c.getId(), c -> String.format("{} {}", c.getBrand(), c.getModel())));
 
         var sb = new StringBuilder();
         sb.append(String.format("W przeciągu %s dni wygasają następujace serwisy:\n\r\n\r", days));
@@ -57,7 +69,7 @@ public class ServiceReminderTask {
         expiringTasks.stream()
                 .sorted(Comparator.comparingInt(ServiceDto::getRemainingDays))
                 .map(s -> String.format("\t- %s | %s | do %s (pozostało %s dni)\n\r",
-                        s.getCar(),
+                        cars.get(s.getCar()),
                         s.getType(),
                         s.getDateTo(),
                         s.getRemainingDays()))
