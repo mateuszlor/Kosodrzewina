@@ -74,7 +74,7 @@ public class ServiceReminderTask {
             sb.append(String.format("W przeciągu %s dni wygasają następujace serwisy:\n\r\n\r", days));
 
             expiringTasks.stream()
-                    .sorted(Comparator.comparingInt(ServiceDto::getRemainingDays))
+                    .sorted(Comparator.comparingLong(ServiceDto::getRemainingDays))
                     .map(s -> String.format("\t- %s | %s | do %s (pozostało %s dni)\n\r",
                             cars.get(s.getCar()),
                             s.getType(),

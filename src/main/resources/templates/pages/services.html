@@ -60,7 +60,7 @@
                                 <td th:text="${s.getDate()}" />
                                 <td th:text="${s.getDateTo()}" />
                                 <td>
-                                    <span class="badge" th:classappend="${s.getRemainingDays() > 14} ? bg-green : bg-red">
+                                    <span class="badge" th:if="${s.getRemainingDays() != null}" th:classappend="${s.getRemainingDays() > 14} ? bg-green : bg-red">
                                         <th:block  th:text="${s.getRemainingDays()}" />
                                         <th:block th:if="${s.getRemainingDays() == 1}">dzień</th:block>
                                         <th:block th:if="${s.getRemainingDays() != 1}">dni</th:block>
