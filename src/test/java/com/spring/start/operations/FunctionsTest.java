@@ -18,7 +18,15 @@ public class FunctionsTest {
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
-                {"Raport type from-to.pdf", "", "from", "to", "type"}
+                {"Raport type from-to.pdf", "", "from", "to", "type"}, //angielski
+                {"Raport typ z-do.pdf", "", "z", "do", "typ"}, //polski
+                {"Raport typ von-nach.pdf", "", "von", "nach", "typ"}, //niemiecki
+                {"Raport matang gikan sa-sa.pdf", "", "gikan sa", "sa", "matang"}, //cebuanski
+                {"Raport tyyppi alkaen-etta.pdf", "", "alkaen", "etta", "tyyppi"}, //finski
+                {"Raport wypozyczenia 2017-06-06-2017-06-16.pdf", "", "2017-06-06", "2017-06-16", "wypozyczenia"},
+                {"Raport.pdf", "", "", "", ""},
+                {"nazwa.pdf", "nazwa", "", "", ""},
+                {"nazwa.pdf", "nazwa.pdf", "", "", ""}
         });
     }
 
