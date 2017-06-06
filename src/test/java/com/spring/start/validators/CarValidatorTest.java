@@ -11,6 +11,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.core.env.Environment;
 import org.springframework.validation.Errors;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.matches;
 
@@ -45,6 +46,9 @@ public class CarValidatorTest {
         car.setRegistrationNumber("EPA 1234");
         //Act
         carValidatorSpy.validate(car, error);
+
+        //Assert
+        assertEquals(0, error.getAllErrors().size());
 
     }
 
@@ -81,6 +85,9 @@ public class CarValidatorTest {
         Mockito.verify(error).rejectValue( matches("registrationNumber"), any(String.class) );
 
     }
+
+
+
 
 }
 
