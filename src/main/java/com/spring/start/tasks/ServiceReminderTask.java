@@ -67,6 +67,9 @@ public class ServiceReminderTask {
                     .stream()
                     .collect(Collectors.toMap(c -> c.getId(), c -> String.format("%s %s", c.getBrand(), c.getModel())));
 
+            log.info(String.format("About to send email - %s expiring services to send on %s email addresses",
+                    expiringTasks.size(),
+                    recipientList.size()));
             var sb = new StringBuilder();
             sb.append(String.format("W przeciągu %s dni wygasają następujace serwisy:\n\r\n\r", days));
 
