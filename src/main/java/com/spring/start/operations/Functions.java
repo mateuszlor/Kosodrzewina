@@ -2,6 +2,11 @@ package com.spring.start.operations;
 
 import com.mysql.jdbc.StringUtils;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.Locale;
+
 /**
  * Created by Vertig0 on 05.06.2017.
  */
@@ -25,6 +30,12 @@ public class Functions {
         return newFileName;
     }
 
+
+    public static Date convertStringToDate(String stringDate) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.ENGLISH);
+        LocalDate date = LocalDate.parse(stringDate, formatter);
+        return java.sql.Date.valueOf(date);
+    }
 
 
 }

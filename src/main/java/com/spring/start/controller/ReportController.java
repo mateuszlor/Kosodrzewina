@@ -51,7 +51,7 @@ public class ReportController {
                           Model model) throws IOException, DocumentException {
 
         String newFileName = Functions.generateFilename(filename, from, to, type.getLabel());
-        reportService.createReport(convertStringToDate(from), convertStringToDate(to), type, newFileName);
+        reportService.createReport(Functions.convertStringToDate(from), Functions.convertStringToDate(to), type, newFileName);
         return "redirect:/download?filename=" + newFileName;
     }
 
@@ -65,12 +65,6 @@ public class ReportController {
         response.setHeader("Content-Length", String.valueOf(file.length()));
         FileCopyUtils.copy(in, response.getOutputStream());
         deleteFile(filename);
-    }
-
-    private Date convertStringToDate(String stringDate) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.ENGLISH);
-        LocalDate date = LocalDate.parse(stringDate, formatter);
-        return java.sql.Date.valueOf(date);
     }
 
     private File getFile(String filename) throws FileNotFoundException {

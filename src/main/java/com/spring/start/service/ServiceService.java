@@ -2,6 +2,7 @@ package com.spring.start.service;
 
 import com.spring.start.entity.PeriodicService;
 import com.spring.start.entity.Service;
+import com.spring.start.operations.Functions;
 import com.spring.start.repository.PeriodicServiceRepository;
 import com.spring.start.repository.ServiceRepository;
 import com.spring.start.service.dto.ServiceDto;
@@ -48,7 +49,7 @@ public class ServiceService{
         Service service = Service.builder()
                 .car(carService.findById(serviceDto.getCar()))
                 .type(dictionaryService.findById(serviceDto.getName()))
-                .execute(convertStringToDate(serviceDto.getDate()))
+                .execute(Functions.convertStringToDate(serviceDto.getDate()))
                 .createdBy(userService.findById(userDto.getId()))
                 .cost(serviceDto.getCost())
                 .build();
@@ -61,19 +62,13 @@ public class ServiceService{
         PeriodicService service = PeriodicService.builder()
                 .car(carService.findById(serviceDto.getCar()))
                 .type(dictionaryService.findById(serviceDto.getName()))
-                .dateFrom(convertStringToDate(serviceDto.getDate()))
-                .dateTo(convertStringToDate(serviceDto.getDateTo()))
+                .dateFrom(Functions.convertStringToDate(serviceDto.getDate()))
+                .dateTo(Functions.convertStringToDate(serviceDto.getDateTo()))
                 .createdBy(userService.findById(userDto.getId()))
                 .cost(serviceDto.getCost())
                 .build();
         periodicServiceRepository.save(service);
         log.info("Dodano nowy serwis");
-    }
-
-    private Date convertStringToDate(String stringDate) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.ENGLISH);
-        LocalDate date = LocalDate.parse(stringDate, formatter);
-        return java.sql.Date.valueOf(date);
     }
 
     public void deleteService(long id) {

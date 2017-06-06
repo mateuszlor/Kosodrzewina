@@ -1,6 +1,7 @@
 package com.spring.start.service;
 
 import com.spring.start.entity.Rent;
+import com.spring.start.operations.Functions;
 import com.spring.start.repository.CarRepository;
 import com.spring.start.repository.CustomerRepository;
 import com.spring.start.repository.RentRepository;
@@ -74,15 +75,6 @@ public class RentServiceTest {
         rentServiceSpy.addRent(rentDto, userDto, rent);
         //Assert
         Mockito.verify(rentServiceSpy).addRent(rentDto, userDto, rent);
-    }
-    @Test
-    public void shouldVerifyThat_RepositorySave_InAddRent_IsCalled() throws Exception {
-        //Arrange
-        Mockito.doReturn(new Date()).when(rentServiceSpy).convertStringToDate(any());
-        //Act
-        rentServiceSpy.addRent(rentDto, userDto, rent);
-        //Assert
-        Mockito.verify(rentRepository).save(any(Rent.class));
     }
 
     @Test
