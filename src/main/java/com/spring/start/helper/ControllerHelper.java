@@ -88,4 +88,11 @@ public class ControllerHelper {
 
         log.info("Forced replacing user in session");
     }
+
+    public com.spring.start.entity.User getLoggedUser() {
+        var auth = SecurityContextHolder.getContext().getAuthentication();
+        var springUser = (User) auth.getPrincipal();
+        com.spring.start.entity.User user = userService.findByUsername(springUser.getUsername());
+        return user;
+    }
 }

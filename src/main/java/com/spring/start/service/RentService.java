@@ -47,8 +47,6 @@ public class RentService implements BasicDatabaseOperations<Rent>{
     @Setter
     private CustomerService customerService;
 
-
-
     public Rent addRent(RentDto rentDto, UserDto user, Rent trailer) {
 
         Rent rent = Rent.builder()

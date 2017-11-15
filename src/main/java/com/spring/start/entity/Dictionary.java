@@ -12,7 +12,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Dictionary {
+public class Dictionary extends BaseEntity<Dictionary>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

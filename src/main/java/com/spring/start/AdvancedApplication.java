@@ -7,12 +7,14 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
 @ComponentScan(basePackages = "com.spring.start")
 //@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
 @EnableAutoConfiguration
 @EntityScan(basePackages = "com.spring.start.entity")
+@EnableJpaAuditing(auditorAwareRef = "springSecurityAuditorAware")
 public class AdvancedApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {

@@ -71,6 +71,7 @@ public class CarController {
                             BindingResult bindingResult, Model model,
                             RedirectAttributes redirectAttributes){
 
+        log.info("DODAWANIE NOWEGO SAMOCHODU");
         validator.validate(carDto, bindingResult);
         if(bindingResult.hasErrors()){
 //            redirectAttributes.addFlashAttribute("error", environment.getProperty("error.form.invalidValues"));
@@ -119,8 +120,8 @@ public class CarController {
 
         Car car = carService.findById(id);
         model.addAttribute("car", car);
-        model.addAttribute("service", car.getService());
-        model.addAttribute("periodicService", car.getPeriodicService());
+//        model.addAttribute("service", car.getService());
+//        model.addAttribute("periodicService", car.getPeriodicService());
         log.info(String.format("Strona samochodu: %1s %2s", car.getBrand(), car.getModel()));
         return PAGES + SLASH + CAR;
     }

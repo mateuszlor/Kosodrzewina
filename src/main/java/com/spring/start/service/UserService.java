@@ -81,6 +81,10 @@ public class UserService implements BasicDatabaseOperations<User>{
         return userDto;
     }
 
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
 
 
     public void editUserData(UserDto dto) {

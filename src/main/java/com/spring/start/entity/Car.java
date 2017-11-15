@@ -1,9 +1,14 @@
 package com.spring.start.entity;
 
+import com.spring.start.service.dto.CarDto;
 import lombok.*;
+import org.joda.time.DateTime;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.lang.reflect.Field;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Created by Vertig0 on 21.03.2017.
@@ -11,46 +16,85 @@ import java.util.Set;
 @Entity
 @Table(name = "car")
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class Car {
+@Getter @Setter
+public class Car extends BaseEntity<Car>{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, unique = true)
-    @Getter @Setter
-    private long id;
+    @Builder
+    public Car(long id, Boolean deleted, Date createdDate, Date modificationDate, User creationUser, User modificationUser, String brand, String model, String registrationNumber, String name, Set<PeriodicService> periodicService, Set<Service> service, Boolean isTrailer) {
+        super(id, deleted, createdDate, modificationDate, creationUser, modificationUser);
+        this.brand = brand;
+        this.model = model;
+        this.registrationNumber = registrationNumber;
+        this.name = name;
+//        this.periodicService = periodicService;
+//        this.service = service;
+        this.isTrailer = isTrailer;
+    }
+
+    public Car(CarDto car){
+        this.brand = car.getBrand();
+        this.model = car.getModel();
+        this.registrationNumber = car.getRegistrationNumber();
+        this.name = car.getName();
+        this.isTrailer = car.getIsTrailer();
+    }
+
+    public Car(Car car) {
+        super(car.getId(), car.getDeleted(), car.getCreatedDate(), car.getModificationDate(), car.getCreationUser(), car.getModificationUser());
+        this.brand = car.brand;
+        this.model = car.model;
+        this.registrationNumber = car.registrationNumber;
+        this.name = car.name;
+//        this.periodicService = car.periodicService;
+//        this.service = car.service;
+        this.isTrailer = car.isTrailer;
+    }
+
+//    @SuppressWarnings("unchecked")
+//    public static Car mergeUpdate(Car basic, Car edited) throws IllegalAccessException, InstantiationException {
+//        Class<?> clazz = basic.getClass();
+//        List<Field> fields = Arrays.asList(clazz.getDeclaredFields());
+//        List<Field> subFields = Arrays.asList(clazz.getSuperclass().getDeclaredFields());
+//        List<Field> finalFields = Stream.concat(fields.stream(), subFields.stream()).collect(Collectors.toList());
+//        Object returnValue = clazz.newInstance();
+//        for (Field field : finalFields) {
+//            field.setAccessible(true);
+//            Object value1 = field.get(basic);
+//            Object value2 = field.get(edited);
+//            Object value = (value1 != null && value2 != null && !value1.equals(value2) && !field.getName().equals("id")) ? value2 : value1;
+//            field.set(returnValue, value);
+//        }
+//        return (Car) returnValue;
+//    }
 
     @Column(name = "brand", nullable = false)
-    @Getter @Setter
     private String brand;
 
     @Column(name = "model")
-    @Getter @Setter
     private String model;
 
     @Column(name = "registration_number", nullable = false)
-    @Getter @Setter
     private String registrationNumber;
 
     @Column(name = "name")
-    @Getter @Setter
     private String name;
 
-    @OneToMany(mappedBy = "car")
-    @Getter @Setter
-    Set<PeriodicService> periodicService;
+//    @OneToMany(mappedBy = "car", fetch = FetchType.LAZY)
+//    Collection<PeriodicService> periodicService = new ArrayList<>();
 
-    @OneToMany(mappedBy = "car")
-    @Getter @Setter
-    Set<Service> service;
+//    @OneToMany(mappedBy = "car", fetch = FetchType.LAZY)
+//    Collection<Service> service = new ArrayList<>();
 
     @Column(name = "is_trailer")
-    @Getter @Setter
     private Boolean isTrailer = Boolean.FALSE;
 
     public String getFullName() {
         return this.getBrand() + " " + this.getModel() + "'" + this.getName() + "'";
+    }
+
+    @PrePersist
+    public void defaultIsTrailer() {
+        isTrailer = isTrailer == null ? false : isTrailer;
     }
 
 }

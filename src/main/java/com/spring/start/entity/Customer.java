@@ -1,8 +1,10 @@
 package com.spring.start.entity;
 
 import lombok.*;
+import org.joda.time.DateTime;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Created by Vertig0 on 18.03.2017.
@@ -10,15 +12,18 @@ import javax.persistence.*;
 @Entity
 @Table(name = "customer")
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class Customer {
+@Getter @Setter
+public class Customer extends BaseEntity<Customer>{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, unique = true)
-    @Getter @Setter
-    private long id;
+    @Builder
+    public Customer(long id, Boolean deleted, Date createdDate, Date modificationDate, User creationUser, User modificationUser, String name, String surname, String username, String address, String phone) {
+        super(id, deleted, createdDate, modificationDate, creationUser, modificationUser);
+        this.name = name;
+        this.surname = surname;
+        this.username = username;
+        this.address = address;
+        this.phone = phone;
+    }
 
     @Column(name = "name", nullable = false)
     @Getter @Setter

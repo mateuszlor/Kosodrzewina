@@ -58,13 +58,15 @@ public class DictionaryService implements BasicDatabaseOperations<Dictionary>{
     }
 
     public void edit(long id, String name, DictionaryType type) {
-
-        Dictionary dictionary = Dictionary.builder()
-                .id(id)
-                .name(name)
-                .type(type)
-                .build();
-        dictionaryRepository.save(dictionary);
+        try {
+            Dictionary dictionary = dictionaryRepository.findOne(id);
+            dictionary = Dictionary.mergeUpdate(dictionary, Dictionary.builder().name(name).type(type).build());
+            dictionaryRepository.save(dictionary);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
         log.info(String.format("Dokonano edycji wpisu"));
     }
 

@@ -16,7 +16,7 @@ import java.util.Date;
 @Builder
 @Getter
 @Setter
-public class Service {
+public class Service extends BaseEntity<Service>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

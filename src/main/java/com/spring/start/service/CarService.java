@@ -1,6 +1,7 @@
 package com.spring.start.service;
 
 import com.spring.start.entity.Car;
+import com.spring.start.entity.PeriodicService;
 import com.spring.start.interfaces.BasicDatabaseOperations;
 import com.spring.start.repository.CarRepository;
 import com.spring.start.service.dto.CarDto;
@@ -12,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,7 +45,7 @@ public class CarService implements BasicDatabaseOperations<Car> {
 
     @Override
     public Iterable<Car> findAll() {
-        return carRepository.findAll();
+        return carRepository.findCarsByDeletedFalse();
     }
 
     @Override
@@ -61,14 +64,15 @@ public class CarService implements BasicDatabaseOperations<Car> {
     }
 
     public void update(CarDto carDto) {
-
-        Car car = Car.builder().brand(carDto.getBrand())
-                .id(carDto.getId())
-                .name(carDto.getName())
-                .model(carDto.getModel())
-                .registrationNumber(carDto.getRegistrationNumber())
-                .build();
-        carRepository.save(car);
+        try {
+            Car car = carRepository.findOne(carDto.getId());
+            car = Car.mergeUpdate(car, new Car(carDto));
+            carRepository.save(car);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
         log.info(String.format("Dokonano edycji samochodu: {0} {1}", carDto.getBrand(), carDto.getModel()));
     }
 

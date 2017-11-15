@@ -14,7 +14,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Rent {
+public class Rent extends BaseEntity<Rent>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
