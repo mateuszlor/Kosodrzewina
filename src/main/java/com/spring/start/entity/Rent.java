@@ -1,6 +1,9 @@
 package com.spring.start.entity;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -12,16 +15,7 @@ import java.util.Date;
 @Entity
 @Table(name = "rent")
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class Rent extends BaseEntity<Rent>{
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, unique = true)
-    @Getter
-    @Setter
-    private long id;
 
     @ManyToOne
     @JoinColumn(name = "customer", nullable = false)
@@ -65,12 +59,6 @@ public class Rent extends BaseEntity<Rent>{
     @Setter
     private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "created_by", nullable = false)
-    @Getter
-    @Setter
-    private User createdBy;
-
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
     @Getter
@@ -83,4 +71,18 @@ public class Rent extends BaseEntity<Rent>{
     @Setter
     private Rent trailer;
 
+    @Builder
+    public Rent(long id, Boolean deleted, Date createdDate, Date modificationDate, User creationUser, User modificationUser, Customer customer, Car car, Date startDate, Date endDate, BigDecimal income, Long startCourse, Long endCourse, String description, RentStatus status, Rent trailer) {
+        super(id, deleted, createdDate, modificationDate, creationUser, modificationUser);
+        this.customer = customer;
+        this.car = car;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.income = income;
+        this.startCourse = startCourse;
+        this.endCourse = endCourse;
+        this.description = description;
+        this.status = status;
+        this.trailer = trailer;
+    }
 }

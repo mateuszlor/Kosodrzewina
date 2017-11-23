@@ -58,7 +58,6 @@ public class RentService implements BasicDatabaseOperations<Rent>{
                 .startCourse(rentDto.getStartCourse())
                 .endCourse(rentDto.getEndCourse())
                 .description(rentDto.getDescription())
-                .createdBy(userService.findById(user.getId()))
                 .status(rentDto.getStatus())
                 .trailer(trailer)
                 .build();

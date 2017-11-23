@@ -1,9 +1,8 @@
 package com.spring.start.service;
 
-import com.spring.start.entity.PeriodicService;
+import com.spring.start.entity.Car;
 import com.spring.start.entity.Service;
 import com.spring.start.operations.Functions;
-import com.spring.start.repository.PeriodicServiceRepository;
 import com.spring.start.repository.ServiceRepository;
 import com.spring.start.service.dto.ServiceDto;
 import com.spring.start.service.dto.UserDto;
@@ -12,11 +11,7 @@ import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -33,9 +28,6 @@ public class ServiceService{
     private ServiceRepository serviceRepository;
 
     @Autowired
-    private PeriodicServiceRepository periodicServiceRepository;
-
-    @Autowired
     private DictionaryService dictionaryService;
 
     @Autowired
@@ -49,8 +41,7 @@ public class ServiceService{
         Service service = Service.builder()
                 .car(carService.findById(serviceDto.getCar()))
                 .type(dictionaryService.findById(serviceDto.getName()))
-                .execute(Functions.convertStringToDate(serviceDto.getDate()))
-                .createdBy(userService.findById(userDto.getId()))
+                .executionDate(Functions.convertStringToDate(serviceDto.getDate()))
                 .cost(serviceDto.getCost())
                 .build();
         serviceRepository.save(service);
@@ -59,15 +50,14 @@ public class ServiceService{
 
     public void createPeriodicService(ServiceDto serviceDto, UserDto userDto) {
 
-        PeriodicService service = PeriodicService.builder()
+        Service service = Service.builder()
                 .car(carService.findById(serviceDto.getCar()))
                 .type(dictionaryService.findById(serviceDto.getName()))
-                .dateFrom(Functions.convertStringToDate(serviceDto.getDate()))
-                .dateTo(Functions.convertStringToDate(serviceDto.getDateTo()))
-                .createdBy(userService.findById(userDto.getId()))
+                .executionDate(Functions.convertStringToDate(serviceDto.getDate()))
+                .endDate(Functions.convertStringToDate(serviceDto.getDateTo()))
                 .cost(serviceDto.getCost())
                 .build();
-        periodicServiceRepository.save(service);
+        serviceRepository.save(service);
         log.info("Dodano nowy serwis");
     }
 
@@ -81,7 +71,7 @@ public class ServiceService{
 
     public void deletePeriodicService(long id) {
         try {
-            periodicServiceRepository.delete(id);
+            serviceRepository.delete(id);
         } catch (Exception e) {
             log.error("Wystąpił błąd przy usuwaniu okresowego wpisu serwisowego: {}", e);
         }
@@ -98,10 +88,10 @@ public class ServiceService{
         return null;
     }
 
-    public PeriodicService findPeriodicServiceById(long id) {
+    public Service findPeriodicServiceById(long id) {
         try {
-            if (periodicServiceRepository.findOne(id) != null) {
-                return periodicServiceRepository.findOne(id);
+            if (serviceRepository.findOne(id) != null) {
+                return serviceRepository.findOne(id);
             }
         } catch (Exception e) {
             log.error("Wystąpił problem przy pobieraniu okresowego serwisu: {}", e);
@@ -109,16 +99,24 @@ public class ServiceService{
         return null;
     }
 
+    public Iterable<Service> getServicesByCar(Car car){
+        return serviceRepository.getAllByCarAndDeletedFalse(car);
+    }
+
+    public Iterable<Service> getPeriodicServicesByCar(Car car){
+        return serviceRepository.getAllByCarAndDeletedFalse(car);
+    }
+
     public List<ServiceDto> getServicesSoonToExpire(int days) {
-        var data = periodicServiceRepository.getServicesSoonToExpire(days);
+        var data = serviceRepository.getServicesSoonToExpire(days);
 
         return data.stream()
                 .map(s -> ServiceDto
                         .builder()
                         .id(s.getId())
                         .car(s.getCar().getId())
-                        .date(s.getDateFrom().toString())
-                        .dateTo(s.getDateTo().toString())
+                        .date(s.getExecutionDate().toString())
+                        .dateTo(s.getEndDate().toString())
                         .type(s.getType().getName())
                         .cost(s.getCost())
                         .isPeriodic(true)
@@ -127,11 +125,12 @@ public class ServiceService{
     }
 
     public long getServicesSoonToExpireCount(int days) {
-        return periodicServiceRepository.getServicesSoonToExpireCount(days);
+        return serviceRepository.getServicesSoonToExpireCount(days);
     }
 
     public List<ServiceDto> getAllServices() {
-        var periodic = periodicServiceRepository.findAll();
+        //TODO: zmienić na specjalne metody z typem
+        var periodic = serviceRepository.findAll();
         var oneTime = serviceRepository.findAll();
 
         var all = StreamSupport.stream(periodic.spliterator(), false)
@@ -139,8 +138,8 @@ public class ServiceService{
                         .builder()
                         .id(s.getId())
                         .car(s.getCar().getId())
-                        .date(s.getDateFrom().toString())
-                        .dateTo(s.getDateTo().toString())
+                        .date(s.getExecutionDate().toString())
+                        .dateTo(s.getEndDate().toString())
                         .type(s.getType().getName())
                         .cost(s.getCost())
                         .isPeriodic(true)
@@ -152,7 +151,7 @@ public class ServiceService{
                         .builder()
                         .id(s.getId())
                         .car(s.getCar().getId())
-                        .date(s.getExecute().toString())
+                        .date(s.getExecutionDate().toString())
                         .type(s.getType().getName())
                         .cost(s.getCost())
                         .isPeriodic(false)

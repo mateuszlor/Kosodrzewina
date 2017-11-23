@@ -1,7 +1,6 @@
 package com.spring.start.service;
 
 import com.spring.start.entity.Car;
-import com.spring.start.entity.PeriodicService;
 import com.spring.start.interfaces.BasicDatabaseOperations;
 import com.spring.start.repository.CarRepository;
 import com.spring.start.service.dto.CarDto;
@@ -13,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 

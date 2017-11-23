@@ -1,5 +1,6 @@
 package com.spring.start.repository;
 
+import com.spring.start.entity.Car;
 import com.spring.start.entity.Service;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -9,4 +10,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ServiceRepository extends CrudRepository<Service, Long>, ServiceRepositoryAdditional {
+
+    Iterable<Service> getAllByCarAndDeletedFalse(Car car);
+
 }

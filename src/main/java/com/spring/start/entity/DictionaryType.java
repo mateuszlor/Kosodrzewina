@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 public enum DictionaryType {
 
     SERVICE("Serwis"),
-    PAYMENT("Płatności");
+    PAYMENT("Okresowe");
 
     private String displayName;
 

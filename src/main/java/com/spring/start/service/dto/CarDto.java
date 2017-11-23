@@ -1,5 +1,6 @@
 package com.spring.start.service.dto;
 
+import com.spring.start.validators.RegistrationNumberConstraint;
 import lombok.*;
 
 /**
@@ -19,6 +20,7 @@ public class CarDto {
 
     private String model;
 
+    @RegistrationNumberConstraint
     private String registrationNumber;
 
     private String name;

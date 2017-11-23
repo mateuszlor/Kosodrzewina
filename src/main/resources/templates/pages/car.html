@@ -90,7 +90,7 @@
                                 <tr role="row" class="odd" th:each="s : ${service}">
                                     <td class="sorting_1" hidden="hidden" th:text="${s.id}"></td>
                                     <td class="sorting_1" th:text="${s.type.name}"></td>
-                                    <td th:text="${s.execute}"></td>
+                                    <td th:text="${s.executionDate}"></td>
                                     <td>
                                         <a th:href="@{/service/{id}(id=${s.id})}" style="float: left"><button type="button" class="btn btn-block btn-warning btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a>
 
@@ -161,8 +161,8 @@
                                 <tr role="row" class="odd" th:each="p : ${periodicService}">
                                     <td class="sorting_1" hidden="hidden" th:text="${p.id}"></td>
                                     <td class="sorting_1" th:text="${p.type.name}"></td>
-                                    <td th:text="${p.dateFrom}"></td>
-                                    <td th:text="${p.dateTo}"></td>
+                                    <td th:text="${p.executionDate}"></td>
+                                    <td th:text="${p.endDate}"></td>
                                     <td>
                                         <a th:href="@{/service/{id}(id=${p.id})}" style="float: left"><button type="button" class="btn btn-block btn-warning btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a>
 

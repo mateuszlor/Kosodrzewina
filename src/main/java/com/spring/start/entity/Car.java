@@ -1,14 +1,17 @@
 package com.spring.start.entity;
 
 import com.spring.start.service.dto.CarDto;
-import lombok.*;
-import org.joda.time.DateTime;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.*;
-import java.lang.reflect.Field;
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.PrePersist;
+import javax.persistence.Table;
+import java.util.Date;
+import java.util.Set;
 
 /**
  * Created by Vertig0 on 21.03.2017.
@@ -20,13 +23,12 @@ import java.util.stream.Stream;
 public class Car extends BaseEntity<Car>{
 
     @Builder
-    public Car(long id, Boolean deleted, Date createdDate, Date modificationDate, User creationUser, User modificationUser, String brand, String model, String registrationNumber, String name, Set<PeriodicService> periodicService, Set<Service> service, Boolean isTrailer) {
+    public Car(long id, Boolean deleted, Date createdDate, Date modificationDate, User creationUser, User modificationUser, String brand, String model, String registrationNumber, String name, Set<Service> service, Boolean isTrailer) {
         super(id, deleted, createdDate, modificationDate, creationUser, modificationUser);
         this.brand = brand;
         this.model = model;
         this.registrationNumber = registrationNumber;
         this.name = name;
-//        this.periodicService = periodicService;
 //        this.service = service;
         this.isTrailer = isTrailer;
     }
@@ -50,23 +52,6 @@ public class Car extends BaseEntity<Car>{
         this.isTrailer = car.isTrailer;
     }
 
-//    @SuppressWarnings("unchecked")
-//    public static Car mergeUpdate(Car basic, Car edited) throws IllegalAccessException, InstantiationException {
-//        Class<?> clazz = basic.getClass();
-//        List<Field> fields = Arrays.asList(clazz.getDeclaredFields());
-//        List<Field> subFields = Arrays.asList(clazz.getSuperclass().getDeclaredFields());
-//        List<Field> finalFields = Stream.concat(fields.stream(), subFields.stream()).collect(Collectors.toList());
-//        Object returnValue = clazz.newInstance();
-//        for (Field field : finalFields) {
-//            field.setAccessible(true);
-//            Object value1 = field.get(basic);
-//            Object value2 = field.get(edited);
-//            Object value = (value1 != null && value2 != null && !value1.equals(value2) && !field.getName().equals("id")) ? value2 : value1;
-//            field.set(returnValue, value);
-//        }
-//        return (Car) returnValue;
-//    }
-
     @Column(name = "brand", nullable = false)
     private String brand;
 
@@ -78,9 +63,6 @@ public class Car extends BaseEntity<Car>{
 
     @Column(name = "name")
     private String name;
-
-//    @OneToMany(mappedBy = "car", fetch = FetchType.LAZY)
-//    Collection<PeriodicService> periodicService = new ArrayList<>();
 
 //    @OneToMany(mappedBy = "car", fetch = FetchType.LAZY)
 //    Collection<Service> service = new ArrayList<>();

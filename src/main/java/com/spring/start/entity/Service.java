@@ -12,8 +12,6 @@ import java.util.Date;
 @Entity
 @Table(name = "service")
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @Getter
 @Setter
 public class Service extends BaseEntity<Service>{
@@ -31,13 +29,29 @@ public class Service extends BaseEntity<Service>{
     @JoinColumn(name = "type", nullable = false)
     private Dictionary type;
 
-    @Column(name = "execute", nullable = false)
+    /**
+     *  Data wykonania/ rozpoczęcia
+     * */
+    @Column(name = "execution_date", nullable = false)
     @Temporal(TemporalType.DATE)
-    private Date execute;
+    private Date executionDate;
 
-    @ManyToOne
-    @JoinColumn(name = "created_by", nullable = false)
-    private User createdBy;
+    /**
+     *  Data zakończenia
+     * */
+    @Column(name = "end_date")
+    @Temporal(TemporalType.DATE)
+    private Date endDate;
 
     private BigDecimal cost;
+
+    @Builder
+    public Service(long id, Boolean deleted, Date createdDate, Date modificationDate, User creationUser, User modificationUser, Car car, Dictionary type, Date executionDate, Date endDate, BigDecimal cost) {
+        super(id, deleted, createdDate, modificationDate, creationUser, modificationUser);
+        this.car = car;
+        this.type = type;
+        this.executionDate = executionDate;
+        this.endDate = endDate;
+        this.cost = cost;
+    }
 }

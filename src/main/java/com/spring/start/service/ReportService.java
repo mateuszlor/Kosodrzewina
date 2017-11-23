@@ -2,12 +2,10 @@ package com.spring.start.service;
 
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfPTable;
-import com.spring.start.entity.PeriodicService;
 import com.spring.start.entity.Rent;
 import com.spring.start.entity.ReportType;
 import com.spring.start.entity.Service;
 import com.spring.start.operations.PDFGenerator;
-import com.spring.start.repository.PeriodicServiceRepository;
 import com.spring.start.repository.RentRepository;
 import com.spring.start.repository.ServiceRepository;
 import lombok.Getter;
@@ -37,11 +35,6 @@ public class ReportService {
     @Autowired
     @Getter
     @Setter
-    private PeriodicServiceRepository periodicServiceRepository;
-
-    @Autowired
-    @Getter
-    @Setter
     private ServiceRepository serviceRepository;
 
 
@@ -65,7 +58,8 @@ public class ReportService {
 
     private void createServiceReport(Date from, Date to, String filename) throws IOException, DocumentException {
         List<Service> services = serviceRepository.getServicesFromPeriodOfTime(from, to);
-        List<PeriodicService> periodicServices = periodicServiceRepository.getServicesFromPeriodOfTime(from, to);
+        //TODO: zmienić na metode od periodów
+        List<Service> periodicServices = serviceRepository.getServicesFromPeriodOfTime(from, to);
         PDFGenerator pdf = new PDFGenerator(filename);
         pdf.createPdf(serviceReport(services, periodicServices));
     }
@@ -95,7 +89,7 @@ public class ReportService {
         return table;
     }
 
-    private PdfPTable serviceReport(List<Service> services, List<PeriodicService> periodicServices) {
+    private PdfPTable serviceReport(List<Service> services, List<Service> periodicServices) {
         Format formatter = new SimpleDateFormat("dd-MM-yyyy");
 
         PdfPTable table = new PdfPTable(6);
@@ -112,18 +106,18 @@ public class ReportService {
             table.addCell(service.getType().getName());
             var cost = service.getCost();
             table.addCell(String.format("%s zł", cost == null ? 0 : cost));
-            table.addCell(formatter.format(service.getExecute()));
+            table.addCell(formatter.format(service.getExecutionDate()));
             table.addCell("");
             iterator++;
         }
-        for (PeriodicService periodicService : periodicServices) {
+        for (Service periodicService : periodicServices) {
             table.addCell(Integer.toString(iterator));
             table.addCell(periodicService.getCar().getFullName());
             table.addCell(periodicService.getType().getName());
             var cost = periodicService.getCost();
             table.addCell(String.format("%s zł", cost == null ? 0 : cost));
-            table.addCell(formatter.format(periodicService.getDateFrom()));
-            table.addCell(formatter.format(periodicService.getDateTo()));
+            table.addCell(formatter.format(periodicService.getExecutionDate()));
+            table.addCell(formatter.format(periodicService.getEndDate()));
             iterator++;
         }
         return table;
