@@ -16,13 +16,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.stream.Collectors;
 
 /**
  * Created by Vertig0 on 21.03.2017.
  */
 @Controller
 @Log4j
-public class CarController {
+public class CarController extends BaseController{
 
     private static final String SLASH = "/";
     private static final String PAGES = "pages";
@@ -41,12 +42,11 @@ public class CarController {
 
     @Autowired
     @Getter @Setter
-    private Environment environment;
+    private ServiceService service;
 
     @Autowired
-    @Getter
-    @Setter
-    private ServiceService service;
+    @Getter @Setter
+    private Environment env;
 
     /**
      *  Metoda wyświatlajaca stronę dodawania nowego samochodu
@@ -68,19 +68,19 @@ public class CarController {
 
         log.info("DODAWANIE NOWEGO SAMOCHODU");
         if(bindingResult.hasErrors()){
-//            redirectAttributes.addFlashAttribute("error", environment.getProperty("error.form.invalidValues"));
+            addMessage(redirectAttributes, MessageType.ERROR, "message.car.add.error",
+                    bindingResult.getFieldErrors().stream().map(e -> e.getDefaultMessage()).collect(Collectors.toList()));
             log.info("Wprowadzono niepoprawne wartosci do formularza dodawania nowego samochodu");
             return "redirect:" + SLASH + ADD_NEW_CAR;
         }
         try {
             carService.save(carDto);
-//            redirectAttributes.addFlashAttribute("info", environment.getProperty("message.customer.success"));
+            addMessage(redirectAttributes, MessageType.SUCCESS, "message.car.add.success");
             log.info("Pomyślnie dodano samochód: " + carDto.getBrand() + " " + carDto.getModel());
         } catch (Exception e){
             log.error("Nie udało się dodać samochodu " + carDto.getBrand() + " " + carDto.getModel() + ": " + e);
         }
         return "redirect:" + SLASH + ADD_NEW_CAR;
-
     }
 
     /**
@@ -95,14 +95,18 @@ public class CarController {
     }
 
     /**
-     *  Metoda usuwająca samochów z bazy danych
+     *  Metoda usuwająca samochody z bazy danych
      * */
     @RequestMapping(value = SLASH + DELETE_CAR, method = RequestMethod.POST)
     public String deleteCar(@RequestParam long id,
-                                 Model model) {
-        //TODO: komunikat o udanym/nieudanym usunieciu klienta
-        carService.delete(id);
-        log.info("Pomyślnie usunięto samochód");
+                            Model model, RedirectAttributes redirectAttributes) {
+        try {
+            addMessage(redirectAttributes, MessageType.SUCCESS, "message.car.delete.success");
+            carService.delete(id);
+            log.info("Pomyślnie usunięto samochód");
+        } catch (Exception e) {
+            log.error("Nie udało się usunąć samochodu: " + e);
+        }
         return "redirect:" + SLASH + CARS;
     }
 
@@ -166,15 +170,17 @@ public class CarController {
                                RedirectAttributes redirectAttributes) {
 
         if(bindingResult.hasErrors()){
-            redirectAttributes.addFlashAttribute("error", environment.getProperty("error.form.invalidValues"));
+            addMessage(redirectAttributes, MessageType.ERROR, "error.form.invalidValues",
+                    bindingResult.getFieldErrors().stream().map(e -> e.getDefaultMessage()).collect(Collectors.toList()));
             log.info("Wprowadzono niepoprawne wartości do formularza edycji samochodu");
             return "redirect:" + SLASH + CAR + SLASH + carDto.getId() + SLASH + EDIT_CAR_URL;
         }
         try {
             carService.update(carDto);
-            redirectAttributes.addFlashAttribute("info", environment.getProperty("message.customer.success"));
+            addMessage(redirectAttributes, MessageType.SUCCESS, "message.car.edit.success");
             log.info("Pomyślnie zedytowano samochód: " + carDto.getBrand());
         } catch (Exception e){
+            addMessage(redirectAttributes, MessageType.ERROR, "message.car.edit.error");
             log.error(String.format("Nie udało się zedytować klienta %1s : %2s", carDto.getBrand(), e));
         }
         return "redirect:" + SLASH + CAR + SLASH + carDto.getId();

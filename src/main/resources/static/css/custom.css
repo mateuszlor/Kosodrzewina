@@ -72,9 +72,8 @@ body {
     max-width: 500px;
 }
 
-## NEW
-
-# override AdminLTE
+/* NEW */
+/*# override AdminLTE */
 .alert-success {
     color: #3c763d;
 }

@@ -10,6 +10,9 @@
     <div th:replace="/fragments/header :: header">Header</div>
     <div th:replace="/fragments/menu :: menu">Menu</div>
     <div class="content-wrapper">
+        <div class="main-container container-fluid">
+            <div th:replace="/fragments/alerts :: alerts(alertType=${alertType}, info=${info})">Alerts</div>
+        </div>
 
         <!-- Content Header (Page header) -->
         <section class="content-header">

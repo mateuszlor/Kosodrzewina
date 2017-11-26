@@ -9,6 +9,9 @@
     <div th:replace="/fragments/header :: header">Header</div>
     <div th:replace="/fragments/menu :: menu">Menu</div>
     <div class="content-wrapper">
+        <div class="main-container container-fluid">
+            <div th:replace="/fragments/alerts :: alerts(alertType=${alertType}, info=${info})">Alerts</div>
+        </div>
 
         <!-- Content Header (Page header) -->
         <section class="content-header">
@@ -17,11 +20,6 @@
                 <small>nowego klienta</small>
             </h1>
         </section>
-        <!---->
-        <!-- Alerts-->
-        <!--<div th:if="${error != null or error != empty}" th:replace="fragments/alerts :: alert (type='error', message=${error})">...</div>-->
-        <!--<div th:if="${info != null or info != empty}" th:replace="fragments/alerts :: alert (type='success', message=${info})">...</div>-->
-        <!---->
 
         <section class="content">
             <!-- Page Content -->

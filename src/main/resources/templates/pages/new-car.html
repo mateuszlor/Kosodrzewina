@@ -6,10 +6,10 @@
     <script type="text/javascript">
         $(document).ready(function() {
 
-//            $('#isTrailer').iCheck({
-//                checkboxClass: 'icheckbox_square',
+//            $('input').iCheck({
+//                checkboxClass: 'icheckbox_square-green',
 //                radioClass: 'iradio_square-green',
-//                increaseArea: '20%' // optional
+//                increaseArea: '10%' // optional
 //            });
 
             $("#isTrailer").click(function(event) {
@@ -27,7 +27,10 @@
     <div th:replace="/fragments/header :: header">Header</div>
     <div th:replace="/fragments/menu :: menu">Menu</div>
     <div class="content-wrapper">
-
+        <!-- KOMUNIKAT -->
+        <div class="main-container container-fluid">
+            <div th:replace="/fragments/alerts :: alerts(alertType=${alertType}, info=${info})">Alerts</div>
+        </div>
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
@@ -72,8 +75,8 @@
                             <span class="help-block"></span>
                         </div>
                         <div class="input-group">
-                            <label for="isTrailer" th:text="#{label.trailer}"/>
                             <input type="checkbox" name="isTrailer" id="isTrailer"/>
+                            <label for="isTrailer" th:text=" #{label.trailer}"/>
                         </div>
                             <button type="submit" class="btn btn-primary" th:text="#{button.add}"/>
                     </form>

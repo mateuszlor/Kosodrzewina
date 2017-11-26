@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,12 +15,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.stream.Collectors;
+
 /**
  * Created by Vertig0 on 27.03.2017.
  */
 @Controller
 @Log4j
-public class DictionaryController extends HandlerInterceptorAdapter{
+public class DictionaryController extends BaseController{
 
     private static final String SLASH = "/";
     private static final String PAGES = "pages";
@@ -37,7 +40,6 @@ public class DictionaryController extends HandlerInterceptorAdapter{
      * */
     @RequestMapping(value = SLASH + DICTIONARY, method = RequestMethod.GET)
     public String showDictionaryPage(Model model){
-
         log.info("Dodawanie nowego wpisu do słownika");
         return PAGES + SLASH + DICTIONARY;
     }
@@ -52,12 +54,17 @@ public class DictionaryController extends HandlerInterceptorAdapter{
                                        RedirectAttributes redirectAttributes){
 
         if(bindingResult.hasErrors()){
+            addMessage(redirectAttributes, MessageType.ERROR, "message.dictionary.add.error.validator",
+                    bindingResult.getFieldErrors().stream().map(e -> e.getDefaultMessage()).collect(Collectors.toList()));
             log.info("Wprowadzono niepoprawne wartosci do formularza dodawania nowego wpisu słownikowego");
             return "redirect:" + SLASH + DICTIONARY;
         }
         try {
             dictionaryService.saveDictionary(name, type);
+            addMessage(redirectAttributes, MessageType.SUCCESS, "message.dictionary.add.success");
+            log.info("Pomyślnie dodano nowy wpis słownikowy");
         } catch (Exception e){
+            addMessage(redirectAttributes, MessageType.ERROR, "message.dictionary.add.error");
             log.error("Nie udało się dodać nowego wpisu: " + e);
         }
         return PAGES + SLASH + DICTIONARY;
@@ -68,7 +75,6 @@ public class DictionaryController extends HandlerInterceptorAdapter{
      * */
     @RequestMapping(value = SLASH + DICTIONARIES, method = RequestMethod.GET)
     public String showDictionaryListPage(Model model){
-
         model.addAttribute("dictionaries", dictionaryService.findAll());
         log.info("Strona listy słownikowej");
         return PAGES + SLASH + DICTIONARIES;
@@ -80,11 +86,15 @@ public class DictionaryController extends HandlerInterceptorAdapter{
      * */
     @RequestMapping(value = SLASH + DELETE_DICTIONARY, method = RequestMethod.POST)
     public String deleteEntry(@RequestParam long id,
-                            Model model) {
-
-        //TODO: komunikat o udanym/nieudanym usunieciu klienta
-        dictionaryService.delete(id);
-        log.info("Pomyślnie usunięto wpis");
+                              RedirectAttributes redirectAttributes) {
+        try {
+            dictionaryService.delete(id);
+            addMessage(redirectAttributes, MessageType.SUCCESS, "message.dictionary.delete.success");
+            log.info("Pomyślnie usunięto wpis");
+        } catch (Exception e) {
+            addMessage(redirectAttributes, MessageType.ERROR, "message.dictionary.delete.error");
+            log.error("Wystąpił problem z usunieciem słownika z bazy: " + e);
+        }
         return "redirect:" + SLASH + DICTIONARIES;
     }
 
@@ -94,7 +104,6 @@ public class DictionaryController extends HandlerInterceptorAdapter{
     @RequestMapping(value = SLASH + DICTIONARY + SLASH + "{id}", method = RequestMethod.GET)
     public String showEditEntryPage(@PathVariable long id,
                                     Model model){
-
         Dictionary dictionary = dictionaryService.findById(id);
         model.addAttribute("dictionary", dictionary);
         model.addAttribute("action", "edit");
@@ -111,16 +120,19 @@ public class DictionaryController extends HandlerInterceptorAdapter{
                           @ModelAttribute("id") long id,
                           BindingResult bindingResult, Model model,
                           RedirectAttributes redirectAttributes) {
-
         if(bindingResult.hasErrors()){
+            addMessage(redirectAttributes, MessageType.ERROR, "message.dictionary.edit.error.validator",
+                    bindingResult.getFieldErrors().stream().map(e -> e.getDefaultMessage()).collect(Collectors.toList()));
             log.info("Wprowadzono niepoprawne wartości podczas próby edycji wpisu");
             model.addAttribute("action", "edit");
             return "redirect:" + PAGES + SLASH + DICTIONARY;
         }
         try {
             dictionaryService.edit(id, name, type);
+            addMessage(redirectAttributes, MessageType.SUCCESS, "message.dictionary.edit.success");
             log.info("Pomyślnie zedytowano wpis ");
         } catch (Exception e){
+            addMessage(redirectAttributes, MessageType.ERROR, "message.dictionary.delete.error");
             log.error(String.format("Nie udało się zedytować wpisu %1s", e));
         }
         return "redirect:" + DICTIONARIES;

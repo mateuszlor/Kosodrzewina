@@ -18,12 +18,12 @@ public class CustomerDto {
 
     private long id;
 
+    @TextConstraint
     private String name;
 
     @TextConstraint
     private String surname;
 
-    @TextConstraint
     private String username;
 
     private String address;
