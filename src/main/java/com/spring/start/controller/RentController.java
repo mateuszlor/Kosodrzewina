@@ -7,7 +7,6 @@ import com.spring.start.service.CustomerService;
 import com.spring.start.service.RentService;
 import com.spring.start.service.dto.RentDto;
 import com.spring.start.service.dto.UserDto;
-import com.spring.start.validators.RentValidator;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,9 +45,6 @@ public class RentController {
     @Autowired
     private CustomerService customerService;
 
-    @Autowired
-    private RentValidator validator;
-
 
     @RequestMapping(path = SLASH + ADD_RENT, method = RequestMethod.GET)
     public String showAddRentPage(Model model) {
@@ -66,7 +62,6 @@ public class RentController {
                           RedirectAttributes redirectAttributes,
                           HttpServletRequest request) {
 
-        validator.validate(rent, bindingResult);
         if (bindingResult.hasErrors()) {
             log.info("Wprowadzono niepoprawne wartosci do formularza dodawania wyporzyczenia");
             return "redirect:" + SLASH + ADD_RENT;

@@ -1,11 +1,9 @@
 package com.spring.start.service.dto;
 
 import com.spring.start.entity.RentStatus;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 /**
@@ -34,10 +32,13 @@ public class RentDto {
 
     private long id;
 
+    @NotNull
     private long customer;
 
+    @NotNull
     private long car;
 
+    @NotNull
     private String startDate;
 
     private String endDate;
@@ -57,6 +58,5 @@ public class RentDto {
     private long trailer;
 
     private RentStatus status;
-
 
 }

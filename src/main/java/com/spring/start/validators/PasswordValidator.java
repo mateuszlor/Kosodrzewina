@@ -54,10 +54,10 @@ public class PasswordValidator implements Validator{
             log.warn(String.format("Nieprawidłowe obecne hasło (jest: '%s', podano: '%s'", fromDatabase, oldPassword));
         }
 
-        if (!user.getNewPassword().equals(user.getNewPassword2())){
-            errors.rejectValue("newPassword", environment.getProperty("error.differentPasswords"));
-            log.warn("Podane nowe hasła są różne");
-        }
+//        if (!user.getNewPassword().equals(user.getNewPassword2())){
+//            errors.rejectValue("newPassword", environment.getProperty("error.differentPasswords"));
+//            log.warn("Podane nowe hasła są różne");
+//        }
 
         if(!errors.hasErrors()) {
             log.info("Walidacja haseł pomyślna");

@@ -4,7 +4,6 @@ import com.spring.start.entity.Car;
 import com.spring.start.service.CarService;
 import com.spring.start.service.ServiceService;
 import com.spring.start.service.dto.CarDto;
-import com.spring.start.validators.CarValidator;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -42,10 +41,6 @@ public class CarController {
 
     @Autowired
     @Getter @Setter
-    private CarValidator validator;
-
-    @Autowired
-    @Getter @Setter
     private Environment environment;
 
     @Autowired
@@ -72,7 +67,6 @@ public class CarController {
                             RedirectAttributes redirectAttributes){
 
         log.info("DODAWANIE NOWEGO SAMOCHODU");
-//        validator.validate(carDto, bindingResult);
         if(bindingResult.hasErrors()){
 //            redirectAttributes.addFlashAttribute("error", environment.getProperty("error.form.invalidValues"));
             log.info("Wprowadzono niepoprawne wartosci do formularza dodawania nowego samochodu");
@@ -171,7 +165,6 @@ public class CarController {
                                BindingResult bindingResult, Model model,
                                RedirectAttributes redirectAttributes) {
 
-        validator.validate(carDto, bindingResult);
         if(bindingResult.hasErrors()){
             redirectAttributes.addFlashAttribute("error", environment.getProperty("error.form.invalidValues"));
             log.info("Wprowadzono niepoprawne wartości do formularza edycji samochodu");

@@ -63,7 +63,7 @@ public class ProfileController {
 
         log.info("Got POST with user: " + (user != null ? user.getFullName() : "NULL"));
 
-        validator.validate(user, bindingResult);
+//        validator.validate(user, bindingResult);
 
         var hasErrors = bindingResult.hasErrors();
 

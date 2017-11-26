@@ -21,8 +21,6 @@ import static org.mockito.Matchers.matches;
 @RunWith(MockitoJUnitRunner.class)
 public class CarValidatorTest {
 
-    @Spy
-    private CarValidator carValidatorSpy;
     @Mock
     private Errors error;
     @Mock
@@ -30,10 +28,6 @@ public class CarValidatorTest {
 
     CarDto car;
 
-    @Before
-    public void before() {
-        carValidatorSpy.setEnvironment(environment);
-    }
 
     @Test
     public void shouldValidateWithoutError() throws Exception {
@@ -45,7 +39,6 @@ public class CarValidatorTest {
         car.setName("name");
         car.setRegistrationNumber("EPA 1234");
         //Act
-        carValidatorSpy.validate(car, error);
 
         //Assert
         assertEquals(0, error.getAllErrors().size());
@@ -61,8 +54,6 @@ public class CarValidatorTest {
         car.setModel("model");
         car.setName("name");
         car.setRegistrationNumber("EPA 1234");
-        //Act
-        carValidatorSpy.validate(car, error);
 
         //Assert
         Mockito.verify(error).rejectValue( matches("brand"), any(String.class) );
@@ -78,8 +69,6 @@ public class CarValidatorTest {
         car.setModel("model");
         car.setName("name");
         car.setRegistrationNumber("EPA 1234-testRandomText*&^");
-        //Act
-        carValidatorSpy.validate(car, error);
 
         //Assert
         Mockito.verify(error).rejectValue( matches("registrationNumber"), any(String.class) );

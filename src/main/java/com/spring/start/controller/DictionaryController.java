@@ -3,7 +3,6 @@ package com.spring.start.controller;
 import com.spring.start.entity.Dictionary;
 import com.spring.start.entity.DictionaryType;
 import com.spring.start.service.DictionaryService;
-import com.spring.start.validators.DictionaryValidator;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -33,12 +32,6 @@ public class DictionaryController extends HandlerInterceptorAdapter{
     @Getter @Setter
     private DictionaryService dictionaryService;
 
-    @Autowired
-    @Getter
-    @Setter
-    private DictionaryValidator validator;
-
-
     /**
      *  Metoda wyświetlająca strone dodawania/edycji wpisu słownikowego
      * */
@@ -58,7 +51,6 @@ public class DictionaryController extends HandlerInterceptorAdapter{
                                        BindingResult bindingResult, Model model,
                                        RedirectAttributes redirectAttributes){
 
-        validator.validate(name, bindingResult);
         if(bindingResult.hasErrors()){
             log.info("Wprowadzono niepoprawne wartosci do formularza dodawania nowego wpisu słownikowego");
             return "redirect:" + SLASH + DICTIONARY;
@@ -120,7 +112,6 @@ public class DictionaryController extends HandlerInterceptorAdapter{
                           BindingResult bindingResult, Model model,
                           RedirectAttributes redirectAttributes) {
 
-        validator.validate(name, bindingResult);
         if(bindingResult.hasErrors()){
             log.info("Wprowadzono niepoprawne wartości podczas próby edycji wpisu");
             model.addAttribute("action", "edit");

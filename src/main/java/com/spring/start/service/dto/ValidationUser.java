@@ -1,29 +1,37 @@
 package com.spring.start.service.dto;
 
+import com.spring.start.validators.EmailConstraint;
+import com.spring.start.validators.FieldsValuesMatch;
+import com.spring.start.validators.TextConstraint;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
  * Created by Nex0Zero on 2017-03-20.
  */
+@FieldsValuesMatch.List({
+    @FieldsValuesMatch(
+        field = "password",
+        fieldMatch = "repeatPassword",
+        message = "Hasła są różne"
+    )
+})
+@Getter @Setter
 public class ValidationUser {
 
-    @Getter @Setter
     private String username;
 
-    @Getter @Setter
+    @TextConstraint
     private String name;
 
-    @Getter @Setter
+    @TextConstraint
     private String surname;
 
-    @Getter @Setter
+    @EmailConstraint
     private String email;
 
-    @Getter @Setter
     private String password;
 
-    @Getter @Setter
     private String repeatPassword;
 
     public ValidationUser(){}

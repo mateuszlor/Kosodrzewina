@@ -1,42 +1,34 @@
 package com.spring.start.service.dto;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import com.spring.start.validators.PhoneNumberConstraint;
+import com.spring.start.validators.TextConstraint;
+import lombok.*;
+
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
 /**
  * Created by Vertig0 on 18.03.2017.
  */
+@Getter @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class CustomerDto {
 
-    @Getter @Setter
     private long id;
 
-    @Getter @Setter
     private String name;
 
-    @Getter @Setter
+    @TextConstraint
     private String surname;
 
-    @Getter @Setter
+    @TextConstraint
     private String username;
 
-    @Getter @Setter
     private String address;
 
-    @Getter @Setter
+    @PhoneNumberConstraint
     private String phone;
 
-    public CustomerDto(){}
-
-    public CustomerDto(long id, String name, String surname, String username, String address, String phone) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.username = username;
-        this.address = address;
-        this.phone = phone;
-    }
 }

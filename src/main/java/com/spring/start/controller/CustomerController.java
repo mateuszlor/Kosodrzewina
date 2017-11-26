@@ -3,7 +3,6 @@ package com.spring.start.controller;
 import com.spring.start.entity.Customer;
 import com.spring.start.service.CustomerService;
 import com.spring.start.service.dto.CustomerDto;
-import com.spring.start.validators.CustomerValidator;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -37,10 +36,6 @@ public class CustomerController {
 
     @Autowired
     @Getter @Setter
-    private CustomerValidator validator;
-
-    @Autowired
-    @Getter @Setter
     private Environment environment;
 
     @RequestMapping(value = SLASH + CUSTOMER, method = RequestMethod.GET)
@@ -55,7 +50,6 @@ public class CustomerController {
                                         BindingResult bindingResult, Model model,
                                         RedirectAttributes redirectAttributes) {
 
-        validator.validate(customerDto, bindingResult);
         if(bindingResult.hasErrors()){
             redirectAttributes.addFlashAttribute("error", environment.getProperty("error.form.invalidValues"));
             log.info("Wprowadzono niepoprawne wartosci do formularza edycji klienta");
@@ -76,7 +70,6 @@ public class CustomerController {
                                   BindingResult bindingResult, Model model,
                                   RedirectAttributes redirectAttributes) {
 
-        validator.validate(customerDto, bindingResult);
         if(bindingResult.hasErrors()){
             redirectAttributes.addFlashAttribute("info", environment.getProperty("error.form.invalidValues"));
             redirectAttributes.addFlashAttribute("alertType", "error");

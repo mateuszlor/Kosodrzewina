@@ -2,7 +2,6 @@ package com.spring.start.controller;
 
 import com.spring.start.service.UserService;
 import com.spring.start.service.dto.ValidationUser;
-import com.spring.start.validators.RegisterValidator;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -31,10 +30,6 @@ public class RegisterController {
 
     @Autowired
     @Getter @Setter
-    private RegisterValidator validator;
-
-    @Autowired
-    @Getter @Setter
     private Environment environment;
 
     @Autowired
@@ -57,7 +52,6 @@ public class RegisterController {
                                BindingResult bindingResult, Model model,
                                RedirectAttributes redirectAttributes){
 
-        validator.validate(validationUser, bindingResult);
         if(bindingResult.hasErrors()){
             redirectAttributes.addFlashAttribute("error", environment.getProperty("error.form.invalidValues"));
             log.info("Wprowadzono niepoprawne wartosci do formularza dodawania nowego użytkownika");
