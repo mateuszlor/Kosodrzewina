@@ -1,5 +1,6 @@
 package com.spring.start.service;
 
+import com.spring.start.entity.Dictionary;
 import com.spring.start.entity.Rent;
 import com.spring.start.entity.RentStatus;
 import com.spring.start.interfaces.BasicDatabaseOperations;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -67,8 +69,8 @@ public class RentService implements BasicDatabaseOperations<Rent>{
     }
 
     @Override
-    public Iterable<Rent> findAll(){
-        return rentRepository.findAll();
+    public List<Rent> findAllActive(){
+        return rentRepository.findAllByDeletedFalse();
     }
 
     @Override
@@ -78,7 +80,19 @@ public class RentService implements BasicDatabaseOperations<Rent>{
 
     @Override
     public void delete(long id){
-        rentRepository.delete(id);
+
+        try {
+            Rent rent = rentRepository.findOne(id);
+            rent.setDeleted(true);
+            rentRepository.save(rent);
+        } catch (Exception e) {
+            log.error("Wystąpił błąd przy usuwaniu wyporzyczenia: " + e);
+        }
+    }
+
+    @Override
+    public Iterable<Rent> findAll() {
+        return rentRepository.findAll();
     }
 
     public void returnRent(long id, String endDate, Long endCourse){

@@ -7,12 +7,10 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.stream.Collectors;
@@ -75,7 +73,7 @@ public class DictionaryController extends BaseController{
      * */
     @RequestMapping(value = SLASH + DICTIONARIES, method = RequestMethod.GET)
     public String showDictionaryListPage(Model model){
-        model.addAttribute("dictionaries", dictionaryService.findAll());
+        model.addAttribute("dictionaries", dictionaryService.findAllActive());
         log.info("Strona listy słownikowej");
         return PAGES + SLASH + DICTIONARIES;
     }

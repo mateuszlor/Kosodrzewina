@@ -1,5 +1,6 @@
 package com.spring.start.service;
 
+import com.spring.start.entity.Car;
 import com.spring.start.entity.Customer;
 import com.spring.start.interfaces.BasicDatabaseOperations;
 import com.spring.start.repository.CustomerRepository;
@@ -49,18 +50,24 @@ public class CustomerService implements BasicDatabaseOperations<Customer>{
         log.info("Dokonano edycji klienta: " + customer.getUsername());
     }
 
-    @Override
-    public List<Customer> findAll(){
-        return customerRepository.findAll();
+    public List<Customer> findAllActive(){
+        return customerRepository.findAllByDeletedFalse();
     }
 
     @Override
     public void delete(long id) {
         try {
-            customerRepository.delete(id);
+            Customer customer = customerRepository.findOne(id);
+            customer.setDeleted(true);
+            customerRepository.save(customer);
         } catch (Exception e) {
             log.error("Wystąpił błąd przy usuwaniu klienta: " + e);
         }
+    }
+
+    @Override
+    public Iterable<Customer> findAll() {
+        return customerRepository.findAll();
     }
 
     @Override

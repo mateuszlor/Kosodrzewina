@@ -93,7 +93,7 @@ public class CustomerController extends BaseController{
     @RequestMapping(value = SLASH + CUSTOMERS, method = RequestMethod.GET)
     public String showCustomersList(Model model){
 
-        model.addAttribute("customers", customerService.findAll());
+        model.addAttribute("customers", customerService.findAllActive());
         log.info("Lista klientów");
         return PAGES + SLASH + CUSTOMERS;
     }

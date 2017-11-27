@@ -2,6 +2,7 @@ package com.spring.start.service;
 
 import com.spring.start.entity.Car;
 import com.spring.start.entity.Service;
+import com.spring.start.interfaces.BasicDatabaseOperations;
 import com.spring.start.operations.Functions;
 import com.spring.start.repository.ServiceRepository;
 import com.spring.start.service.dto.ServiceDto;
@@ -22,7 +23,7 @@ import java.util.stream.StreamSupport;
 @org.springframework.stereotype.Service
 @Log4j
 @var
-public class ServiceService{
+public class ServiceService implements BasicDatabaseOperations<Service> {
 
     @Autowired
     private ServiceRepository serviceRepository;
@@ -75,6 +76,26 @@ public class ServiceService{
         } catch (Exception e) {
             log.error("Wystąpił błąd przy usuwaniu okresowego wpisu serwisowego: {}", e);
         }
+    }
+
+    @Override
+    public void delete(long id) {
+        try {
+            Service service = serviceRepository.findOne(id);
+            service.setDeleted(true);
+            serviceRepository.save(service);
+        } catch (Exception e) {
+            log.error("Wystąpił błąd przy usuwaniu serwisu: " + e);
+        }
+    }
+
+    @Override
+    public Iterable<Service> findAll() {
+        return serviceRepository.findAll();
+    }
+
+    public List<Service> findAllActive() {
+        return serviceRepository.getAllByDeletedFalse();
     }
 
     public Service findById(long id) {

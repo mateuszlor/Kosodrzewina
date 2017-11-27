@@ -49,18 +49,18 @@ public class DictionaryServiceTest {
     @Test
     public void shouldVerifyThat_FindAll_IsCalled() {
         //Arrange
-        Mockito.doReturn(new ArrayList<Dictionary>()).when(dictionaryServiceSpy).findAll();
+        Mockito.doReturn(new ArrayList<Dictionary>()).when(dictionaryServiceSpy).findAllActive();
         //Act
-        dictionaryServiceSpy.findAll();
+        dictionaryServiceSpy.findAllActive();
         //Assert
-        Mockito.verify(dictionaryServiceSpy).findAll();
+        Mockito.verify(dictionaryServiceSpy).findAllActive();
     }
     @Test
     public void shouldVerifyThat_RepositoryFindAll_InFindAll_IsCalled() throws Exception {
         //Arrange
         dictionaryServiceSpy.setDictionaryRepository(dictionaryRepository);
         //Act
-        dictionaryServiceSpy.findAll();
+        dictionaryServiceSpy.findAllActive();
         //Assert
         Mockito.verify(dictionaryRepository).findAll();
     }

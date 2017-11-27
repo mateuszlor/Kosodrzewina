@@ -16,6 +16,6 @@ public interface CarRepository extends CrudRepository<Car, Long> {
 
     List<Car> findCarsByIds(List<Long> ids);
 
-    Iterable<Car> findCarsByDeletedFalse();
+    List<Car> findCarsByDeletedFalse();
 
 }

@@ -1,5 +1,6 @@
 package com.spring.start.service;
 
+import com.spring.start.entity.Car;
 import com.spring.start.entity.Dictionary;
 import com.spring.start.entity.DictionaryType;
 import com.spring.start.interfaces.BasicDatabaseOperations;
@@ -10,6 +11,8 @@ import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * Created by Vertig0 on 27.03.2017.
@@ -34,8 +37,8 @@ public class DictionaryService implements BasicDatabaseOperations<Dictionary>{
     }
 
     @Override
-    public Iterable<Dictionary> findAll(){
-        return dictionaryRepository.findAll();
+    public List<Dictionary> findAllActive(){
+        return dictionaryRepository.findAllByDeletedFalse();
     }
 
     public Iterable<Dictionary> getDictionaryiesByType(DictionaryType type){
@@ -45,10 +48,17 @@ public class DictionaryService implements BasicDatabaseOperations<Dictionary>{
     @Override
     public void delete(long id) {
         try {
-            dictionaryRepository.delete(id);
+            Dictionary dictionary = dictionaryRepository.findOne(id);
+            dictionary.setDeleted(true);
+            dictionaryRepository.save(dictionary);
         } catch (Exception e) {
             log.error("Wystąpił błąd przy usuwaniu wpisu: " + e);
         }
+    }
+
+    @Override
+    public Iterable<Dictionary> findAll() {
+        return dictionaryRepository.findAll();
     }
 
     @Override

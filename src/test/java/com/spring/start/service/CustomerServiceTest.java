@@ -70,18 +70,18 @@ public class CustomerServiceTest {
     @Test
     public void shouldVerifyThat_FindAll_IsCalled() throws Exception {
         //Arrange
-        Mockito.doReturn(new ArrayList<Customer>()).when(customerServiceSpy).findAll();
+        Mockito.doReturn(new ArrayList<Customer>()).when(customerServiceSpy).findAllActive();
         //Act
-        customerServiceSpy.findAll();
+        customerServiceSpy.findAllActive();
         //Assert
-        Mockito.verify(customerServiceSpy).findAll();
+        Mockito.verify(customerServiceSpy).findAllActive();
     }
     @Test
     public void shouldVerifyThat_RepositoryFindAll_FindAll_IsCalled() throws Exception {
         //Arrange
         customerServiceSpy.setCustomerRepository(customerRepository);
         //Act
-        customerServiceSpy.findAll();
+        customerServiceSpy.findAllActive();
         //Assert
         Mockito.verify(customerRepository).findAll();
     }

@@ -1,7 +1,6 @@
 package com.spring.start.service;
 
 import com.spring.start.entity.Rent;
-import com.spring.start.operations.Functions;
 import com.spring.start.repository.CarRepository;
 import com.spring.start.repository.CustomerRepository;
 import com.spring.start.repository.RentRepository;
@@ -17,7 +16,6 @@ import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import static org.mockito.Matchers.any;
 
@@ -80,16 +78,16 @@ public class RentServiceTest {
     @Test
     public void shouldVerifyThat_FindAll_IsCalled() throws Exception {
         //Arrange
-        Mockito.doReturn(new ArrayList<Rent>()).when(rentServiceSpy).findAll();
+        Mockito.doReturn(new ArrayList<Rent>()).when(rentServiceSpy).findAllActive();
         //Act
-        rentServiceSpy.findAll();
+        rentServiceSpy.findAllActive();
         //Assert
-        Mockito.verify(rentServiceSpy).findAll();
+        Mockito.verify(rentServiceSpy).findAllActive();
     }
     @Test
     public void shouldVerifyThat_RepositoryFindAll_FindAll_IsCalled() throws Exception {
         //Act
-        rentServiceSpy.findAll();
+        rentServiceSpy.findAllActive();
         //Assert
         Mockito.verify(rentRepository).findAll();
     }

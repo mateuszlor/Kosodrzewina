@@ -67,6 +67,11 @@ public class UserService implements BasicDatabaseOperations<User>{
         return userRepository.findOne(id);
     }
 
+    @Override
+    public List<User> findAllActive() {
+        return null;
+    }
+
     public UserDto getUserDetails(String username) {
         var user = userRepository.findByUsername(username);
         var userDto = UserDto.builder()

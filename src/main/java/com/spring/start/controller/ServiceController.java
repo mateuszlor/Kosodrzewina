@@ -51,7 +51,7 @@ public class ServiceController {
     @RequestMapping(value = SLASH + ADD_SERVICE, method = RequestMethod.GET)
     public String showNewServicePage(Model model) throws Exception {
 
-        model.addAttribute("cars", carService.findAll());
+        model.addAttribute("cars", carService.findAllActive());
         model.addAttribute("serviceDict", dictionaryService.getDictionaryiesByType(DictionaryType.SERVICE));
         model.addAttribute("paymentDict", dictionaryService.getDictionaryiesByType(DictionaryType.PAYMENT));
 

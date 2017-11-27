@@ -54,18 +54,18 @@ public class CarServiceTest {
     @Test
     public void shouldVerifyThat_FindAll_IsCalled() {
         //Arrange
-        Mockito.doReturn(new ArrayList<Car>()).when(carServiceSpy).findAll();
+        Mockito.doReturn(new ArrayList<Car>()).when(carServiceSpy).findAllActive();
         //Act
-        carServiceSpy.findAll();
+        carServiceSpy.findAllActive();
         //Assert
-        Mockito.verify(carServiceSpy).findAll();
+        Mockito.verify(carServiceSpy).findAllActive();
     }
     @Test
     public void shouldVerifyThat_RepositoryFindAll_InFindAll_IsCalled() throws Exception {
         //Arrange
         carServiceSpy.setCarRepository(carRepository);
         //Act
-        carServiceSpy.findAll();
+        carServiceSpy.findAllActive();
         //Assert
         Mockito.verify(carRepository).findAll();
     }

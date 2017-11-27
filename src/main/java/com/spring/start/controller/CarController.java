@@ -89,7 +89,7 @@ public class CarController extends BaseController{
     @RequestMapping(value = SLASH + CARS, method = RequestMethod.GET)
     public String showCarList(Model model){
 
-        model.addAttribute("cars", carService.findAll());
+        model.addAttribute("cars", carService.findAllActive());
         log.info(String.format("Lista samochodów"));
         return PAGES + SLASH + CARS;
     }

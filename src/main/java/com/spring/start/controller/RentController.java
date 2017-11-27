@@ -50,8 +50,8 @@ public class RentController {
     public String showAddRentPage(Model model) {
 
         model.addAttribute("trailers", carService.findCarsByIsTrailer());
-        model.addAttribute("cars", carService.findAll());
-        model.addAttribute("customers", customerService.findAll());
+        model.addAttribute("cars", carService.findAllActive());
+        model.addAttribute("customers", customerService.findAllActive());
         log.info("Strona dodawania nowego wypożyczenia");
         return PAGES + SLASH + ADD_RENT;
     }
@@ -88,7 +88,7 @@ public class RentController {
     @RequestMapping(path = SLASH + RENTS, method = RequestMethod.GET)
     public String showRentsPage(Model model) {
 
-        model.addAttribute("rents", rentService.findAll());
+        model.addAttribute("rents", rentService.findAllActive());
         log.info("Lista wyporzyczeń");
         return PAGES + SLASH + RENTS;
     }

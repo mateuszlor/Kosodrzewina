@@ -41,17 +41,24 @@ public class CarService implements BasicDatabaseOperations<Car> {
     }
 
     @Override
-    public Iterable<Car> findAll() {
+    public List<Car> findAllActive() {
         return carRepository.findCarsByDeletedFalse();
     }
 
     @Override
     public void delete(long id) {
         try {
-            carRepository.delete(id);
+            Car car = carRepository.findOne(id);
+            car.setDeleted(true);
+            carRepository.save(car);
         } catch (Exception e) {
             log.error("Wystąpił błąd przy usuwaniu klienta: " + e);
         }
+    }
+
+    @Override
+    public Iterable<Car> findAll() {
+        return carRepository.findAll();
     }
 
     @Override
