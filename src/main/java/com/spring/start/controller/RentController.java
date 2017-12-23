@@ -12,26 +12,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.stream.Collectors;
 
 /**
  * Created by Vertig0 on 09.04.2017.
  */
 @Controller
 @Log4j
-public class RentController {
+public class RentController extends BaseController{
 
     private static final String SLASH = "/";
     private static final String PAGES = "pages";
     private static final String ADD_RENT = "add-rent";
+    private static final String EDIT_RENT = "edit";
     private static final String RENTS = "rents";
+    private static final String RENT = "rent";
     private static final String DELETE_RENT = "delete-rent";
     private static final String RETURN_RENT = "return-rent";
     private static final String CHAGNE_STATUS = "rent-rent";
@@ -63,6 +63,8 @@ public class RentController {
                           HttpServletRequest request) {
 
         if (bindingResult.hasErrors()) {
+            addMessage(redirectAttributes, MessageType.ERROR, "message.rent.add.error.validator",
+                    bindingResult.getFieldErrors().stream().map(e -> e.getDefaultMessage()).collect(Collectors.toList()));
             log.info("Wprowadzono niepoprawne wartosci do formularza dodawania wyporzyczenia");
             return "redirect:" + SLASH + ADD_RENT;
         }
@@ -78,8 +80,10 @@ public class RentController {
             }
             rentService.addRent(rent, (UserDto) request.getSession().getAttribute("user"),
                     savedTraier != null ? savedTraier : null);
+            addMessage(redirectAttributes, MessageType.SUCCESS, "message.rent.add.success");
             log.info("Pomyślnie dodano wyporzyczenie");
         } catch (Exception e) {
+            addMessage(redirectAttributes, MessageType.ERROR, "message.rent.add.error");
             log.error("Nie udało się dodać wyporzyczenia: " + e);
         }
         return "redirect:" + SLASH + ADD_RENT;
@@ -93,14 +97,28 @@ public class RentController {
         return PAGES + SLASH + RENTS;
     }
 
+
+    //TODO: Strona podglądu a potem edycji
+    /**
+     *  Metoda wyświetlajaca stronę edycji samochodu
+     * */
+    @RequestMapping(value = SLASH + RENT + SLASH + "{id}" + SLASH + EDIT_RENT, method = RequestMethod.GET)
+    public String showCarEditPage(@PathVariable long id, Model model){
+
+        Rent rent = rentService.findById(id);
+        model.addAttribute("rent", rent);
+        log.info("Strona edycji wyporzyczenia");
+        return PAGES + SLASH + ADD_RENT;
+    }
+
     /**
      *  Metoda usuwająca wyporzyczenie z bazy danych
      * */
     @RequestMapping(value = SLASH + DELETE_RENT, method = RequestMethod.POST)
     public String deleteRent(@RequestParam long id,
-                              Model model) {
-        //TODO: komunikat o udanym/nieudanym usunięciu
+                              RedirectAttributes redirectAttributes) {
         rentService.delete(id);
+        addMessage(redirectAttributes, MessageType.SUCCESS, "message.rent.delete.success");
         log.info("Pomyślnie usunięto wyporzyczenie");
         return "redirect:" + SLASH + RENTS;
     }
@@ -131,13 +149,15 @@ public class RentController {
     }
 
     @RequestMapping(value = SLASH + CHAGNE_STATUS, method = RequestMethod.POST)
-    public String changeStatusToRented(@RequestParam long id, Model model) {
+    public String changeStatusToRented(@RequestParam long id, RedirectAttributes redirectAttributes) {
         try {
             Rent rent = rentService.findById(id);
             rent.setStatus(RentStatus.RENTED);
             rentService.update(rent);
+            addMessage(redirectAttributes, MessageType.SUCCESS, "message.rent.changeStatus.success");
             log.info("Pomyślnie zaktualizowano status wyporzyczenia " + id);
         } catch (Exception e) {
+            addMessage(redirectAttributes, MessageType.ERROR, "message.rent.changeStatus.error");
             log.error("Wystąpił problem przy zmianie statusu wyporzyczenia {}", e);
         }
         return "redirect:" + SLASH + RENTS;

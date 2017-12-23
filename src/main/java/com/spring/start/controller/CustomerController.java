@@ -52,16 +52,17 @@ public class CustomerController extends BaseController{
                                         RedirectAttributes redirectAttributes) {
 
         if(bindingResult.hasErrors()){
-            addMessage(redirectAttributes, MessageType.ERROR, "message.customer.edit.error",
+            addMessage(redirectAttributes, MessageType.ERROR, "message.customer.edit.error.validator",
                     bindingResult.getFieldErrors().stream().map(e -> e.getDefaultMessage()).collect(Collectors.toList()));
-            log.info("Wprowadzono niepoprawne wartosci do formularza edycji klienta");
-            return "redirect:" + SLASH + EDIT_CUSTOMER;
+            log.warn("Wprowadzono niepoprawne wartości do formularza edycji klienta");
+            return "redirect:" + SLASH + EDIT_CUSTOMER + SLASH + customerDto.getId();
         }
         try {
-            customerService.save(customerDto);
+            customerService.update(customerDto);
             addMessage(redirectAttributes, MessageType.SUCCESS, "message.customer.edit.success");
             log.info("Pomyślnie zedytowano klienta: " + customerDto.getUsername());
         } catch (Exception e){
+            addMessage(redirectAttributes, MessageType.ERROR, "message.customer.edit.error");
             log.error("Nie udało się zedytować klienta " + customerDto.getName() + ": " + e);
         }
         return "redirect:" + SLASH + CUSTOMERS;
@@ -79,11 +80,11 @@ public class CustomerController extends BaseController{
             return "redirect:" + SLASH + CUSTOMER;
         }
         try {
-            customerService.update(customerDto);
+            customerService.save(customerDto);
             addMessage(redirectAttributes, MessageType.SUCCESS, "message.customer.add.success");
             log.info("Pomyślnie zedytowano klienta: " + customerDto.getUsername());
         } catch (Exception e){
-            log.error("Nie udało się dodać użytkownika " + customerDto.getName() + "do bazy: " + e);
+            log.error("Nie udało się dodać użytkownika " + customerDto.getName() + " do bazy: " + e);
             addMessage(redirectAttributes, MessageType.ERROR, "message.customer.add.error");
             return "redirect:" + SLASH + CUSTOMERS;
         }

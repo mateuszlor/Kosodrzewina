@@ -62,22 +62,6 @@ public class ServiceService implements BasicDatabaseOperations<Service> {
         log.info("Dodano nowy serwis");
     }
 
-    public void deleteService(long id) {
-        try {
-            serviceRepository.delete(id);
-        } catch (Exception e) {
-            log.error("Wystąpił błąd przy usuwaniu wpisu serwisowego: " + e);
-        }
-    }
-
-    public void deletePeriodicService(long id) {
-        try {
-            serviceRepository.delete(id);
-        } catch (Exception e) {
-            log.error("Wystąpił błąd przy usuwaniu okresowego wpisu serwisowego: {}", e);
-        }
-    }
-
     @Override
     public void delete(long id) {
         try {

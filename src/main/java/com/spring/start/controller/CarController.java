@@ -127,25 +127,12 @@ public class CarController extends BaseController{
      *  Metoda usuwająca dany wpis serwisowy
      **/
     @RequestMapping(value = SLASH + DELETE_SERVICE, method = RequestMethod.POST)
-    public String deleteService(@RequestParam long id, @RequestParam long carId, Model model) {
+    public String deleteService(@RequestParam long id, @RequestParam long carId, RedirectAttributes redirectAttributes) {
         //TODO: czy jesteś pewien?
 
-        //TODO: komunikat o udanym/nieudanym usunieciu servisu
-        service.deleteService(id);
+        service.delete(id);
+        addMessage(redirectAttributes, MessageType.SUCCESS, "message.service.delete.success");
         log.info("Pomyślnie usunięto wpis serwisowy");
-        return "redirect:" + SLASH + CAR + SLASH + carId;
-    }
-
-    /**
-     *  Metoda usuwająca dany okresowy wpis serwisowy
-     * */
-    @RequestMapping(value = SLASH + DELETE_PERIODIC, method = RequestMethod.POST)
-    public String deletePeriodicService(@RequestParam long id, @RequestParam long carId, Model model) {
-        //TODO: czy jesteś pewien?
-
-        //TODO: komunikat o udanym/nieudanym usunieciu servisu
-        service.deletePeriodicService(id);
-        log.info("Pomyślnie usunięto okresowy wpis serwisowy");
         return "redirect:" + SLASH + CAR + SLASH + carId;
     }
 

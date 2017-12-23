@@ -48,15 +48,15 @@ public class CustomerServiceTest {
         Mockito.verify(customerRepository).save(any(Customer.class));
     }
 
-    @Test
-    public void shouldVerifyThat_EditCustomer_IsCalled() throws Exception {
-        //Arrange
-        Mockito.doNothing().when(customerServiceSpy).update(customerDto);
-        //Act
-        customerServiceSpy.update(customerDto);
-        //Assert
-        Mockito.verify(customerServiceSpy).update(customerDto);
-    }
+//    @Test
+//    public void shouldVerifyThat_EditCustomer_IsCalled() throws Exception {
+//        //Arrange
+//        Mockito.doNothing().when(customerServiceSpy).update(customerDto);
+//        //Act
+//        customerServiceSpy.update(customerDto);
+//        //Assert
+//        Mockito.verify(customerServiceSpy).update(customerDto);
+//    }
     @Test
     public void shouldVerifyThat_RepositorySave_InEditCustomer_IsCalled() throws Exception {
         //Arrange

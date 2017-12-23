@@ -1,5 +1,6 @@
 package com.spring.start.entity;
 
+import com.spring.start.service.dto.CustomerDto;
 import lombok.*;
 import org.joda.time.DateTime;
 
@@ -43,6 +44,14 @@ public class Customer extends BaseEntity<Customer>{
         this.username = username;
         this.address = address;
         this.phone = phone;
+    }
+
+    public Customer(CustomerDto dto) {
+        this.name = dto.getName();
+        this.surname = dto.getSurname();
+        this.username = dto.getUsername();
+        this.address = dto.getAddress();
+        this.phone = dto.getPhone();
     }
 
     public String getFullName() {

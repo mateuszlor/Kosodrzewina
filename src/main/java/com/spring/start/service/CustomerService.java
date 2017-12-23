@@ -37,17 +37,17 @@ public class CustomerService implements BasicDatabaseOperations<Customer>{
         log.info("Dodano nowego klienta: " + customer.getUsername());
     }
 
-    public void update(CustomerDto customerDto) {
-
-        Customer customer = Customer.builder().address(customerDto.getAddress())
-                .id(customerDto.getId())
-                .name(customerDto.getName())
-                .surname(customerDto.getSurname())
-                .username(customerDto.getUsername())
-                .phone(customerDto.getPhone())
-                .build();
-        customerRepository.save(customer);
-        log.info("Dokonano edycji klienta: " + customer.getUsername());
+    public void update(CustomerDto customerDto){
+        try {
+            Customer customer = customerRepository.findOne(customerDto.getId());
+            customer = Customer.mergeUpdate(customer, new Customer(customerDto));
+            customerRepository.save(customer);
+            log.info("Dokonano edycji klienta: " + customer.getUsername());
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
     }
 
     public List<Customer> findAllActive(){

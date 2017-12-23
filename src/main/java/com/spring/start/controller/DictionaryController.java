@@ -65,7 +65,7 @@ public class DictionaryController extends BaseController{
             addMessage(redirectAttributes, MessageType.ERROR, "message.dictionary.add.error");
             log.error("Nie udało się dodać nowego wpisu: " + e);
         }
-        return PAGES + SLASH + DICTIONARY;
+        return "redirect:" + SLASH + DICTIONARIES;
     }
 
     /**
@@ -113,7 +113,7 @@ public class DictionaryController extends BaseController{
      * Metoda edytująca samochód
      * */
     @RequestMapping(path = SLASH + EDIT_DICTIONARY, method = RequestMethod.POST)
-    public String editCar(@ModelAttribute("name") String name,
+    public String editEntry(@ModelAttribute("name") String name,
                           @ModelAttribute("type") DictionaryType type,
                           @ModelAttribute("id") long id,
                           BindingResult bindingResult, Model model,
@@ -123,7 +123,7 @@ public class DictionaryController extends BaseController{
                     bindingResult.getFieldErrors().stream().map(e -> e.getDefaultMessage()).collect(Collectors.toList()));
             log.info("Wprowadzono niepoprawne wartości podczas próby edycji wpisu");
             model.addAttribute("action", "edit");
-            return "redirect:" + PAGES + SLASH + DICTIONARY;
+            return "redirect:" + SLASH + DICTIONARY + SLASH + id;
         }
         try {
             dictionaryService.edit(id, name, type);

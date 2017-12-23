@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 @Controller
 @Log4j
 @var
-public class ServiceController {
+public class ServiceController extends BaseController{
 
     @Autowired
     private DictionaryService dictionaryService;
@@ -67,6 +67,8 @@ public class ServiceController {
 
         validator.validate(serviceDto, bindingResult);
         if (bindingResult.hasErrors()) {
+            addMessage(redirectAttributes, MessageType.ERROR, "message.service.add.error.validator",
+                    bindingResult.getFieldErrors().stream().map(e -> e.getDefaultMessage()).collect(Collectors.toList()));
             log.info("Wprowadzono niepoprawne wartosci do formularza dodawania serwisu");
             return "redirect:" + SLASH + ADD_SERVICE;
         }
@@ -77,13 +79,15 @@ public class ServiceController {
                 log.debug("Dodano serwis do bazy");
             } else if (DictionaryType.PAYMENT.toString().equals(serviceDto.getType())) {
                 serviceService.createPeriodicService(serviceDto, (UserDto) request.getSession().getAttribute("user"));
-                log.debug("Dodano 'płatność' do bazy");
+                log.debug("Dodano serwis okresowy do bazy");
             } else {
                 log.error("Wystąpił problem z dodaniem serwisu, pusty typ wpisu serwisowego");
                 return "redirect:" + SLASH + ADD_SERVICE;
             }
+            addMessage(redirectAttributes, MessageType.SUCCESS, "message.service.add.success");
             log.info("Pomyślnie dodano serwis");
         } catch (Exception e) {
+            addMessage(redirectAttributes, MessageType.ERROR, "message.service.add.error");
             log.error("Nie udało się dodać serwisu: " + e);
         }
 
@@ -94,7 +98,6 @@ public class ServiceController {
     public String listServices(Model model, HttpServletRequest request) {
 
         log.info("Services page");
-
         log.info(String.format("Attributes: %s", String.join(", ", Collections.list(request.getParameterNames()))));
 
         var type = request.getParameter("type");
