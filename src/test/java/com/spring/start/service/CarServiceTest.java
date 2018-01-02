@@ -143,7 +143,7 @@ public class CarServiceTest {
         //Act
         carServiceSpy.findCarsByIsTrailer();
         //Assert
-        Mockito.verify(carRepository).findCarsByIsTrailerNotNull();
+        Mockito.verify(carRepository).findAll();
     }
 
 // -------------------------------------------------------------------------------------------------------

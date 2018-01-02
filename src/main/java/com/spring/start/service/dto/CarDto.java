@@ -21,7 +21,7 @@ public class CarDto {
     @NotNull
     private String brand;
 
-    @NotNull
+    //TODO: Jak nie laweta to not null
     private String model;
 
     @RegistrationNumberConstraint

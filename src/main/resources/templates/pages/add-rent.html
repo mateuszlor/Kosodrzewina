@@ -6,13 +6,13 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
-//            $('.additional').hide();
-            $('#carsOnly').hide();
+            $('.additional').hide();
 
             $(".chzn-select").chosen();
             $("#isTrailer").click(function(event) {
                 if ($(this).is(":checked")){
                     $(".additional").show();
+                    $("#trailer_chosen").css("width",  "100%");
                 } else {
                     $(".additional").hide();
                 }
@@ -63,7 +63,7 @@
                                     <label th:text="#{menu.car}"/>
                                 </div>
                                 <div class="col-md-6">
-                                    <select class="form-control chzn-select" name="car" required="required">
+                                    <select class="form-control chzn-select" name="car" id="car" required="required">
                                         <option th:each="car : ${cars}" th:value="${car.id}" th:text="${car.brand + ' ' + car.model + ' (' + car.name + ')'}"></option>
                                     </select>
                                 </div>
@@ -75,7 +75,7 @@
                                     <label th:text="#{label.dictionary.type}"/>
                                 </div>
                                 <div class="col-md-6">
-                                    <select class="form-control chzn-select" name="customer" required="required" >
+                                    <select class="form-control chzn-select" name="customer" required="required">
                                         <option th:each="customer : ${customers}" th:value="${customer.id}" th:text="${customer.name + ' ' + customer.surname}"></option>
                                     </select>
                                 </div>
@@ -174,30 +174,31 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group additional">
+                        <div class="additional">
+                            <div class="form-group">
                             <div class="row">
-                                <div class="col-md-3" align="right">
-                                    <label th:text="#{label.rent.income}"/>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-money" aria-hidden="true"></i></span>
-                                        <input class="form-control" id="additionalIncome" name="additionalIncome" th:value="${additionalIncome}" type="number" />
-                                        <span class="input-group-addon" th:text="#{label.general.PLN}"></span>
+                                    <div class="col-md-3" align="right">
+                                        <label th:text="#{label.rent.income}"/>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-money" aria-hidden="true"></i></span>
+                                            <input class="form-control" id="additionalIncome" name="additionalIncome" th:value="${additionalIncome}" type="number" />
+                                            <span class="input-group-addon" th:text="#{label.general.PLN}"></span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <!--TODO: zmienić klase na additional, pytanie co zrobić by nie znikało przy inicjalizacji-->
-                        <div class="form-group additional">
-                            <div class="row">
-                                <div class="col-md-3" align="right">
-                                    <label th:text="#{menu.car}"/>
-                                </div>
-                                <div class="col-md-6">
-                                    <select class="form-control chzn-select" name="trailer">
-                                        <option th:each="car : ${trailers}" th:value="${car.id}" th:text="${car.brand + '-' + car.name}"></option>
-                                    </select>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-3" align="right">
+                                        <label th:text="#{menu.carCarrier}"/>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <select class="form-control chzn-select" id="trailer" name="trailer">
+                                            <option th:each="trailer : ${trailers}" th:value="${trailer.id}" th:text="${trailer.brand + '-' + trailer.name}"></option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -12,7 +12,8 @@ import java.util.List;
  */
 @Repository
 public interface CarRepository extends CrudRepository<Car, Long> {
-    Iterable<Car> findCarsByIsTrailerNotNull();
+
+    Iterable<Car> findCarsByIsTrailerTrueAndDeletedFalse();
 
     List<Car> findCarsByIds(List<Long> ids);
 

@@ -82,7 +82,7 @@ public class CarService implements BasicDatabaseOperations<Car> {
 
     public Iterable<Car> findCarsByIsTrailer() {
 
-        return carRepository.findCarsByIsTrailerNotNull();
+        return carRepository.findCarsByIsTrailerTrueAndDeletedFalse();
     }
 
     public List<CarDto> findCarsByIdList(List<Long> ids) {
