@@ -1,6 +1,7 @@
 package com.spring.start.service;
 
 import com.spring.start.entity.Car;
+import com.spring.start.entity.DictionaryType;
 import com.spring.start.entity.Service;
 import com.spring.start.interfaces.BasicDatabaseOperations;
 import com.spring.start.operations.Functions;
@@ -105,11 +106,11 @@ public class ServiceService implements BasicDatabaseOperations<Service> {
     }
 
     public Iterable<Service> getServicesByCar(Car car){
-        return serviceRepository.getAllByCarAndDeletedFalse(car);
+        return serviceRepository.getAllByCarAndDeletedFalseAndTypeType(car, DictionaryType.SERVICE);
     }
 
     public Iterable<Service> getPeriodicServicesByCar(Car car){
-        return serviceRepository.getAllByCarAndDeletedFalse(car);
+        return serviceRepository.getAllByCarAndDeletedFalseAndTypeType(car, DictionaryType.PAYMENT);
     }
 
     public List<ServiceDto> getServicesSoonToExpire(int days) {
