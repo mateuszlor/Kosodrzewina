@@ -22,11 +22,6 @@
                 <small>o samochodzie</small>
             </h1>
         </section>
-        <!---->
-        <!-- Alerts-->
-        <!--<div th:if="${error != null or error != empty}" th:replace="fragments/alerts :: alert (type='error', message=${error})">...</div>-->
-        <!--<div th:if="${info != null or info != empty}" th:replace="fragments/alerts :: alert (type='success', message=${info})">...</div>-->
-        <!---->
 
         <section class="content">
             <!-- Page Content -->
@@ -165,7 +160,8 @@
                                     <td th:text="${p.endDate}"></td>
                                     <td>
                                         <a th:href="@{/service/{id}(id=${p.id})}" style="float: left"><button type="button" class="btn btn-block btn-warning btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a>
-
+                                        <!-- TODO: włączyć gdy będzie naprawa edycji w serwisie -->
+                                        <!--<a th:href="@{/service/{id}/edit(id=*{p.id})}" style="float: left"><button type="button" class="btn btn-box-tool" data-toggle="tooltip"><i class="fa fa-wrench" aria-hidden="true"></i></button></a>-->
                                         <div style="float: left">
                                             <form th:action="@{/delete-periodic}" method="post">
                                                 <input type="hidden" name="id" th:value="${p.id}"/>

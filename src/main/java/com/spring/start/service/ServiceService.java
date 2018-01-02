@@ -63,6 +63,23 @@ public class ServiceService implements BasicDatabaseOperations<Service> {
         log.info("Dodano nowy serwis");
     }
 
+    public void updateService(ServiceDto serviceDto) {
+        try {
+            Service service = serviceRepository.findOne(serviceDto.getId());
+            service = Service.mergeUpdate(service, new Service(serviceDto));
+            serviceRepository.save(service);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
+        log.info("Pomyślnie zaktualizowano serwis - SERWIS");
+    }
+
+    public void updatePeriodicService(ServiceDto serviceDto) {
+
+    }
+
     @Override
     public void delete(long id) {
         try {

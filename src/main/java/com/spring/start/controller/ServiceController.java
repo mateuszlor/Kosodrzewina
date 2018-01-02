@@ -1,6 +1,7 @@
 package com.spring.start.controller;
 
 import com.spring.start.entity.DictionaryType;
+import com.spring.start.entity.Service;
 import com.spring.start.service.CarService;
 import com.spring.start.service.DictionaryService;
 import com.spring.start.service.ServiceService;
@@ -13,9 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -46,7 +45,11 @@ public class ServiceController extends BaseController{
     private static final String SLASH = "/";
     private static final String PAGES = "pages";
     private static final String SERVICES = "services";
+    private static final String SERVICE = "service";
     private static final String ADD_SERVICE = "add-service";
+    private static final String EDIT_SERVICE = "edit-service";
+    private static final String EDIT = "edit";
+
 
     @RequestMapping(value = SLASH + ADD_SERVICE, method = RequestMethod.GET)
     public String showNewServicePage(Model model) throws Exception {
@@ -137,4 +140,55 @@ public class ServiceController extends BaseController{
 
         return PAGES + SLASH + SERVICES;
     }
+
+    @RequestMapping(path = SLASH + SERVICE + SLASH + "{id}", method = RequestMethod.GET)
+    public String showServicePage(@PathVariable long id, Model model, RedirectAttributes redirectAttributes) {
+
+        Service service = serviceService.findById(id);
+        model.addAttribute("service", service);
+        log.info("Strona serwisu");
+        return PAGES + SLASH + SERVICE;
+    }
+
+    @RequestMapping(path = SLASH + SERVICE + SLASH + "{id}" + SLASH + EDIT, method = RequestMethod.GET)
+    public String editServicePage(@PathVariable long id, Model model, RedirectAttributes redirectAttributes) {
+
+        Service service = serviceService.findById(id);
+        model.addAttribute("service", service);
+        model.addAttribute("action", "edit");
+        model.addAttribute("serviceDict", dictionaryService.getDictionaryiesByType(DictionaryType.SERVICE));
+        model.addAttribute("paymentDict", dictionaryService.getDictionaryiesByType(DictionaryType.PAYMENT));
+        model.addAttribute("cars", carService.findAllActive());
+        log.info("Strona edycji serwisu");
+        return PAGES + SLASH + ADD_SERVICE;
+    }
+
+    //TODO: Naprawić - nie działa - wyłaczone
+    @RequestMapping(path = SLASH + EDIT_SERVICE, method = RequestMethod.POST)
+    public String editService(@Valid @ModelAttribute("service") ServiceDto serviceDto,
+                             BindingResult bindingResult, Model model,
+                             RedirectAttributes redirectAttributes,
+                             HttpServletRequest request) {
+
+        //TODO: zastanowic się co zrobić gdy nie aktualizujemy typu, samochodu itp i przychodzi puste z zakładki
+//        validator.validate(serviceDto, bindingResult);
+//        if (bindingResult.hasErrors()) {
+//            addMessage(redirectAttributes, MessageType.ERROR, "message.service.edit.error.validator",
+//                    bindingResult.getFieldErrors().stream().map(e -> e.getDefaultMessage()).collect(Collectors.toList()));
+//            log.info("Wprowadzono niepoprawne wartosci do formularza edycji serwisu");
+//            return "redirect:" + SLASH + ADD_SERVICE;
+//        }
+
+        try {
+            serviceService.updateService(serviceDto);
+            addMessage(redirectAttributes, MessageType.SUCCESS, "message.service.edit.success");
+            log.info("Pomyślnie zaktualizowano serwis");
+        } catch (Exception e) {
+            addMessage(redirectAttributes, MessageType.ERROR, "message.service.edit.error");
+            log.error("Nie udało się zaktualizować serwisu: " + e);
+        }
+
+        return "redirect:" + SLASH + ADD_SERVICE;
+    }
+
 }

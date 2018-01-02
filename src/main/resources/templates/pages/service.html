@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:c="http://www.w3.org/1999/XSL/Transform">
+    <head>
+        <th:block th:include="/fragments/elements :: head"/>
+        <title>Home Page</title>
+
+        <!--<script type="text/javascript">-->
+            <!--$(document).ready(function() {-->
+                <!--$(".chzn-select").chosen();-->
+                <!--$('.datepicker').datepicker({-->
+                    <!--format: "dd-mm-yyyy",-->
+                    <!--orientation: "right",-->
+                    <!--todayHighlight: true,-->
+                    <!--autoclose: true,-->
+                    <!--weekStart: 1-->
+                <!--});-->
+                <!--var payment = document.getElementById("PAYMENT");-->
+                <!--payment.hide();-->
+
+                <!--$("#type").change(function(){-->
+                    <!--$(this).find("option:selected").each(function(){-->
+                        <!--var optionValue = $(this).attr("value");-->
+                        <!--if(optionValue == 'SERVICE'){-->
+                            <!--$('#dateToField').hide();-->
+                            <!--$('#executionLabel').show();-->
+                            <!--$('#fromDateLabel').hide();-->
+                            <!--$('#SERVICE').show();-->
+                            <!--$('#PAYMENT').hide();-->
+                        <!--} else{-->
+                            <!--$('#dateToField').show();-->
+                            <!--$('#fromDateLabel').show();-->
+                            <!--$('#executionLabel').hide();-->
+                            <!--$('#SERVICE').hide();-->
+                            <!--$('#PAYMENT').show();-->
+                        <!--}-->
+                    <!--});-->
+                <!--}).change();-->
+
+            <!--});-->
+        <!--</script>-->
+
+    </head>
+        <body class="skin-blue sidebar-mini">
+        <div class="wrapper">
+            <div th:replace="/fragments/header :: header">Header</div>
+            <div th:replace="/fragments/menu :: menu">Menu</div>
+            <div class="content-wrapper">
+                <div class="main-container container-fluid">
+                    <div th:replace="/fragments/alerts :: alerts(alertType=${alertType}, info=${info})">Alerts</div>
+                </div>
+
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <h1>
+                        Informacje
+                        <small>o serwisie</small>
+                    </h1>
+                </section>
+
+                <section class="content">
+                    <!-- Page Content -->
+                    <div class="box" th:object="${service}">
+                        <div class="box-header with-border">
+                            <h3 class="box-title" th:text="#{label.service.new}"/>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h3 class="text-center">
+                                        <!--<strong th:text="*{brand + ' ' + model}"></strong>-->TROLOLO
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2" th:text="#{label.service.car}"></div>
+                                <div class="col-md-3" th:text="*{car.brand + ' ' + car.model}"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2" th:text="#{label.service.type}"></div>
+                                <div class="col-md-3" th:text="*{type.type.displayName}"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2" th:text="#{label.service.serviceKind}"></div>
+                                <div class="col-md-3" th:text="*{type.name}"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2" th:text="${#httpServletRequest.getParameter('type.type.name') == 'PAYMENT'} ? #{label.service.startDate} : #{label.service.executionDate}"></div>
+                                <div class="col-md-3" th:text="*{executionDate}"></div>
+                            </div>
+                            <div class="row" th:if="${#httpServletRequest.getParameter('type.type.name') == 'PAYMENT'}">
+                                <div class="col-md-2" th:text="#{label.service.endDate}"></div>
+                                <div class="col-md-3" th:text="*{endDate}"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2" th:text="#{label.service.cost}"></div>
+                                <div class="col-md-3" th:text="*{cost}"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!---->
+                </section>
+            </div>
+            <div th:replace="/fragments/footer :: footer">Footer</div>
+        </div>
+    </body>
+</html>

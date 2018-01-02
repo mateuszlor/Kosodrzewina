@@ -1,5 +1,7 @@
 package com.spring.start.entity;
 
+import com.spring.start.operations.Functions;
+import com.spring.start.service.dto.ServiceDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -16,10 +18,10 @@ import java.util.Date;
 @Setter
 public class Service extends BaseEntity<Service>{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, unique = true)
-    private long id;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "id", nullable = false, unique = true)
+//    private long id;
 
     @ManyToOne
     @JoinColumn(name = "car", nullable = false)
@@ -53,5 +55,11 @@ public class Service extends BaseEntity<Service>{
         this.executionDate = executionDate;
         this.endDate = endDate;
         this.cost = cost;
+    }
+
+    public Service(ServiceDto serviceDto) {
+        this.executionDate = Functions.convertStringToDate(serviceDto.getDate());
+        this.endDate = Functions.convertStringToDate(serviceDto.getDateTo());
+        this.cost = serviceDto.getCost();
     }
 }
