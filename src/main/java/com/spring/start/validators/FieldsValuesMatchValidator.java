@@ -7,7 +7,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 @Log4j
-public class FieldsValuesMatchValidator implements ConstraintValidator<FieldsValuesMatch, String> {
+public class FieldsValuesMatchValidator implements ConstraintValidator<FieldsValuesMatch, Object> {
 
     private String field;
     private String fieldMatch;
@@ -18,7 +18,7 @@ public class FieldsValuesMatchValidator implements ConstraintValidator<FieldsVal
     }
 
     @Override
-    public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
+    public boolean isValid(Object s, ConstraintValidatorContext constraintValidatorContext) {
         Object fieldValue = new BeanWrapperImpl(s)
                 .getPropertyValue(field);
         Object fieldMatchValue = new BeanWrapperImpl(s)

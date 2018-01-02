@@ -9,6 +9,8 @@ import lombok.Setter;
 /**
  * Created by Nex0Zero on 2017-03-20.
  */
+
+@Getter @Setter
 @FieldsValuesMatch.List({
     @FieldsValuesMatch(
         field = "password",
@@ -16,7 +18,6 @@ import lombok.Setter;
         message = "Hasła są różne"
     )
 })
-@Getter @Setter
 public class ValidationUser {
 
     private String username;

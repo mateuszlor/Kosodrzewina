@@ -3,7 +3,6 @@ package com.spring.start.service.dto;
 import com.spring.start.entity.Role;
 import com.spring.start.validators.FieldsValuesMatch;
 import lombok.*;
-import lombok.experimental.var;
 import lombok.extern.log4j.Log4j;
 
 /**
