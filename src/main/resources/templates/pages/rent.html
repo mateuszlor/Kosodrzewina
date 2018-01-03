@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:c="http://www.w3.org/1999/XSL/Transform">
+<head>
+    <th:block th:include="/fragments/elements :: head"/>
+    <title>Home Page</title>
+
+</head>
+<body class="skin-blue sidebar-mini">
+<div class="wrapper">
+    <div th:replace="/fragments/header :: header">Header</div>
+    <div th:replace="/fragments/menu :: menu">Menu</div>
+    <div class="content-wrapper">
+        <div class="main-container container-fluid">
+            <div th:replace="/fragments/alerts :: alerts(alertType=${alertType}, info=${info})">Alerts</div>
+        </div>
+
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                Informacje
+                <small>o wyporzyczeniu</small>
+            </h1>
+        </section>
+
+        <section class="content">
+            <!-- Page Content -->
+            <div class="box" th:object="${rent}">
+                <div class="box-header with-border">
+                    <h3 class="box-title" th:text="#{label.rent.description}"/>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h3 class="text-center">
+                                <strong th:text="'Wypożyczenie nr. ' + *{id}"></strong>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2" th:text="#{label.rent.car}"></div>
+                        <div class="col-md-3" th:text="*{car.brand + ' ' + car.model}"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2" th:text="#{label.rent.customer}"></div>
+                        <div class="col-md-3" th:text="*{customer.name + ' ' + customer.surname}"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2" th:text="#{label.rent.startDate}"></div>
+                        <div class="col-md-3" th:text="*{startDate}"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2" th:text="#{label.rent.endDate}"></div>
+                        <div class="col-md-3" th:text="*{endDate}"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2" th:text="#{label.rent.income}"></div>
+                        <div class="col-md-3" th:text="*{income}"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2" th:text="#{label.rent.startCourse}"></div>
+                        <div class="col-md-3" th:text="*{startCourse}"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2" th:text="#{label.rent.endCourse}"></div>
+                        <div class="col-md-3" th:text="*{endCourse}"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2" th:text="#{label.rent.status}"></div>
+                        <div class="col-md-3" th:text="*{status.displayName}"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2" th:text="#{label.rent.description}"></div>
+                        <div class="col-md-3" th:text="*{description}"></div>
+                    </div>
+                    <th:block th:if="*{trailer}">
+                        <div class="row">
+                            <h3 class="col-md-2">Laweta</h3>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2" th:text="#{label.rent.car}"></div>
+                            <div class="col-md-3" th:text="*{trailer.car.brand}"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2" th:text="#{label.rent.income}"></div>
+                            <div class="col-md-3" th:text="*{trailer.income}"></div>
+                        </div>
+                    </th:block>
+                </div>
+            </div>
+            <!---->
+        </section>
+    </div>
+    <div th:replace="/fragments/footer :: footer">Footer</div>
+</div>
+</body>
+</html>

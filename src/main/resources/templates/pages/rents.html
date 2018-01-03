@@ -61,7 +61,7 @@
                                     <td th:text="${rent.income}"></td>
                                     <td th:text="${rent.status.displayName}"></td>
                                     <td>
-                                        <a th:href="@{/edit-rent/{id}(id=${rent.id})}" style="float: left"><button type="button" class="btn btn-block btn-warning btn-xs" disabled="disabled"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a>
+                                        <a th:href="@{/rent/{id}(id=${rent.id})}" style="float: left"><button type="button" class="btn btn-block btn-warning btn-xs"><i class="fa fa fa-arrow-right" aria-hidden="true"></i></button></a>
                                         <div style="float: left">
                                             <form th:action="@{/delete-rent}" method="post">
                                                 <input type="hidden" name="id" th:value="${rent.id}"/>

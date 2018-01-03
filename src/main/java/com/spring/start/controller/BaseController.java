@@ -15,8 +15,9 @@ import java.util.stream.Stream;
 @Log4j
 public class BaseController {
 
-    @Getter
-    private static final String SLASH = "/";
+//    @Getter
+    protected static final String SLASH = "/";
+    protected static final String PAGES = "pages";
 
     @Autowired
     @Getter

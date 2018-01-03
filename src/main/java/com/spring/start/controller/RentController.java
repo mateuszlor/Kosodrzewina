@@ -26,8 +26,6 @@ import java.util.stream.Collectors;
 @Log4j
 public class RentController extends BaseController{
 
-    private static final String SLASH = "/";
-    private static final String PAGES = "pages";
     private static final String ADD_RENT = "add-rent";
     private static final String EDIT_RENT = "edit";
     private static final String RENTS = "rents";
@@ -109,6 +107,14 @@ public class RentController extends BaseController{
         model.addAttribute("rent", rent);
         log.info("Strona edycji wyporzyczenia");
         return PAGES + SLASH + ADD_RENT;
+    }
+
+    @RequestMapping(value = SLASH + RENT + SLASH + "{id}", method = RequestMethod.GET)
+    public String showRentPage(@PathVariable long id, Model model) {
+        Rent rent = rentService.findById(id);
+        model.addAttribute("rent", rent);
+        log.info("Strona wyporzyczenia");
+        return PAGES + SLASH + RENT;
     }
 
     /**
