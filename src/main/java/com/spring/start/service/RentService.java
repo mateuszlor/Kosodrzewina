@@ -106,6 +106,10 @@ public class RentService implements BasicDatabaseOperations<Rent>{
         log.info("Pomyślnie zamknięto wyporzyczenie");
     }
 
+    public Iterable<Rent> findAllRentsWithoutAdditionalCarCarrier() {
+        return rentRepository.findAllRentsWithoutAdditionalTrailer();
+    }
+
     public void update(Rent rent) {
         rentRepository.save(rent);
     }

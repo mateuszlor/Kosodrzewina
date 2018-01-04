@@ -90,7 +90,7 @@ public class RentController extends BaseController{
     @RequestMapping(path = SLASH + RENTS, method = RequestMethod.GET)
     public String showRentsPage(Model model) {
 
-        model.addAttribute("rents", rentService.findAllActive());
+        model.addAttribute("rents", rentService.findAllRentsWithoutAdditionalCarCarrier());
         log.info("Lista wyporzyczeń");
         return PAGES + SLASH + RENTS;
     }

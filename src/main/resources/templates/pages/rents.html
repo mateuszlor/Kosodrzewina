@@ -54,7 +54,7 @@
                             <tbody>
                                 <tr role="row" class="odd" th:each="rent : ${rents}">
                                     <td class="sorting_1" th:text="${rent.id}"></td>
-                                    <td class="sorting_1" th:text="${rent.car.brand + ' ' + rent.car.model + '(' + rent.car.name + ')'}"></td>
+                                    <td class="sorting_1" th:with="additionalCarCarrier=${rent.trailer != null} ? ${' + ' + rent.trailer.car.brand + ' ' + rent.trailer.car.name} : ${''}" th:text="${rent.car.brand + ' ' + rent.car.model + '(' + rent.car.name + ')' + additionalCarCarrier}"></td>
                                     <td th:text="${rent.customer.name + ' ' + rent.customer.surname}"></td>
                                     <td th:text="${rent.startDate}"></td>
                                     <td th:text="${rent.endDate}"></td>
