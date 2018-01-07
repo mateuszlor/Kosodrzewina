@@ -1,11 +1,11 @@
 package com.spring.start.service.dto;
 
+import com.spring.start.entity.Money;
 import lombok.*;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
 import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
 
 /**
  * Created by Vertig0 on 30.03.2017.
@@ -35,7 +35,7 @@ public class ServiceDto {
 
     private boolean isPeriodic;
 
-    private BigDecimal cost;
+    private Money cost;
 
     public Long getRemainingDays(){
 

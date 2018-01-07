@@ -3,9 +3,10 @@ package com.spring.start.entity;
 import com.spring.start.operations.Functions;
 import com.spring.start.service.dto.ServiceDto;
 import lombok.*;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -17,11 +18,6 @@ import java.util.Date;
 @Getter
 @Setter
 public class Service extends BaseEntity<Service>{
-
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "id", nullable = false, unique = true)
-//    private long id;
 
     @ManyToOne
     @JoinColumn(name = "car", nullable = false)
@@ -45,10 +41,12 @@ public class Service extends BaseEntity<Service>{
     @Temporal(TemporalType.DATE)
     private Date endDate;
 
-    private BigDecimal cost;
+    @NotNull
+    @Embedded
+    private Money cost = new Money();
 
     @Builder
-    public Service(long id, Boolean deleted, Date createdDate, Date modificationDate, User creationUser, User modificationUser, Car car, Dictionary type, Date executionDate, Date endDate, BigDecimal cost) {
+    public Service(long id, Boolean deleted, Date createdDate, Date modificationDate, User creationUser, User modificationUser, Car car, Dictionary type, Date executionDate, Date endDate, Money cost) {
         super(id, deleted, createdDate, modificationDate, creationUser, modificationUser);
         this.car = car;
         this.type = type;
