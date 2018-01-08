@@ -162,10 +162,28 @@
                                 <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
                             </div>
                         </div>
-                        <div class="input-group date" id="dateToField">
-                            <label th:text="#{label.toDate}"/>
-                            <input class="form-control datepicker" id="dateTo" name="dateTo" th:value="${dateTo}" placeholder="dd-mm-yyyy" type="text" readonly="readonly"/>
-                            <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                        <div class="form-group date" id="dateToField">
+                            <div>
+                                <label th:text="#{label.toDate}"/>
+                            </div>
+                            <div class="input-group">
+                                <input class="form-control datepicker" id="dateTo" name="dateTo" th:value="${dateTo}" placeholder="dd-mm-yyyy" type="text" readonly="readonly"/>
+                                <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                            </div>
+                        </div>
+                        <div class="form-group" >
+                            <label th:text="#{label.service.cost}"/>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <input class="form-control col-md-4" id="cost.amount" name="cost.amount" th:value="${date}" type="number"/>
+                                </div>
+                                <div class="col-md-1">
+                                    <select class="form-control chzn-select col-md-1" name="cost.currency" required="required" id="cost.currency">
+                                        <option value="PLN">PLN</option>
+                                        <option value="EUR">EUR</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-primary" th:text="#{button.add}"/>
                     </form>

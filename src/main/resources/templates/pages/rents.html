@@ -58,7 +58,8 @@
                                     <td th:text="${rent.customer.name + ' ' + rent.customer.surname}"></td>
                                     <td th:text="${rent.startDate}"></td>
                                     <td th:text="${rent.endDate}"></td>
-                                    <td th:with="carCarrier=${rent.trailer != null} ? ${rent.trailer} : 0,carCarrierIncome=${carCarrier != 0} ? ${carCarrier.income} : ${carCarrier},result=${rent.income + carCarrierIncome}" th:text="${result}"></td>
+                                    <td th:with="carCarrier=${rent.trailer != null} ? ${rent.trailer} : 0,carCarrierIncome=${carCarrier != 0} ? ${carCarrier.income.amount} : 0,result=${rent.income.amount.add(carCarrierIncome)}" th:text="${result + ' ' + rent.income.currency}"></td>
+                                    <!--<td th:text="${rent.income}"></td>-->
                                     <td th:text="${rent.status.displayName}"></td>
                                     <td>
                                         <a th:href="@{/rent/{id}(id=${rent.id})}" style="float: left"><button type="button" class="btn btn-block btn-warning btn-xs"><i class="fa fa fa-arrow-right" aria-hidden="true"></i></button></a>

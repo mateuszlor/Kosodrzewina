@@ -1,5 +1,6 @@
 package com.spring.start.service.dto;
 
+import com.spring.start.entity.Money;
 import com.spring.start.entity.RentStatus;
 import lombok.*;
 
@@ -43,7 +44,7 @@ public class RentDto {
 
     private String endDate;
 
-    private BigDecimal income;
+    private Money income;
 
     private Long startCourse;
 
@@ -53,7 +54,7 @@ public class RentDto {
 
     private Boolean isTrailer = Boolean.FALSE;
 
-    private BigDecimal additionalIncome;
+    private Money additionalIncome;
 
     private long trailer;
 

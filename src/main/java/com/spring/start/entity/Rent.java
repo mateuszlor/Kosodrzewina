@@ -39,10 +39,10 @@ public class Rent extends BaseEntity<Rent>{
     @Getter @Setter
     private Date endDate;
 
-    @Column(name = "income", nullable = false)
     @Getter
     @Setter
-    private BigDecimal income;
+    @Embedded
+    private Money income;
 
     @Column(name = "start_course")
     @Getter
@@ -72,7 +72,7 @@ public class Rent extends BaseEntity<Rent>{
     private Rent trailer;
 
     @Builder
-    public Rent(long id, Boolean deleted, Date createdDate, Date modificationDate, User creationUser, User modificationUser, Customer customer, Car car, Date startDate, Date endDate, BigDecimal income, Long startCourse, Long endCourse, String description, RentStatus status, Rent trailer) {
+    public Rent(long id, Boolean deleted, Date createdDate, Date modificationDate, User creationUser, User modificationUser, Customer customer, Car car, Date startDate, Date endDate, Money income, Long startCourse, Long endCourse, String description, RentStatus status, Rent trailer) {
         super(id, deleted, createdDate, modificationDate, creationUser, modificationUser);
         this.customer = customer;
         this.car = car;

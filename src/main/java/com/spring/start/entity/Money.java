@@ -1,5 +1,6 @@
 package com.spring.start.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Type;
@@ -21,14 +22,23 @@ public class Money {
     @Type(type = "org.jadira.usertype.moneyandcurrency.moneta.PersistentCurrencyUnit")
     CurrencyUnit currency;
 
-    Money(org.javamoney.moneta.Money money) {
+    public Money(BigDecimal amount, String currency) {
+        org.javamoney.moneta.Money money = org.javamoney.moneta.Money.of(amount, currency);
+        new Money(money);
+    }
+
+    public Money(org.javamoney.moneta.Money money) {
         this.amount = money.getNumberStripped();
         this.currency = money.getCurrency();
     }
 
-    Money() {
+    public Money() {
         org.javamoney.moneta.Money money = org.javamoney.moneta.Money.of(BigDecimal.ZERO, DEFAULT_CURRENCY);
         new Money(money);
     }
 
+    @Override
+    public String toString() {
+        return amount + " " + currency;
+    }
 }

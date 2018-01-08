@@ -113,12 +113,14 @@
                                 <div class="col-md-3" align="right">
                                     <label th:text="#{label.rent.income}"/>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-money" aria-hidden="true"></i></span>
-                                        <input class="form-control" id="income" name="income" th:value="${income}" type="number" />
-                                        <span class="input-group-addon" th:text="#{label.general.PLN}"></span>
-                                    </div>
+                                <div class="col-md-3">
+                                    <input class="form-control" id="income.amount" name="income.amount" th:value="${income}" type="number"/>
+                                </div>
+                                <div class="col-md-1">
+                                    <select class="form-control" name="income.currency" required="required" id="income.currency">
+                                        <option value="PLN">PLN</option>
+                                        <option value="EUR">EUR</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -176,16 +178,18 @@
                         </div>
                         <div class="additional">
                             <div class="form-group">
-                            <div class="row">
+                                <div class="row">
                                     <div class="col-md-3" align="right">
                                         <label th:text="#{label.rent.income}"/>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-money" aria-hidden="true"></i></span>
-                                            <input class="form-control" id="additionalIncome" name="additionalIncome" th:value="${additionalIncome}" type="number" />
-                                            <span class="input-group-addon" th:text="#{label.general.PLN}"></span>
-                                        </div>
+                                    <div class="col-md-3">
+                                        <input class="form-control" id="additionalIncome.amount" name="additionalIncome.amount" th:value="${additionalIncome}" type="number"/>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <select class="form-control" name="additionalIncome.currency" required="required" id="additionalIncome.currency">
+                                            <option value="PLN">PLN</option>
+                                            <option value="EUR">EUR</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
