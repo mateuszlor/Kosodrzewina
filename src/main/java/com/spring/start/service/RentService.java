@@ -54,8 +54,8 @@ public class RentService implements BasicDatabaseOperations<Rent>{
         Rent rent = Rent.builder()
                 .car(carService.findById(rentDto.getCar()))
                 .customer(customerService.findById(rentDto.getCustomer()))
-                .startDate(Functions.convertStringToDate(rentDto.getStartDate()))
-                .endDate(Functions.convertStringToDate(rentDto.getEndDate()))
+                .startDate(Functions.convertStringToDateTime(rentDto.getStartDate()))
+                .endDate(Functions.convertStringToDateTime(rentDto.getEndDate()))
                 .income(rentDto.getIncome())
                 .startCourse(rentDto.getStartCourse())
                 .endCourse(rentDto.getEndCourse())
@@ -97,7 +97,7 @@ public class RentService implements BasicDatabaseOperations<Rent>{
 
     public void returnRent(long id, String endDate, Long endCourse){
         Rent rent = rentRepository.findOne(id);
-        rent.setEndDate(Functions.convertStringToDate(endDate));
+        rent.setEndDate(Functions.convertStringToDateTime(endDate));
         rent.setStatus(RentStatus.ENDED);
         if (endCourse != null) {
             rent.setEndCourse(endCourse);

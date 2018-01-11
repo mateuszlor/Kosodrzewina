@@ -4,9 +4,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.joda.time.DateTime;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -29,12 +29,12 @@ public class Rent extends BaseEntity<Rent>{
     @Setter
     private Car car;
 
-    @Column(name = "start_date", nullable = false)
+    @Column(name = "start_date", nullable = false, columnDefinition="DATETIME")
     @Temporal(TemporalType.TIMESTAMP)
     @Getter @Setter
     private Date startDate;
 
-    @Column(name = "end_date")
+    @Column(name = "end_date", columnDefinition="DATETIME")
     @Temporal(TemporalType.TIMESTAMP)
     @Getter @Setter
     private Date endDate;

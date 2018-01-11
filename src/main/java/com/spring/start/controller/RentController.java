@@ -73,7 +73,6 @@ public class RentController extends BaseController{
                 RentDto trailerRent = new RentDto(rent);
                 trailerRent.setIncome(rent.getAdditionalIncome());
                 trailerRent.setCar(rent.getTrailer());
-                //TODO: zrobić powiązanie lawety z samochodem jeśli razem
                 savedTraier = rentService.addRent(trailerRent, (UserDto) request.getSession().getAttribute("user"), null);
             }
             rentService.addRent(rent, (UserDto) request.getSession().getAttribute("user"),

@@ -17,13 +17,23 @@
                     $(".additional").hide();
                 }
             });
-            $('.datepicker').datepicker({
-                format: "dd-mm-yyyy",
-                orientation: "right",
-                todayHighlight: true,
-                autoclose: true,
-                weekStart: 1
+
+            $(function () {
+                $('#datetimepicker1').datetimepicker({
+                    format: 'YYYY-MM-DD HH:mm:ss'
+                });
+                $('#datetimepicker2').datetimepicker({
+                    format: 'YYYY-MM-DD HH:mm:ss',
+                    useCurrent: false
+                });
+                $("#datetimepicker1").on("dp.change", function (e) {
+                    $('#datetimepicker2').data("DateTimePicker").minDate(e.date);
+                });
+                $("#datetimepicker2").on("dp.change", function (e) {
+                    $('#datetimepicker1').data("DateTimePicker").maxDate(e.date);
+                });
             });
+
         });
     </script>
 
@@ -81,29 +91,32 @@
                                 </div>
                             </div>
                         </div>
-                        <!--TODO: daty z godziną, wcześniejsza nie może być późniejsza niż późniejsza i na odwrót-->
-                        <div class="form-group date">
+                        <div class="form-group">
                             <div class="row">
                                 <div class="col-md-3" align="right">
                                     <label th:text="#{label.rent.startDate}"/>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="input-group">
-                                        <input class="form-control datepicker" id="startDate" name="startDate" th:value="${startDate}" placeholder="dd-mm-yyyy" type="text" readonly="readonly"/>
-                                        <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                    <div class="form-group">
+                                        <div class="input-group date" id="datetimepicker1">
+                                            <input type="text" class="form-control" id="startDate" name="startDate" th:value="${startDate}"/>
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group date">
+                        <div class="form-group">
                             <div class="row">
                                 <div class="col-md-3" align="right">
                                     <label th:text="#{label.rent.endDate}"/>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="input-group">
-                                        <input class="form-control datepicker" id="endDate" name="endDate" th:value="${endDate}" placeholder="dd-mm-yyyy" type="text" readonly="readonly"/>
-                                        <div class="input-group-addon datepicer"><i class="fa fa-calendar"></i></div>
+                                    <div class="form-group">
+                                        <div class="input-group date" id='datetimepicker2'>
+                                            <input type="text" class="form-control" id="endDate" name="endDate" th:value="${endDate}"/>
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
