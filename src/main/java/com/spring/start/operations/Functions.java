@@ -1,8 +1,8 @@
 package com.spring.start.operations;
 
 import com.mysql.jdbc.StringUtils;
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,6 +15,11 @@ import java.util.Locale;
  * Created by Vertig0 on 05.06.2017.
  */
 public class Functions {
+
+    //TODO: wstawić gdzieś do properties używane formaty dat
+    public static String DATE_FORMAT = "dd-MM-yyyy";
+
+    public static String DATETIME_FORMAT = "dd-MM-yyyy HH:mm:ss";
 
     private static final String DEFAULT_FILENAME = "Raport";
     private static final String DEFAULT_ENLARGEMENT = ".pdf";
@@ -34,18 +39,16 @@ public class Functions {
         return newFileName;
     }
 
-    //TODO: wstawić gdzieś do properties używane formaty dat
     public static Date convertStringToDate(String stringDate) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.ENGLISH);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMAT, Locale.ENGLISH);
         LocalDate date = LocalDate.parse(stringDate, formatter);
         return java.sql.Date.valueOf(date);
     }
 
-    //TODO: Dopisac metode na datetime i powiązać z rent
     public static Date convertStringToDateTime(String stringDate) {
         Date date = new Date();
         try {
-            date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(stringDate);
+            date = new SimpleDateFormat(DATETIME_FORMAT).parse(stringDate);
         } catch (ParseException e) {
             e.printStackTrace();
         }

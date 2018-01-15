@@ -20,9 +20,5 @@ public class RentRepositoryImpl extends BaseAdditionalRepositoryImpl<Rent> imple
                 .filter(r -> from.before(r.getStartDate())
                         && to.after(r.getEndDate()))
                 .collect(Collectors.toList());
-//        return getTable()
-//                .filter(r -> r.getStartDate().isAfter(LocalDateTime.parse(from.toString()))
-//                        && r.getEndDate().isBefore(LocalDateTime.parse(to.toString())))
-//                .collect(Collectors.toList());
     }
 }
