@@ -117,15 +117,15 @@ public class CarServiceTest {
         //Assert
         Mockito.verify(carServiceSpy).update(carDto);
     }
-    @Test
-    public void shouldVerifyThat_RepositorySave_InEditCar_IsCalled() throws Exception {
-        //Arrange
-        carServiceSpy.setCarRepository(carRepository);
-        //Act
-        carServiceSpy.update(carDto);
-        //Assert
-        Mockito.verify(carRepository).save(any(Car.class));
-    }
+//    @Test
+//    public void shouldVerifyThat_RepositorySave_InEditCar_IsCalled() throws Exception {
+//        //Arrange
+//        carServiceSpy.setCarRepository(carRepository);
+//        //Act
+//        carServiceSpy.update(carDto);
+//        //Assert
+//        Mockito.verify(carRepository).save(any(Car.class));
+//    }
 
     @Test
     public void shouldVerifyThat_FindCarsByIsTrailer_IsCalled() throws Exception {
