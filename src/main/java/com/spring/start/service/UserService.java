@@ -2,9 +2,11 @@ package com.spring.start.service;
 
 import com.spring.start.entity.Role;
 import com.spring.start.entity.User;
+import com.spring.start.entity.UserRole;
 import com.spring.start.helper.ControllerHelper;
 import com.spring.start.interfaces.BasicDatabaseOperations;
 import com.spring.start.repository.UserRepository;
+import com.spring.start.repository.UserRoleRepository;
 import com.spring.start.service.dto.UserDto;
 import com.spring.start.service.dto.ValidationUser;
 import lombok.Getter;
@@ -38,6 +40,9 @@ public class UserService implements BasicDatabaseOperations<User>{
     @Autowired
     private ControllerHelper controllerHelper;
 
+    @Autowired
+    private UserRoleRepository userRoleRepository;
+
     public void createUser(ValidationUser validationUser) {
         User user = User.builder()
                 .name(validationUser.getName())
@@ -45,10 +50,14 @@ public class UserService implements BasicDatabaseOperations<User>{
                 .username(validationUser.getUsername())
                 .password(bCryptPasswordEncoder.encode(validationUser.getPassword()))
                 .email(validationUser.getEmail())
-                .role(Role.ADMIN)
                 .enabled(true)
                 .build();
         userRepository.save(user);
+        UserRole userRole = UserRole.builder()
+                                    .user(user)
+                                    .role(Role.USER)
+                                    .build();
+        userRoleRepository.save(userRole);
         log.info("Dodano nowego użytkownika: " + user.getUsername());
     }
 

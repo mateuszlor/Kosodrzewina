@@ -51,16 +51,6 @@ public class UserBuilderTests {
     }
 
     @Test
-    public void shouldBuildRole() {
-        //given
-        var role = Role.ADMIN;
-        //when
-        var generated = User.builder().role(role).build();
-        //then
-        Assert.assertEquals(role, generated.getRole());
-    }
-
-    @Test
     public void shouldBuildUsername() {
         //given
         var username = "XYZ";
