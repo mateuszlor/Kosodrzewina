@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="/fragments/elements :: head"/>
+    <title>Home Page</title>
+
+</head>
+<body class="skin-blue sidebar-mini">
+<div class="wrapper">
+    <div th:replace="/fragments/header :: header">Header</div>
+    <div th:replace="/fragments/menu :: menu">Menu</div>
+    <div class="content-wrapper">
+        <div class="main-container container-fluid">
+            <div th:replace="/fragments/alerts :: alerts(alertType=${alertType}, info=${info})">Alerts</div>
+        </div>
+
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                Użytkownicy
+            </h1>
+        </section>
+
+        <section class="content">
+            <!-- Page Content -->
+            <div class="box">
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap"><div class="row"><div class="col-sm-6"></div><div class="col-sm-6"></div></div><div class="row"><div class="col-sm-12">
+                        <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                            <thead>
+                            <tr role="row">
+                                <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column descending" aria-sort="ascending" hidden="hidden">Id</th>
+                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" th:text="#{label.general.name}"></th>
+                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" th:text="#{label.dictionary.type}"></th>
+                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" >Role</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr role="row" class="odd" th:each="user : ${users}">
+                                <td class="sorting_1" hidden="hidden" th:text="${user.id}"></td>
+                                <td class="sorting_1" th:text="${user.username}"></td>
+                                <td th:text="${user.name + ' ' + user.surname}"></td>
+                                <td>
+                                    <th:block th:each="usrRole : ${user.userRole}">
+                                        <span class="label label-primary" th:text="${usrRole.role.label}"></span>
+                                    </th:block>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    </div>
+                        <!-- /.box-body -->
+                    </div>
+                </div>
+            </div>
+            <!---->
+        </section>
+
+    </div>
+    <div th:replace="/fragments/footer :: footer">Footer</div>
+</div>
+</body>
+</html>

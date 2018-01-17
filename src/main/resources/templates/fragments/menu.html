@@ -1,11 +1,9 @@
-<aside class="main-sidebar" th:fragment="menu" xmlns:th="http://www.w3.org/1999/xhtml">
+<aside class="main-sidebar" th:fragment="menu" xmlns:th="http://www.w3.org/1999/xhtml"
+       xmlns:sec="http://www.w3.org/1999/xhtml">
     <section class="sidebar">
         <ul class="sidebar-menu">
             <li class="header" th:text="#{menu.headers.menu}">HEADER</li>
             <!-- Optionally, you can add icons to the links -->
-            <li>
-                <a href="/invalid"><i class="fa fa-times" aria-hidden="true" /><span>Invalid</span></a>
-            </li>
             <li>
                 <a href="/reports"><i class="fa fa-file" aria-hidden="true"></i><span th:text="#{label.reports}"></span></a>
             </li>
@@ -50,7 +48,6 @@
                 </a>
                 <ul class="treeview-menu">
                     <li><a th:href="@{/add-service}"><i class="fa fa-plus" aria-hidden="true"></i><span th:text="#{menu.addNewService}"/></a></li>
-                    <!--<li><a th:href="@{/dictionaries}"><i class="fa fa-th-list" aria-hidden="true"></i><span th:text="#{label.dictionary.list}"/></a></li>-->
                 </ul>
             </li>
             <li class="treeview">
@@ -64,23 +61,32 @@
                     <li><a th:href="@{/rents}"><i class="fa fa-th-list" aria-hidden="true"></i><span th:text="#{label.rent.rents}"/></a></li>
                 </ul>
             </li>
-            <li>
-                <a href="/notExists"><i class="fa fa-question" aria-hidden="true" /><span>Not existing</span></a>
-            </li>
-            <li>
-                <a href="/register"><i class="fa fa-sign-in" aria-hidden="true" /> <span>Register</span></a>
-            </li>
-            <li class="treeview">
-                <a href="#"><i class="fa fa-arrows-v"></i> <span>Multilevel example</span>
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right" />
-                    </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-arrow-right" aria-hidden="true" />Link in level 2</a></li>
-                    <li><a href="#"><i class="fa fa-arrow-right" aria-hidden="true" />Link in level 2</a></li>
-                </ul>
-            </li>
+            <th:block sec:authorize="hasAuthority('ADMIN')">
+                <li>
+                    <a href="/register"><i class="fa fa-user-plus" aria-hidden="true"></i><span>Register</span></a>
+                </li>
+                <li>
+                    <a href="/admin/user-management"><i class="fa fa-users" aria-hidden="true"/><span th:text="#{label.user.userManagement}"></span></a>
+                </li>
+            </th:block>
+
+            <!--<li>-->
+            <!--<a href="/invalid"><i class="fa fa-times" aria-hidden="true" /><span>Invalid</span></a>-->
+            <!--</li>-->
+            <!--<li>-->
+            <!--<a href="/notExists"><i class="fa fa-question" aria-hidden="true" /><span>Not existing</span></a>-->
+            <!--</li>-->
+            <!--<li class="treeview">-->
+                <!--<a href="#"><i class="fa fa-arrows-v"></i> <span>Multilevel example</span>-->
+                    <!--<span class="pull-right-container">-->
+                        <!--<i class="fa fa-angle-left pull-right" />-->
+                    <!--</span>-->
+                <!--</a>-->
+                <!--<ul class="treeview-menu">-->
+                    <!--<li><a href="#"><i class="fa fa-arrow-right" aria-hidden="true" />Link in level 2</a></li>-->
+                    <!--<li><a href="#"><i class="fa fa-arrow-right" aria-hidden="true" />Link in level 2</a></li>-->
+                <!--</ul>-->
+            <!--</li>-->
         </ul>
         <!-- /.sidebar-menu -->
     </section>

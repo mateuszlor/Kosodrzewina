@@ -7,9 +7,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
 
 @Controller
 @Log4j
@@ -18,6 +16,7 @@ public class BaseController {
 //    @Getter
     protected static final String SLASH = "/";
     protected static final String PAGES = "pages";
+    protected static final String ADMIN = "admin";
 
     @Autowired
     @Getter

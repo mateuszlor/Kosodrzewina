@@ -8,4 +8,6 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface UserRepository extends CrudRepository<User, Long>, UserRepositoryAdditional {
     User findByUsername(String username);
+
+    Iterable<User> findAllByEnabledTrue();
 }

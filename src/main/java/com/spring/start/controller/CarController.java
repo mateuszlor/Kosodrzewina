@@ -25,8 +25,6 @@ import java.util.stream.Collectors;
 @Log4j
 public class CarController extends BaseController{
 
-    private static final String SLASH = "/";
-    private static final String PAGES = "pages";
     private static final String ADD_NEW_CAR = "new-car";
     private static final String CARS = "cars";
     private static final String DELETE_CAR = "delete-car";
@@ -153,8 +151,8 @@ public class CarController extends BaseController{
      * */
     @RequestMapping(path = SLASH + EDIT_CAR_HTML, method = RequestMethod.POST)
     public String editCar(@Valid @ModelAttribute("car") CarDto carDto,
-                               BindingResult bindingResult, Model model,
-                               RedirectAttributes redirectAttributes) {
+                          BindingResult bindingResult, Model model,
+                          RedirectAttributes redirectAttributes) {
 
         if(bindingResult.hasErrors()){
             addMessage(redirectAttributes, MessageType.ERROR, "error.form.invalidValues",
@@ -175,3 +173,4 @@ public class CarController extends BaseController{
 
 
 }
+
