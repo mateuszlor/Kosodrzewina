@@ -1,9 +1,8 @@
 package com.spring.start.operations;
 
 import com.mysql.jdbc.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -19,7 +18,7 @@ public class Functions {
     //TODO: wstawić gdzieś do properties używane formaty dat
     public static String DATE_FORMAT = "dd-MM-yyyy";
 
-    public static String DATETIME_FORMAT = "dd-MM-yyyy HH:mm:ss";
+    public static String DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     private static final String DEFAULT_FILENAME = "Raport";
     private static final String DEFAULT_ENLARGEMENT = ".pdf";
@@ -46,13 +45,14 @@ public class Functions {
     }
 
     public static Date convertStringToDateTime(String stringDate) {
-        Date date = new Date();
+        DateFormat format = new SimpleDateFormat(DATETIME_FORMAT, Locale.ENGLISH);
         try {
-            date = new SimpleDateFormat(DATETIME_FORMAT).parse(stringDate);
+            Date date = format.parse(stringDate);
+            return date;
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return date;
+        return new Date();
     }
 
 }
