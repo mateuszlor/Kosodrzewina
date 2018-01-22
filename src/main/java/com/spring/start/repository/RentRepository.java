@@ -13,6 +13,6 @@ public interface RentRepository extends CrudRepository<Rent, Long>, RentReposito
 
     List<Rent> findAllByDeletedFalse();
 
-    @Query("select r1 from Rent r1, Rent r2 where r1.id != r2.trailer")
+    @Query("select r1 from Rent r1, Rent r2 where (r1.id != r2.trailer OR (SELECT COUNT(r) FROM Rent r) = 1) AND r.deleted = 0")
     Iterable<Rent> findAllRentsWithoutAdditionalTrailer();
 }
