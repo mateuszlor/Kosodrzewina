@@ -17,7 +17,7 @@ public class PhoneNumberValidator implements ConstraintValidator<PhoneNumberCons
     public boolean isValid(String contactField, ConstraintValidatorContext cxt) {
         boolean isValid = contactField != null && contactField.matches(PHONE_NUMBER_PATTERN);
         if (!isValid){
-            log.info("WALIDACJA: Wprowadzono niepoprawny numer telefonu");
+            log.warn("WALIDACJA: Wprowadzono niepoprawny numer telefonu");
         }
         return isValid;
     }
