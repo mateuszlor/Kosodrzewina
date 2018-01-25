@@ -39,7 +39,10 @@ public class User {
     @Column(name = "enabled", nullable = false)
     private boolean enabled;
 
-    @ManyToMany
+    @ElementCollection
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "role", nullable = false)
+    @Enumerated(EnumType.STRING)
     private List<Role> userRole;
 
 }
