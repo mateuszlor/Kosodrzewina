@@ -39,7 +39,7 @@ public class User {
     @Column(name = "enabled", nullable = false)
     private boolean enabled;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    private List<UserRole> userRole;
+    @ManyToMany
+    private List<Role> userRole;
 
 }
