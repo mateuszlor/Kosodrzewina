@@ -29,6 +29,8 @@ public class ControllerHelper {
     @Autowired
     private HttpServletRequest request;
 
+    private static final String userKey = "user";
+
     public void setUserData(Model model) {
 
         log.info(String.format("About to set user data: request = %s, userService = %s, securityContext = %s",
@@ -80,8 +82,7 @@ public class ControllerHelper {
         model.addAttribute("user", user);
     }
 
-    public void forceReplaceUserInSession(UserDto user){
-        var userKey = "user";
+    public void forceReplaceUserInSession(UserDto user) {
         var session = request.getSession();
         session.removeAttribute(userKey);
         session.setAttribute(userKey, user);
@@ -89,10 +90,19 @@ public class ControllerHelper {
         log.info("Forced replacing user in session");
     }
 
+
+    /**
+     * Gets simple user model (taken from session) - ID is all we need here
+     * @return com.spring.start.entity.User model of currently logged user
+     */
     public com.spring.start.entity.User getLoggedUser() {
-        var auth = SecurityContextHolder.getContext().getAuthentication();
-        var springUser = (User) auth.getPrincipal();
-        com.spring.start.entity.User user = userService.findByUsername(springUser.getUsername());
+
+        var session = request.getSession();
+        var userDto = (UserDto) session.getAttribute(userKey);
+        var user = com.spring.start.entity.User
+                .builder()
+                .id(userDto.getId())
+                .build();
         return user;
     }
 }
