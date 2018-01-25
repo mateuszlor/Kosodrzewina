@@ -39,25 +39,22 @@ public class UserService implements BasicDatabaseOperations<User>{
 
     @Autowired
     private ControllerHelper controllerHelper;
-
-    @Autowired
-    private UserRoleRepository userRoleRepository;
-
+    
     public void createUser(ValidationUser validationUser) {
+
+        List<Role> baseRoles = new ArrayList<Role>();
+        baseRoles.add(Role.USER);
+
         User user = User.builder()
                 .name(validationUser.getName())
                 .surname(validationUser.getSurname())
                 .username(validationUser.getUsername())
                 .password(bCryptPasswordEncoder.encode(validationUser.getPassword()))
                 .email(validationUser.getEmail())
+                .userRole(baseRoles)
                 .enabled(true)
                 .build();
         userRepository.save(user);
-        UserRole userRole = UserRole.builder()
-                                    .user(user)
-                                    .role(Role.USER)
-                                    .build();
-        userRoleRepository.save(userRole);
         log.info("Dodano nowego użytkownika: " + user.getUsername());
     }
 

@@ -1,7 +1,7 @@
 package com.spring.start.service;
 
+import com.spring.start.entity.Role;
 import org.springframework.security.core.userdetails.User;
-import com.spring.start.entity.UserRole;
 import com.spring.start.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -34,9 +34,9 @@ public class CustomUserDetailsService implements UserDetailsService {
                 true, true, authorities);
     }
 
-    private List<GrantedAuthority> buildUserAuthority(List<UserRole> userRoles) {
+    private List<GrantedAuthority> buildUserAuthority(List<Role> userRoles) {
         List<GrantedAuthority> setAuths = userRoles.stream()
-                                                    .map(f -> new SimpleGrantedAuthority(f.getRole().name()))
+                                                    .map(f -> new SimpleGrantedAuthority(f.getName()))
                                                     .collect(Collectors.toList());
 
         return setAuths;
