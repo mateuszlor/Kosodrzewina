@@ -2,11 +2,9 @@ package com.spring.start.service;
 
 import com.spring.start.entity.Role;
 import com.spring.start.entity.User;
-import com.spring.start.entity.UserRole;
 import com.spring.start.helper.ControllerHelper;
 import com.spring.start.interfaces.BasicDatabaseOperations;
 import com.spring.start.repository.UserRepository;
-import com.spring.start.repository.UserRoleRepository;
 import com.spring.start.service.dto.UserDto;
 import com.spring.start.service.dto.ValidationUser;
 import lombok.Getter;
@@ -18,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
