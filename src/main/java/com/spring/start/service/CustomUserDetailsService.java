@@ -36,7 +36,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     private List<GrantedAuthority> buildUserAuthority(List<Role> userRoles) {
         List<GrantedAuthority> setAuths = userRoles.stream()
-                                                    .map(f -> new SimpleGrantedAuthority(f.getName()))
+                                                    .map(f -> new SimpleGrantedAuthority(f.name()))
                                                     .collect(Collectors.toList());
 
         return setAuths;
