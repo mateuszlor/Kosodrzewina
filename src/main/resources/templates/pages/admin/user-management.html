@@ -43,7 +43,7 @@
                                 <td th:text="${user.name + ' ' + user.surname}"></td>
                                 <td>
                                     <th:block th:each="usrRole : ${user.userRole}">
-                                        <span class="label label-primary" th:text="${usrRole.role.label}"></span>
+                                        <span class="label label-primary" th:text="${usrRole.label}"></span>
                                     </th:block>
                                 </td>
                             </tr>
