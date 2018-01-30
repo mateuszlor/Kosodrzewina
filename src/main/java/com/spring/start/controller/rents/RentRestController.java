@@ -1,7 +1,7 @@
-package com.spring.start.controller.customer;
+package com.spring.start.controller.rents;
 
-import com.spring.start.entity.Customer;
-import com.spring.start.service.CustomerService;
+import com.spring.start.entity.Rent;
+import com.spring.start.service.RentService;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -15,21 +15,21 @@ import java.util.List;
 
 @RestController
 @Log4j
-public class CustomerRestController{
+public class RentRestController {
 
     private static final String SLASH = "/";
+    private static final String GET_RENTS= "getRents";
     private static final String REST = "rest";
-    private static final String GET_CUSTOMERS = "getCustomers";
 
     @Autowired
     @Getter
     @Setter
-    private CustomerService customerService;
+    private RentService rentService;
 
-    @RequestMapping(value = SLASH + REST + SLASH + GET_CUSTOMERS, method = RequestMethod.GET)
-    public List<Customer> getCustomersByRest(Model model){
-        log.info("REST: Pobrano liste klientów");
-       return customerService.findAllActive();
+    @RequestMapping(value = SLASH + REST + SLASH + GET_RENTS, method = RequestMethod.GET)
+    public Iterable<Rent> getGroupedRentsByRest(Model model) {
+        log.info("REST: Pobrano listę wyporzyczeń");
+        return rentService.findAllRentsWithoutAdditionalCarCarrier();
     }
 
 }

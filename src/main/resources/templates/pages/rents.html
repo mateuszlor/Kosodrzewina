@@ -5,13 +5,88 @@
     <title>Home Page</title>
     <script>
         $(document).ready(function() {
-            $('.datepicker').datepicker({
-                format: "dd-mm-yyyy",
-                orientation: "right",
-                todayHighlight: true,
-                autoclose: true,
-                weekStart: 1
+            var table = $('#rentsTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Polish.json"
+                },
+                "sAjaxSource": "/rest/getRents",
+                "sAjaxDataProp": "",
+                "order": [[ 0, "asc" ]],
+                "aoColumns": [
+                    { "mData": "customer",
+                        mRender: function (mData, type, row) {
+                            return mData.name + ' ' + mData.surname;
+                        }
+                    },
+                    {"mData": "car",
+                        "mRender": function (mData, type, row) {
+                            var str = '';
+                            str += mData.brand + ' ' + mData.model;
+                            if (mData.name != null) {
+                                str += ' (' + mData.name + ')';
+                            }
+                            if (row.trailer != null) {
+                                str += ' + ' + row.trailer.car.brand;
+                                if (row.trailer.car.name != null) {
+                                    str += ' (' + row.trailer.car.name + ')';
+                                }
+                            }
+                            return str;
+                        }
+                    },
+                    { "mData": "startDate",
+                        mRender: function (mData) {
+                            var date = new Date(mData);
+                            return date.toLocaleString();
+                        }
+                    },
+                    { "mData": "endDate",
+                        mRender: function (mData) {
+                            var date = new Date(mData);
+                            return date.toLocaleString();
+                        }
+                    },
+                    { "mData": "income",
+                       "mRender": function (mData, type, row) {
+                            var amount = mData.amount;
+                            if (row.trailer != null) {
+                                amount += row.trailer.income.amount;
+                            }
+
+                            return amount + ' ' + mData.currency.currencyCode;
+                        }
+                    },
+                    { "mData": "status" },
+                    { "mData": "id",
+                        mRender: function (mData, type, row) {
+                            var str = '';
+                            str += '<a href="/rent/' + mData + '" style="float: left"><button type="button" class="btn btn-block btn-warning btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a>';
+                            str += '<div style="float: left"><button type="button" id="deleteModalButton" name="delete" class="btn btn-block btn-danger btn-xs" data-toggle="modal" data-id="' + mData +'" data-target="#deleteModal"><i class="fa fa-trash" aria-hidden="true"></i></button></div>';
+                            //TODO: widoczność przycisków w zależnosci od statusu (jakoś status trzeba dostawać
+                            str += '<div style="float: left"><button type="button" id="returnModalButton" name="return" class="btn btn-block btn-primary btn-xs" data-toggle="modal" data-date="' + row.endDate + '" data-id="' + mData +'" data-target="#returnModal"><i class="fa fa-trash" aria-hidden="true" th:text="#{label.general.return}"></i></button></div>';
+                            //TODO: działa ale weź to przerób
+                            str += '     <form th:action="@{/rent-rent}" method="post">\n' +
+                                '           <input type="hidden" name="id" value="' + mData + '"/>\n' +
+                                '           <div style="float: left"><button type="submit" class="btn btn-block btn-success btn-xs" th:text="#{label.rent.rent}"></button></div>\n' +
+                                '        </form>';
+
+                            return str;
+                        }
+                    }
+                ],
+                columnDefs: [
+                    { orderable: false, targets: -1 }
+                ]
+
             });
+        });
+        $(document).on('click', '#deleteModalButton', function () {
+            $('#hiddenId').val($(this).data('id'));
+        });
+        $(document).on('click', '#returnModalButton', function () {
+            $('#hiddenReturnId').val($(this).data('id'));
+            var date = new Date($(this).data('date')).toLocaleString();
+            $('#returnDate').val(date);
         });
 
     </script>
@@ -33,146 +108,109 @@
         </section>
 
         <section class="content">
-            <!-- Page Content -->
             <div class="box">
-                <!-- /.box-header -->
+                <div class="box-header"></div>
                 <div class="box-body">
-                    <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap"><div class="row"><div class="col-sm-6"></div><div class="col-sm-6"></div></div><div class="row"><div class="col-sm-12">
-                        <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
-                            <thead>
-                                <tr role="row">
-                                    <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column descending" aria-sort="ascending">Id</th>
-                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" th:text="#{menu.car}"></th>
-                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" th:text="#{menu.customer}"></th>
-                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" th:text="#{label.rent.startDate}"></th>
-                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" th:text="#{label.rent.endDate}"></th>
-                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" th:text="#{label.rent.income}"></th>
-                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" th:text="#{label.rent.status}"></th>
-                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" th:text="#{label.actions}"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr role="row" class="odd" th:each="rent : ${rents}">
-                                    <td class="sorting_1" th:text="${rent.id}"></td>
-                                    <td class="sorting_1" th:with="additionalCarCarrier=${rent.trailer != null} ? ${' + ' + rent.trailer.car.brand + ' ' + rent.trailer.car.name} : ${''}" th:text="${rent.car.brand + ' ' + rent.car.model + '(' + rent.car.name + ')' + additionalCarCarrier}"></td>
-                                    <td th:text="${rent.customer.name + ' ' + rent.customer.surname}"></td>
-                                    <td th:text="${rent.startDate}"></td>
-                                    <td th:text="${rent.endDate}"></td>
-                                    <td th:with="carCarrier=${rent.trailer != null} ? ${rent.trailer} : 0,carCarrierIncome=${carCarrier != 0} ? ${carCarrier.income.amount} : 0,result=${rent.income.amount.add(carCarrierIncome)}" th:text="${result + ' ' + rent.income.currency}"></td>
-                                    <!--<td th:text="${rent.income}"></td>-->
-                                    <td th:text="${rent.status.displayName}"></td>
-                                    <td>
-                                        <a th:href="@{/rent/{id}(id=${rent.id})}" style="float: left"><button type="button" class="btn btn-block btn-warning btn-xs"><i class="fa fa fa-arrow-right" aria-hidden="true"></i></button></a>
-                                        <div style="float: left">
-                                            <form th:action="@{/delete-rent}" method="post">
-                                                <input type="hidden" name="id" th:value="${rent.id}"/>
-                                                <button type="button" name="delete" class="btn btn-block btn-danger btn-xs" data-toggle="modal" th:attr="data-target='#deleteModal' + ${rent.id}"><i class="fa fa-trash" aria-hidden="true"></i></button>
-
-                                                <!-- Modal -->
-                                                <div class="modal modal-danger fade" th:id="deleteModal + ${rent.id}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                                    <div class="modal-dialog" role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                </button>
-                                                                <h4 class="modal-title" id="myModalLabel" th:text="#{label.rent.message.delete.areYouSure}"></h4>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <p th:text="#{label.general.message.deleteData}"></p>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal" th:text="#{button.reject}"></button>
-                                                                <button type="submit" class="btn btn-outline" th:text="#{button.accept}"></button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div style="float: left">
-                                            <form th:action="@{/return-rent}" method="post">
-                                                <input type="hidden" name="id" th:value="${rent.id}"/>
-                                                <button type="button" th:disabled="${rent.status.level == 3}" name="return" class="btn btn-block btn-primary btn-xs" data-toggle="modal" th:attr="data-target='#returnModal' + ${rent.id}" th:text="#{label.general.return}"></button>
-
-                                                <!-- Modal -->
-
-                                                <div class="modal modal-info fade" th:id="returnModal + ${rent.id}" role="dialog" aria-labelledby="myModalLabel2">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                </button>
-                                                                <h4 class="modal-title" id="myModalLabel2" th:text="#{label.rent.message.return.areYouSure}"></h4>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <input type="text" name="id" th:value="${rent.id}"/>
-                                                                <div class="row">
-                                                                    <div class="col-md-2"></div>
-                                                                    <div class="col-md-2" align="right">
-                                                                        <label th:text="#{label.rent.endDate}"/>
-                                                                    </div>
-                                                                    <div class="col-md-5">
-                                                                        <div class="form-group">
-                                                                            <div class="input-group date">
-                                                                                <input class="form-control datepicker" id="endDate" name="endDate"
-                                                                                       th:value="${#dates.format(rent.endDate, 'dd-MM-yyyy')}"
-                                                                                       placeholder="dd-mm-yyyy" type="text" readonly="readonly"/>
-                                                                                <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="col-md-2"></div>
-                                                                    <div class="col-md-2" align="right">
-                                                                        <label th:text="#{label.rent.endCourse}"/>
-                                                                    </div>
-                                                                    <div class="col-md-5">
-                                                                        <div class="input-group">
-                                                                            <input class="form-control" id="endCourse" name="endCourse" th:value="${rent.endCourse}" type="number" />
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="col-md-2"></div>
-                                                                    <div class="col-md-4" align="right">
-                                                                        <label for="isTrailer" th:text="#{label.trailer}"/>
-                                                                    </div>
-                                                                    <div class="col-md-1">
-                                                                        <input type="checkbox" name="isTrailer" id="isTrailer"/>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal" th:text="#{button.reject}"></button>
-                                                                <button type="submit" class="btn btn-outline" th:text="#{button.accept}"></button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div style="float: left">
-                                            <form th:action="@{/rent-rent}" method="post">
-                                                <input type="hidden" name="id" th:value="${rent.id}"/>
-                                                <button type="submit" th:disabled="${rent.status.level !=1}" class="btn btn-block btn-success btn-xs" th:text="#{label.rent.rent}"></button>
-                                            </form>
-                                        </div>
-                                        <div style="clear:both;"></div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <!-- /.box-body -->
-                </div>
+                    <table id="rentsTable" class="table table-striped table-borderd">
+                        <!-- Header Table -->
+                        <thead>
+                            <tr>
+                                <th th:text="#{menu.customer}"></th>
+                                <th th:text="#{menu.car}"></th>
+                                <th th:text="#{label.rent.startDate}"></th>
+                                <th th:text="#{label.rent.endDate}"></th>
+                                <th th:text="#{label.rent.income}"></th>
+                                <th th:text="#{label.rent.status}"></th>
+                                <th th:text="#{label.actions}"></th>
+                            </tr>
+                        </thead>
+                    </table>
                 </div>
             </div>
-            <!---->
         </section>
+
+        <div name="modals">
+            <!-- Modal na usuniecie -->
+            <div class="modal fade modal-danger" th:id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <form th:action="@{/delete-rent}" method="post">
+                    <input type="hidden" name="id" id="hiddenId"/>
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel" th:text="#{label.car.message.delete.AreYouSure}"></h4>
+                            </div>
+                            <div class="modal-body" th:text="#{label.general.message.deleteData}"></div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal" th:text="#{button.reject}"></button>
+                                <button type="submit" class="btn btn-outline" th:text="#{button.accept}"></button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
+            <!-- Modal na zwrot-->
+            <!--TODO: sprawdzić czy działa i ewentualnie naprawić-->
+            <div class="modal modal-info fade" th:id="returnModal" role="dialog" aria-labelledby="myModalLabel2">
+                <form th:action="@{/return-rent}" method="post">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h4 class="modal-title" th:text="#{label.rent.message.return.areYouSure}"></h4>
+                            </div>
+                            <div class="modal-body">
+                                <input type="hidden" name="id" id="hiddenReturnId"/>
+                                <div class="row">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-2" align="right">
+                                        <label th:text="#{label.rent.endDate}"/>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <div class="input-group date">
+                                                <input class="form-control datepicker" id="returnDate" name="endDate"
+                                                       placeholder="dd-mm-yyyy" type="text" readonly="readonly"/>
+                                                <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-2" align="right">
+                                        <label th:text="#{label.rent.endCourse}"/>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="input-group">
+                                            <input class="form-control" id="endCourse" name="endCourse" type="number" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-4" align="right">
+                                        <label for="isTrailer" th:text="#{label.trailer}"/>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <input type="checkbox" name="isTrailer" id="isTrailer"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal" th:text="#{button.reject}"></button>
+                                <button type="submit" class="btn btn-outline" th:text="#{button.accept}"></button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
     </div>
     <div th:replace="/fragments/footer :: footer">Footer</div>
 </div>

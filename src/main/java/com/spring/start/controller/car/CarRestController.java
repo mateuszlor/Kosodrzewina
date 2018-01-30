@@ -1,7 +1,7 @@
-package com.spring.start.controller.customer;
+package com.spring.start.controller.car;
 
-import com.spring.start.entity.Customer;
-import com.spring.start.service.CustomerService;
+import com.spring.start.entity.Car;
+import com.spring.start.service.CarService;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -15,21 +15,21 @@ import java.util.List;
 
 @RestController
 @Log4j
-public class CustomerRestController{
-
+public class CarRestController {
+    //TODO: jakaś klasa nadrzędna czy coś?
     private static final String SLASH = "/";
+    private static final String GET_CARS= "getCars";
     private static final String REST = "rest";
-    private static final String GET_CUSTOMERS = "getCustomers";
 
     @Autowired
     @Getter
     @Setter
-    private CustomerService customerService;
+    private CarService carService;
 
-    @RequestMapping(value = SLASH + REST + SLASH + GET_CUSTOMERS, method = RequestMethod.GET)
-    public List<Customer> getCustomersByRest(Model model){
-        log.info("REST: Pobrano liste klientów");
-       return customerService.findAllActive();
+    @RequestMapping(value = SLASH + REST + SLASH + GET_CARS, method = RequestMethod.GET)
+    public List<Car> getCarsByRest(Model model) {
+        log.info("REST: Pobrano liste samochodów");
+        return carService.findAllActive();
     }
 
 }
