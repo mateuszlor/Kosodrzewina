@@ -9,6 +9,7 @@
             $(".chzn-select").chosen();
 
             $("#type").change(function(){
+                /*TODO: Zmiana wartosci w polu Nazwa Czynności*/
                 $(this).find("option:selected").each(function(){
                     var optionValue = $(this).attr("value");
                     if(optionValue == 'SERVICE'){
@@ -94,7 +95,7 @@
                             <div>
                                 <select class="form-control chzn-select"  name="name" th:field="*{type}" disabled="disabled">
                                     <option id="SERVICE" th:each="dict : ${serviceDict}" th:id="${dict.type}" th:value="${dict.id}" th:text="${dict.name}"></option>
-                                    <option id="PAYMENT" th:each="dict : ${paymentDict}" th:id="${dict.type}" th:value="${dict.id}" th:text="${dict.name}" hidden="hidden"></option>
+                                    <option id="PAYMENT" th:each="dict : ${paymentDict}" th:id="${dict.type}" th:value="${dict.id}" th:text="${dict.name}" disabled="disabled"></option>
                                 </select>
                                 <!--<select id="PAYMENT" class="form-control chzn-select"  name="name" hidden="hidden">-->
                                 <!--<option id="PAYMENT" th:each="dict : ${paymentDict}" th:id="${dict.type}" th:value="${dict.id}" th:text="${dict.name}"></option>-->
@@ -152,7 +153,7 @@
                             <div>
                                 <select class="form-control chzn-select"  name="name">
                                     <option id="SERVICE" th:each="dict : ${serviceDict}" th:id="${dict.type}" th:value="${dict.id}" th:text="${dict.name}"></option>
-                                    <option id="PAYMENT" th:each="dict : ${paymentDict}" th:id="${dict.type}" th:value="${dict.id}" th:text="${dict.name}" hidden="hidden"></option>
+                                    <option id="PAYMENT" th:each="dict : ${paymentDict}" th:id="${dict.type}" th:value="${dict.id}" th:text="${dict.name}"></option>
                                 </select>
                                 <!--<select id="PAYMENT" class="form-control chzn-select"  name="name" hidden="hidden">-->
                                     <!--<option id="PAYMENT" th:each="dict : ${paymentDict}" th:id="${dict.type}" th:value="${dict.id}" th:text="${dict.name}"></option>-->

@@ -12,7 +12,7 @@ import java.util.List;
  */
 @Repository
 public interface DictionaryRepository extends CrudRepository<Dictionary, Long> {
-    Iterable<Dictionary> getDictionariesByType(DictionaryType type);
+    Iterable<Dictionary> getDictionariesByTypeAndDeletedFalse(DictionaryType type);
 
     List<Dictionary> findAllByDeletedFalse();
 }

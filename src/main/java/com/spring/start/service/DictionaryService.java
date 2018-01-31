@@ -1,6 +1,5 @@
 package com.spring.start.service;
 
-import com.spring.start.entity.Car;
 import com.spring.start.entity.Dictionary;
 import com.spring.start.entity.DictionaryType;
 import com.spring.start.interfaces.BasicDatabaseOperations;
@@ -42,7 +41,7 @@ public class DictionaryService implements BasicDatabaseOperations<Dictionary>{
     }
 
     public Iterable<Dictionary> getDictionaryiesByType(DictionaryType type){
-        return dictionaryRepository.getDictionariesByType(type);
+        return dictionaryRepository.getDictionariesByTypeAndDeletedFalse(type);
     }
 
     @Override

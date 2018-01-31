@@ -81,7 +81,7 @@ public class DictionaryServiceTest {
         //Act
         dictionaryServiceSpy.getDictionaryiesByType(DictionaryType.PAYMENT);
         //Assert
-        Mockito.verify(dictionaryRepository).getDictionariesByType(DictionaryType.PAYMENT);
+        Mockito.verify(dictionaryRepository).getDictionariesByTypeAndDeletedFalse(DictionaryType.PAYMENT);
     }
 
     @Test

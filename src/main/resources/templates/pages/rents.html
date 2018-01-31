@@ -78,14 +78,21 @@
                 ]
 
             });
+
+            $(function () {
+                $('#datetimepicker1').datetimepicker({
+                    format: 'YYYY-MM-DD HH:mm:ss'
+                });
+            });
         });
         $(document).on('click', '#deleteModalButton', function () {
             $('#hiddenId').val($(this).data('id'));
         });
         $(document).on('click', '#returnModalButton', function () {
             $('#hiddenReturnId').val($(this).data('id'));
-            var date = new Date($(this).data('date')).toLocaleString();
-            $('#returnDate').val(date);
+            var date = new Date($(this).data('date'));
+            var result = moment(date).format('YYYY-MM-DD HH:mm:ss');
+            $('#returnDate').val(result);
         });
 
     </script>
@@ -152,7 +159,7 @@
 
             <!-- Modal na zwrot-->
             <!--TODO: sprawdzić czy działa i ewentualnie naprawić-->
-            <div class="modal modal-info fade" th:id="returnModal" role="dialog" aria-labelledby="myModalLabel2">
+            <div class="modal modal-default fade" th:id="returnModal" role="dialog" aria-labelledby="myModalLabel2">
                 <form th:action="@{/return-rent}" method="post">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -164,45 +171,59 @@
                             </div>
                             <div class="modal-body">
                                 <input type="hidden" name="id" id="hiddenReturnId"/>
-                                <div class="row">
-                                    <div class="col-md-2"></div>
-                                    <div class="col-md-2" align="right">
-                                        <label th:text="#{label.rent.endDate}"/>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <div class="form-group">
-                                            <div class="input-group date">
-                                                <input class="form-control datepicker" id="returnDate" name="endDate"
-                                                       placeholder="dd-mm-yyyy" type="text" readonly="readonly"/>
-                                                <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3" align="right">
+                                            <label th:text="#{label.rent.endDate}"/>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="input-group date" id="datetimepicker1">
+                                                    <input type="text" class="form-control" id="returnDate" name="endDate" />
+                                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-2"></div>
-                                    <div class="col-md-2" align="right">
-                                        <label th:text="#{label.rent.endCourse}"/>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <div class="input-group">
-                                            <input class="form-control" id="endCourse" name="endCourse" type="number" />
+
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3" align="right">
+                                            <label th:text="#{label.rent.endCourse}"/>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <input class="form-control" id="endCourse" name="endCourse" type="number" />
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-2"></div>
-                                    <div class="col-md-4" align="right">
-                                        <label for="isTrailer" th:text="#{label.trailer}"/>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <input type="checkbox" name="isTrailer" id="isTrailer"/>
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3" align="right">
+                                            <label th:text="#{label.trailer}"/>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <input type="checkbox" name="isTrailer" id="isTrailer"/>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal" th:text="#{button.reject}"></button>
-                                <button type="submit" class="btn btn-outline" th:text="#{button.accept}"></button>
+                                <button type="button" class="btn btn-info pull-left" data-dismiss="modal" th:text="#{button.reject}"></button>
+                                <button type="submit" class="btn btn-info" th:text="#{button.accept}"></button>
                             </div>
                         </div>
                     </div>
