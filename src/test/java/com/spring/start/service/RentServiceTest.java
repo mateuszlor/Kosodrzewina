@@ -85,11 +85,11 @@ public class RentServiceTest {
         Mockito.verify(rentServiceSpy).findAllActive();
     }
     @Test
-    public void shouldVerifyThat_RepositoryFindAll_FindAll_IsCalled() throws Exception {
+    public void shouldVerifyThat_RepositoryFindAllByDeletedFalse_FindAll_IsCalled() throws Exception {
         //Act
         rentServiceSpy.findAllActive();
         //Assert
-        Mockito.verify(rentRepository).findAll();
+        Mockito.verify(rentRepository).findAllByDeletedFalse();
     }
 
     @Test
@@ -119,21 +119,22 @@ public class RentServiceTest {
         Mockito.verify(rentServiceSpy).delete(5);
     }
     @Test
-    public void shouldVerifyThat_RepositoryDelete_InDelete_IsCalled() throws Exception {
+    public void shouldVerifyThat_RentSetDeleted_InDelete_IsCalled() throws Exception {
         //Act
+        Mockito.doReturn(rent).when(rentRepository).findOne((long)5);
         rentServiceSpy.delete(5);
         //Assert
-        Mockito.verify(rentRepository).delete((long) 5);
+        Mockito.verify(rent).setDeleted(true);
     }
 
     @Test
     public void shouldVerifyThat_ReturnRent_IsCalled() throws Exception {
         //Arrange
-        Mockito.doNothing().when(rentServiceSpy).returnRent(5, "01-01-2000", (long) 9);
+        Mockito.doNothing().when(rentServiceSpy).returnRent(5, "01-01-2000 00:00:00", (long) 9);
         //Act
-        rentServiceSpy.returnRent(5, "01-01-2000", (long) 9);
+        rentServiceSpy.returnRent(5, "01-01-2000 00:00:00", (long) 9);
         //Assert
-        Mockito.verify(rentServiceSpy).returnRent(5, "01-01-2000", (long) 9);
+        Mockito.verify(rentServiceSpy).returnRent(5, "01-01-2000 00:00:00", (long) 9);
     }
     @Test
     public void shouldVerifyThat_RepositorySave_InReturnRent_IsCalled() throws Exception {
@@ -141,7 +142,7 @@ public class RentServiceTest {
         Mockito.doReturn(rent).when(rentRepository).findOne(any());
         Mockito.doNothing().when(rent).setEndDate(any());
         //Act
-        rentServiceSpy.returnRent(5, "01-01-2000", (long) 9);
+        rentServiceSpy.returnRent(5, "01-01-2000 00:00:00", (long) 9);
         //Assert
         Mockito.verify(rentRepository).save(any(Rent.class));
     }
