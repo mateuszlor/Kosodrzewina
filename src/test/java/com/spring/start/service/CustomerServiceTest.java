@@ -83,7 +83,7 @@ public class CustomerServiceTest {
         //Act
         customerServiceSpy.findAllActive();
         //Assert
-        Mockito.verify(customerRepository).findAll();
+        Mockito.verify(customerRepository).findAllByDeletedFalse();
     }
 
     @Test
@@ -98,11 +98,12 @@ public class CustomerServiceTest {
     @Test
     public void shouldVerifyThat_RepositoryDelete_InDeleteCustomer_IsCalled() throws Exception {
         //Arrange
+        Mockito.doReturn(customer).when(customerRepository).findOne((long)5);
         customerServiceSpy.setCustomerRepository(customerRepository);
         //Act
         customerServiceSpy.delete(5);
         //Assert
-        Mockito.verify(customerRepository).delete((long) 5);
+        Mockito.verify(customer).setDeleted(true);
     }
 
     @Test
