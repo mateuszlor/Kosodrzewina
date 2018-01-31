@@ -61,13 +61,13 @@ public class CarServiceTest {
         Mockito.verify(carServiceSpy).findAllActive();
     }
     @Test
-    public void shouldVerifyThat_RepositoryFindAll_InFindAll_IsCalled() throws Exception {
+    public void shouldVerifyThat_RepositoryFfindCarsByDeletedFalse_InFindAll_IsCalled() throws Exception {
         //Arrange
         carServiceSpy.setCarRepository(carRepository);
         //Act
         carServiceSpy.findAllActive();
         //Assert
-        Mockito.verify(carRepository).findAll();
+        Mockito.verify(carRepository).findCarsByDeletedFalse();
     }
 
     @Test
@@ -80,13 +80,14 @@ public class CarServiceTest {
         Mockito.verify(carServiceSpy).delete(5);
     }
     @Test
-    public void shouldVerifyThat_RepositoryDelete_InDeleteCar_IsCalled() throws Exception {
+    public void shouldVerifyThat_CarSetDeleted_InDeleteCar_IsCalled() throws Exception {
         //Arrange
+        Mockito.doReturn(car).when(carRepository).findOne((long)5);
         carServiceSpy.setCarRepository(carRepository);
         //Act
         carServiceSpy.delete(5);
         //Assert
-        Mockito.verify(carRepository).delete((long) 5);
+        Mockito.verify(car).setDeleted(true);
     }
 
     @Test
@@ -143,7 +144,7 @@ public class CarServiceTest {
         //Act
         carServiceSpy.findCarsByIsTrailer();
         //Assert
-        Mockito.verify(carRepository).findAll();
+        Mockito.verify(carRepository).findCarsByIsTrailerTrueAndDeletedFalse();
     }
 
 // -------------------------------------------------------------------------------------------------------
