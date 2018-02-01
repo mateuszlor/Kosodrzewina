@@ -1,5 +1,6 @@
 package com.spring.start.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.spring.start.helper.ControllerHelper;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,6 +31,7 @@ import java.util.stream.Stream;
 @Getter
 @Setter
 @MappedSuperclass
+@JsonIgnoreProperties( { "creationUser", "modificationUser"})
 public abstract class BaseEntity<T> {
 
     @Id
