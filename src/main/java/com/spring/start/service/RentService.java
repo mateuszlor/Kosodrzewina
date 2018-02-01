@@ -99,6 +99,7 @@ public class RentService implements BasicDatabaseOperations<Rent>{
         Rent rent = rentRepository.findOne(id);
         rent.setEndDate(Functions.convertStringToDateTime(endDate));
         rent.setStatus(RentStatus.ENDED);
+        //TODO: Zastanowić sie jak zrobić ten opis kilometrów końcowych
         if (endCourse != null) {
             rent.setEndCourse(endCourse);
         }
@@ -106,6 +107,16 @@ public class RentService implements BasicDatabaseOperations<Rent>{
         log.info("Pomyślnie zamknięto wyporzyczenie");
     }
 
+    public void rent(long id) {
+        Rent rent = rentRepository.findOne(id);
+        rent.setStatus(RentStatus.RENTED);
+        if (rent.getTrailer() != null) {
+            rent.getTrailer().setStatus(RentStatus.RENTED);
+        }
+        update(rent);
+    }
+
+    //TODO FIX: Nie działa poprawnie metoda, do zmiany
     public Iterable<Rent> findAllRentsWithoutAdditionalCarCarrier() {
         return rentRepository.findAllRentsWithoutAdditionalTrailer();
     }

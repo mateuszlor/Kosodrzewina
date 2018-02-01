@@ -62,13 +62,17 @@
                             var str = '';
                             str += '<a href="/rent/' + mData + '" style="float: left"><button type="button" class="btn btn-block btn-warning btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a>';
                             str += '<div style="float: left"><button type="button" id="deleteModalButton" name="delete" class="btn btn-block btn-danger btn-xs" data-toggle="modal" data-id="' + mData +'" data-target="#deleteModal"><i class="fa fa-trash" aria-hidden="true"></i></button></div>';
-                            str += '<div style="float: left"><button type="button" id="returnModalButton" name="return" class="btn btn-block btn-primary btn-xs" data-toggle="modal" th:if="${' + row.status.level + ' != 3}" data-date="' + row.endDate + '" data-id="' + mData +'" data-target="#returnModal"><i class="fa fa-trash" aria-hidden="true" th:text="#{label.general.return}"></i></button></div>';
                             //TODO: działa ale weź to przerób
-                            str += '     <form th:action="@{/rent-rent}" method="post">\n' +
-                                '           <input type="hidden" name="id" value="' + mData + '"/>\n' +
-                                '           <div th:if="${' + row.status.level + ' == 1}" style="float: left"><button type="submit" class="btn btn-block btn-success btn-xs" th:text="#{label.rent.rent}"></button></div>\n' +
-                                '        </form>';
-
+                            if (row.status.level == 1) {
+                                str += '     <div style="float: left" ><form th:action="@{/rent-rent}" method="post">' +
+                                    '           <input type="hidden" name="id" value="' + mData + '"/>' +
+                                    '           <div style="float: left"><button type="submit" class="btn btn-block btn-success btn-xs" th:text="#{label.rent.rent}"></button></div>' +
+                                    '        </form></div>';
+                            }
+                            if (row.status.level != 3) {
+                                str += '<div style="float: left"><button type="button" id="returnModalButton" name="return" class="btn btn-block btn-primary btn-xs" data-toggle="modal" data-date="' + row.endDate + '" data-id="' + mData +'" data-trailer="' + row.trailer + '" data-target="#returnModal"><i class="fa fa-trash" aria-hidden="true" th:text="#{label.general.return}"></i></button></div>';
+                            }
+                            str += '<div style="clear: both"></div>';
                             return str;
                         }
                     }
@@ -92,6 +96,14 @@
             $('#hiddenReturnId').val($(this).data('id'));
             var date = new Date($(this).data('date'));
             var result = moment(date).format('YYYY-MM-DD HH:mm:ss');
+            var trailer = $(this).data('trailer');
+            if (trailer != null) {
+                $('#trailerForm').show();
+                $('#isTrailer').prop("checked", true);
+            } else {
+                $('#trailerForm').hide();
+                $('#isTrailer').prop("checked", false);
+            }
             $('#returnDate').val(result);
         });
 
@@ -205,7 +217,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group" id="trailerForm" hidden="hidden">
                                     <div class="row">
                                         <div class="col-md-3" align="right">
                                             <label th:text="#{label.trailer}"/>

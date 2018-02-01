@@ -156,9 +156,10 @@ public class RentController extends BaseController{
     @RequestMapping(value = SLASH + CHAGNE_STATUS, method = RequestMethod.POST)
     public String changeStatusToRented(@RequestParam long id, RedirectAttributes redirectAttributes) {
         try {
-            Rent rent = rentService.findById(id);
-            rent.setStatus(RentStatus.RENTED);
-            rentService.update(rent);
+            rentService.rent(id);
+//            Rent rent = rentService.findById(id);
+//            rent.setStatus(RentStatus.RENTED);
+//            rentService.update(rent);
             addMessage(redirectAttributes, MessageType.SUCCESS, "message.rent.changeStatus.success");
             log.info("Pomyślnie zaktualizowano status wyporzyczenia " + id);
         } catch (Exception e) {
