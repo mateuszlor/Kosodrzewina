@@ -70,7 +70,7 @@
                                     '        </form></div>';
                             }
                             if (row.status.level != 3) {
-                                str += '<div style="float: left"><button type="button" id="returnModalButton" name="return" class="btn btn-block btn-primary btn-xs" data-toggle="modal" data-date="' + row.endDate + '" data-id="' + mData +'" data-trailer="' + row.trailer + '" data-target="#returnModal"><i class="fa fa-trash" aria-hidden="true" th:text="#{label.general.return}"></i></button></div>';
+                                str += '<div style="float: left"><button type="button" id="returnModalButton" name="return" class="btn btn-block btn-primary btn-xs" data-toggle="modal" data-end-course="'+ row.endCourse +'" data-date="' + row.endDate + '" data-id="' + mData +'" data-trailer="' + row.trailer + '" data-target="#returnModal"><i class="fa fa-trash" aria-hidden="true" th:text="#{label.general.return}"></i></button></div>';
                             }
                             str += '<div style="clear: both"></div>';
                             return str;
@@ -105,6 +105,7 @@
                 $('#isTrailer').prop("checked", false);
             }
             $('#returnDate').val(result);
+            $('#returnEndCourse').val($(this).data('end-course'));
         });
 
     </script>
@@ -170,7 +171,6 @@
 
 
             <!-- Modal na zwrot-->
-            <!--TODO: sprawdzić czy działa i ewentualnie naprawić-->
             <div class="modal modal-default fade" th:id="returnModal" role="dialog" aria-labelledby="myModalLabel2">
                 <form th:action="@{/return-rent}" method="post">
                     <div class="modal-dialog">
@@ -210,7 +210,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <div class="input-group">
-                                                    <input class="form-control" id="endCourse" name="endCourse" type="number" />
+                                                    <input class="form-control" id="returnEndCourse" name="endCourse" type="number" />
                                                 </div>
                                             </div>
                                         </div>
