@@ -35,6 +35,15 @@
             });
 
         });
+
+        $(document).on('change', '#car', function () {
+            var id = $('#car').find("option:selected").attr("id");
+            if(id == 'TRAILER'){
+                $('#connectTrailer').hide();
+            } else {
+                $('#connectTrailer').show();
+            }
+        });
     </script>
 
 </head>
@@ -74,7 +83,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <select class="form-control chzn-select" name="car" id="car" required="required">
-                                        <option th:each="car : ${cars}" th:value="${car.id}" th:text="${car.brand + ' ' + car.model + ' (' + car.name + ')'}"></option>
+                                        <option th:each="car : ${cars}" th:id="${car.isTrailer} ? 'TRAILER' : 'CAR'" th:value="${car.id}" th:text="${car.brand + ' ' + car.model + ' (' + car.name + ')'}"></option>
                                     </select>
                                 </div>
                             </div>
@@ -179,7 +188,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" id="connectTrailer">
                             <div class="row">
                                 <div class="col-md-4" align="right">
                                     <label for="isTrailer" th:text="#{label.trailer}"/>
