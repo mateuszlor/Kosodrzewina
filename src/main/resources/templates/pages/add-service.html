@@ -6,27 +6,27 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
-            $(".chzn-select").chosen();
+            $(".chzn-select").chosen({
+                allow_single_deselect: true
+            });
+            $("#addName option[name='ADD_PAYMENT']").hide();
+            $('#addName').trigger("chosen:updated");
 
-            $("#type").change(function(){
-                /*TODO: Zmiana wartosci w polu Nazwa Czynności*/
-                $(this).find("option:selected").each(function(){
-                    var optionValue = $(this).attr("value");
-                    if(optionValue == 'SERVICE'){
-                        $('#dateToField').hide();
-                        $('#executionLabel').show();
-                        $('#fromDateLabel').hide();
-                        $('#SERVICE').show();
-                        $('#PAYMENT').hide();
-                    } else{
-                        $('#dateToField').show();
-                        $('#fromDateLabel').show();
-                        $('#executionLabel').hide();
-                        $('#SERVICE').hide();
-                        $('#PAYMENT').show();
-                    }
-                });
-            }).change();
+            // $("#type").change(function(){
+            //     /*TODO: Zmiana wartosci w polu Nazwa Czynności*/
+            //     $(this).find("option:selected").each(function(){
+            //         var optionValue = $(this).attr("value");
+            //         if(optionValue == 'SERVICE'){
+            //             $('#dateToField').hide();
+            //             $('#executionLabel').show();
+            //             $('#fromDateLabel').hide();
+            //         } else{
+            //             $('#dateToField').show();
+            //             $('#fromDateLabel').show();
+            //             $('#executionLabel').hide();
+            //         }
+            //     });
+            // }).change();
 
             $(function () {
                 $('#datetimepicker1').datetimepicker({
@@ -44,6 +44,27 @@
                 });
             });
 
+        });
+
+        $(document).on('change', '#addType', function () {
+            var val = $('#addType').val();
+            if(val == 'SERVICE'){
+                $('#dateToField').hide();
+                $('#executionLabel').show();
+                $('#fromDateLabel').hide();
+                $('#addName option[name="ADD_SERVICE"]').show();
+                $("#addName option[name='ADD_PAYMENT']").hide();
+                $('#addName option[name="empty"]').attr('selected', 'selected');
+                $('#addName').trigger("chosen:updated");
+            } else {
+                $('#dateToField').show();
+                $('#fromDateLabel').show();
+                $('#executionLabel').hide();
+                $("#addName option[name='ADD_SERVICE']").hide();
+                $("#addName option[name='ADD_PAYMENT']").show();
+                $('#addName option[name="empty"]').attr('selected', 'selected');
+                $('#addName').trigger("chosen:updated");
+            }
         });
     </script>
 
@@ -144,16 +165,17 @@
                         </div>
                         <div class="form-group">
                             <label th:text="#{label.dictionary.type}"/>
-                            <select class="form-control chzn-select" name="type" required="required" id="type">
-                                <option id="typeValue" th:each="type : ${T(com.spring.start.entity.DictionaryType).values()}" th:value="${type}" th:text="${type.displayName}"></option>
+                            <select class="form-control chzn-select" name="type" required="required" id="addType">
+                                <option th:each="type : ${T(com.spring.start.entity.DictionaryType).values()}" th:value="${type}" th:text="${type.displayName}"></option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label th:text="#{label.dictionary.serwisName}" id="name"/>
                             <div>
-                                <select class="form-control chzn-select"  name="name">
-                                    <option id="SERVICE" th:each="dict : ${serviceDict}" th:id="${dict.type}" th:value="${dict.id}" th:text="${dict.name}"></option>
-                                    <option id="PAYMENT" th:each="dict : ${paymentDict}" th:id="${dict.type}" th:value="${dict.id}" th:text="${dict.name}"></option>
+                                <select class="form-control chzn-select"  id="addName" name="name">
+                                    <option name="empty"></option>
+                                    <option name="ADD_SERVICE" th:each="dict : ${serviceDict}" th:value="${dict.id}" th:text="${dict.name}"></option>
+                                    <option name="ADD_PAYMENT" th:each="dict : ${paymentDict}" th:value="${dict.id}" th:text="${dict.name}"></option>
                                 </select>
                                 <!--<select id="PAYMENT" class="form-control chzn-select"  name="name" hidden="hidden">-->
                                     <!--<option id="PAYMENT" th:each="dict : ${paymentDict}" th:id="${dict.type}" th:value="${dict.id}" th:text="${dict.name}"></option>-->
