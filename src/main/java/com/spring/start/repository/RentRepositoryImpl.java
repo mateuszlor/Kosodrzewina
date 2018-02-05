@@ -21,4 +21,15 @@ public class RentRepositoryImpl extends BaseAdditionalRepositoryImpl<Rent> imple
                         && to.after(r.getEndDate()))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<Rent> findAllRentsWithoutAdditionalTrailer() {
+        return getTable()
+                .filter(r -> !getTable()
+                        .filter(rt -> rt.getTrailer() != null)
+                        .map(rt -> rt.getTrailer().getId())
+                        .collect(Collectors.toList())
+                        .contains(r.getId()))
+                .collect(Collectors.toList());
+    }
 }

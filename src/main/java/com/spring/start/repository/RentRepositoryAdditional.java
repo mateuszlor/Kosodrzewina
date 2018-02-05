@@ -18,4 +18,5 @@ public interface RentRepositoryAdditional {
      */
     List<Rent> getRentsBetweenDates(Date from, Date to);
 
+    List<Rent> findAllRentsWithoutAdditionalTrailer();
 }
