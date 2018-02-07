@@ -9,8 +9,12 @@
             $(".chzn-select").chosen({
                 allow_single_deselect: true
             });
+
             $("#addName option[name='ADD_PAYMENT']").hide();
             $('#addName').trigger("chosen:updated");
+            $('#dateToField').hide();
+            $('#executionLabel').show();
+            $('#fromDateLabel').hide();
 
             // $("#type").change(function(){
             //     /*TODO: Zmiana wartosci w polu Nazwa Czynności*/
@@ -219,7 +223,7 @@
                                     <label th:text="#{label.service.cost}"/>
                                 </div>
                                 <div class="col-md-4">
-                                    <input class="form-control col-md-4" id="cost.amount" name="cost.amount" th:value="${date}" type="number"/>
+                                    <input class="form-control col-md-4" id="cost.amount" name="cost.amount" th:value="${date}" type="number" step="0.01"/>
                                 </div>
                                 <div class="col-md-1">
                                     <select class="form-control chzn-select col-md-1" name="cost.currency" required="required" id="cost.currency">

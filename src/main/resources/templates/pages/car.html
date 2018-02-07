@@ -163,7 +163,7 @@
                                         <!-- TODO: włączyć gdy będzie naprawa edycji w serwisie -->
                                         <!--<a th:href="@{/service/{id}/edit(id=*{p.id})}" style="float: left"><button type="button" class="btn btn-box-tool" data-toggle="tooltip"><i class="fa fa-wrench" aria-hidden="true"></i></button></a>-->
                                         <div style="float: left">
-                                            <form th:action="@{/delete-periodic}" method="post">
+                                            <form th:action="@{/delete-service}" method="post">
                                                 <input type="hidden" name="id" th:value="${p.id}"/>
                                                 <input type="hidden" name="carId" th:value="${car.id}"/>
                                                 <button type="button" name="delete" class="btn btn-block btn-danger btn-xs" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash" aria-hidden="true"></i></button>
