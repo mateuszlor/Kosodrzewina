@@ -8,7 +8,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>Advanced</name>
+	<name>Kosodrzewina</name>
 	<description>Demo project for Spring Boot</description>
 
 	<parent>
@@ -154,6 +154,16 @@
 		</dependency>
 
 	</dependencies>
+
+	<resources>
+		<resource>
+			<filtering>true</filtering>
+			<directory>src/main/resources</directory>
+			<includes>
+				<include>application.properties</include>
+			</includes>
+		</resource>
+	</resources>
 
 	<build>
 		<plugins>

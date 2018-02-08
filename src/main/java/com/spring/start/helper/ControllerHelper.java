@@ -2,16 +2,15 @@ package com.spring.start.helper;
 
 import com.spring.start.service.UserService;
 import com.spring.start.service.dto.UserDto;
-import lombok.Getter;
 import lombok.experimental.var;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
-import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
 
@@ -30,6 +29,12 @@ public class ControllerHelper {
     private HttpServletRequest request;
 
     private static final String userKey = "user";
+
+    @Value("${application.name}")
+    private String applicationName;
+
+    @Value("${build.version}")
+    private String version;
 
     public void setUserData(Model model) {
 
@@ -80,6 +85,7 @@ public class ControllerHelper {
         log.info("About to set data into model: " + model);
 
         model.addAttribute("user", user);
+        addPomInformationToSession();
     }
 
     public void forceReplaceUserInSession(UserDto user) {
@@ -104,5 +110,11 @@ public class ControllerHelper {
                 .id(userDto.getId())
                 .build();
         return user;
+    }
+
+    public void addPomInformationToSession() {
+        var session = request.getSession();
+        session.setAttribute("applicationName", applicationName);
+        session.setAttribute("version", version);
     }
 }

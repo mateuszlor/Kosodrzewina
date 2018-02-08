@@ -11,12 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.lang.annotation.Annotation;
 import java.util.Arrays;
-import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 /**
  * Created by Mateusz on 27.03.2017.
