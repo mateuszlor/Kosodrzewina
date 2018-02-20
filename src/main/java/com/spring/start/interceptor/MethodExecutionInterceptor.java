@@ -23,7 +23,6 @@ import java.util.Map;
 @Aspect
 @Component
 @Configuration
-@PropertySource("classpath:i18n/messages.properties")
 public class MethodExecutionInterceptor {
 
     @Getter
