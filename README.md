@@ -1,5 +1,7 @@
 # Kosodrzewina
 
+[![Build Status](https://travis-ci.org/mateuszlor/Kosodrzewina.svg?branch=master)](https://travis-ci.org/mateuszlor/Kosodrzewina)
+
 Kosodrzewina jest projektem służącym do zarządzania wyporzyczeniami samochodów dostawyczych typu laweta
 osobom trzecim. Program stworzony został w technologii Java z wykorzystaniem framworka Spring Boot,
 co czyni z systemu aplikację webową. Głównymi założeniami projektu jest wyporzyczanie samochodów dostawczych, sumowanie dochodów i wydatków, 
