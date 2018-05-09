@@ -70,7 +70,7 @@
                                     '        </form></div>';
                             }
                             if (row.status.level != 3) {
-                                str += '<div style="float: left"><button type="button" id="returnModalButton" name="return" class="btn btn-block btn-primary btn-xs" data-toggle="modal" data-end-course="'+ row.endCourse +'" data-date="' + row.endDate + '" data-id="' + mData +'" data-trailer="' + row.trailer + '" data-target="#returnModal"><i class="fa fa-trash" aria-hidden="true" th:text="#{label.general.return}"></i></button></div>';
+                                str += '<div style="float: left"><button type="button" id="returnModalButton" name="return" class="btn btn-block btn-primary btn-xs" data-toggle="modal" data-end-course="'+ row.endCourse +'" data-date="' + row.endDate + '" data-id="' + mData +'" data-trailer="' + row.trailer + '" data-target="#returnModal" th:text="#{label.general.return}"></button></div>';
                             }
                             str += '<div style="clear: both"></div>';
                             return str;
