@@ -8,15 +8,21 @@
         $(document).ready(function() {
             $('.additional').hide();
 
-            $(".chzn-select").chosen();
-            $("#isTrailer").click(function(event) {
-                if ($(this).is(":checked")){
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+                increaseArea: '10%' // optional
+            });
+
+            $("#isTrailer").on('ifChanged', function(event) {
+                if ($(this).is(":checked")) {
                     $(".additional").show();
                     $("#trailer_chosen").css("width",  "100%");
-                } else {
+                } else
                     $(".additional").hide();
-                }
             });
+
+            $(".chzn-select").chosen();
 
             $(function () {
                 $('#datetimepicker1').datetimepicker({

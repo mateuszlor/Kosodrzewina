@@ -6,13 +6,20 @@
     <script type="text/javascript">
         $(document).ready(function() {
 
-//            $('input').iCheck({
-//                checkboxClass: 'icheckbox_square-green',
-//                radioClass: 'iradio_square-green',
-//                increaseArea: '10%' // optional
-//            });
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+                increaseArea: '10%' // optional
+            });
 
-            $("#isTrailer").click(function(event) {
+            <!--$("#isTrailer").click(function(event) {-->
+                <!--if ($(this).is(":checked"))-->
+                    <!--$("#model").prop('disabled', true).val("brak");-->
+                <!--else-->
+                    <!--$("#model").prop('disabled', false).val('');-->
+            <!--})-->
+
+            $("#isTrailer").on('ifChanged', function(event) {
                 if ($(this).is(":checked"))
                     $("#model").prop('disabled', true).val("brak");
                 else
