@@ -40,8 +40,10 @@
             var id = $('#car').find("option:selected").attr("id");
             if(id == 'TRAILER'){
                 $('#connectTrailer').hide();
+                $(".course").hide();
             } else {
                 $('#connectTrailer').show();
+                $(".course").show();
             }
         });
     </script>
@@ -75,7 +77,6 @@
                     <form role="form" th:action="@{/add-rent}"  lpformnum="2" method="post">
                         <!-- text input -->
 
-                        <!--TODO: przy wyborze lawety tutaj są tylko samochody-->
                         <div class="form-group" id="cars">
                             <div class="row">
                                 <div class="col-md-3" align="right">
@@ -83,7 +84,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <select class="form-control chzn-select" name="car" id="car" required="required">
-                                        <option th:each="car : ${cars}" th:id="${car.isTrailer} ? 'TRAILER' : 'CAR'" th:value="${car.id}" th:text="${car.brand + ' ' + car.model + ' (' + car.name + ')'}"></option>
+                                        <option th:each="car : ${cars}" th:id="${car.isTrailer} ? 'TRAILER' : 'CAR'" th:value="${car.id}" th:text="${car.brand + ' ' + (car.model != null ? car.model : '') + (car.name != null and car.name!='' ? ' (' + car.name + ')' : '')}"></option>
                                     </select>
                                 </div>
                             </div>
@@ -91,7 +92,7 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-3" align="right">
-                                    <label th:text="#{label.dictionary.type}"/>
+                                    <label th:text="#{menu.customer}"/>
                                 </div>
                                 <div class="col-md-6">
                                     <select class="form-control chzn-select" name="customer" required="required">
@@ -146,23 +147,25 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-3" align="right">
-                                    <label th:text="#{label.rent.startCourse}"/>
-                                </div>
-                                <div class="col-md-6">
-                                    <input class="form-control" id="startCourse" name="startCourse" th:value="${startCourse}" type="number" />
+                        <div class="course">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-3" align="right">
+                                        <label th:text="#{label.rent.startCourse}"/>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input class="form-control" id="startCourse" name="startCourse" th:value="${startCourse}" type="number" />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-3" align="right">
-                                    <label th:text="#{label.rent.endCourse}"/>
-                                </div>
-                                <div class="col-md-6">
-                                    <input class="form-control" id="endCourse" name="endCourse" th:value="${endCourse}" type="number" />
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-3" align="right">
+                                        <label th:text="#{label.rent.endCourse}"/>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input class="form-control" id="endCourse" name="endCourse" th:value="${endCourse}" type="number" />
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -222,7 +225,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <select class="form-control chzn-select" id="trailer" name="trailer">
-                                            <option th:each="trailer : ${trailers}" th:value="${trailer.id}" th:text="${trailer.brand + '-' + trailer.name}"></option>
+                                            <option th:each="trailer : ${trailers}" th:value="${trailer.id}" th:text="${trailer.brand + ' ' + trailer.name}"></option>
                                         </select>
                                     </div>
                                 </div>

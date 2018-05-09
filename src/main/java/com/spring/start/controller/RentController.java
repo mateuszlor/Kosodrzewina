@@ -1,7 +1,6 @@
 package com.spring.start.controller;
 
 import com.spring.start.entity.Rent;
-import com.spring.start.entity.RentStatus;
 import com.spring.start.service.CarService;
 import com.spring.start.service.CustomerService;
 import com.spring.start.service.RentService;
