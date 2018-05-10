@@ -16,22 +16,6 @@
             $('#executionLabel').show();
             $('#fromDateLabel').hide();
 
-            // $("#type").change(function(){
-            //     /*TODO: Zmiana wartosci w polu Nazwa Czynności*/
-            //     $(this).find("option:selected").each(function(){
-            //         var optionValue = $(this).attr("value");
-            //         if(optionValue == 'SERVICE'){
-            //             $('#dateToField').hide();
-            //             $('#executionLabel').show();
-            //             $('#fromDateLabel').hide();
-            //         } else{
-            //             $('#dateToField').show();
-            //             $('#fromDateLabel').show();
-            //             $('#executionLabel').hide();
-            //         }
-            //     });
-            // }).change();
-
             $(function () {
                 $('#datetimepicker1').datetimepicker({
                     format: 'DD-MM-YYYY'
@@ -106,7 +90,7 @@
                         <div class="form-group">
                             <label th:text="#{menu.car}"/>
                             <select class="form-control chzn-select" name="car" required="required" th:field="*{car}" disabled="disabled">
-                                <option th:each="car : ${cars}" th:value="${car.id}" th:text="${car.brand + ' ' + car.model + ' (' + car.name + ')'}"></option>
+                                <option th:each="car : ${cars}" th:value="${car.id}" th:text="${car.brand + ' ' + (car.model != null ? car.model : '') + (car.name != null and car.name != '' ? ' (' + car.name + ')' : '')}"></option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -122,9 +106,6 @@
                                     <option id="SERVICE" th:each="dict : ${serviceDict}" th:id="${dict.type}" th:value="${dict.id}" th:text="${dict.name}"></option>
                                     <option id="PAYMENT" th:each="dict : ${paymentDict}" th:id="${dict.type}" th:value="${dict.id}" th:text="${dict.name}" disabled="disabled"></option>
                                 </select>
-                                <!--<select id="PAYMENT" class="form-control chzn-select"  name="name" hidden="hidden">-->
-                                <!--<option id="PAYMENT" th:each="dict : ${paymentDict}" th:id="${dict.type}" th:value="${dict.id}" th:text="${dict.name}"></option>-->
-                                <!--</select>-->
                             </div>
                         </div>
                         <div class="form-group date">
@@ -164,7 +145,7 @@
                         <div class="form-group">
                             <label th:text="#{menu.car}"/>
                             <select class="form-control chzn-select" name="car" required="required">
-                                <option th:each="car : ${cars}" th:value="${car.id}" th:text="${car.brand + ' ' + car.model + ' (' + car.name + ')'}"></option>
+                                <option th:each="car : ${cars}" th:text="${car.brand + ' ' + (car.model != null ? car.model : '') + (car.name != null and car.name != '' ? ' (' + car.name + ')' : '')}"></option>
                             </select>
                         </div>
                         <div class="form-group">
