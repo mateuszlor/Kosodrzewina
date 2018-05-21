@@ -1,5 +1,6 @@
 package com.spring.start.entity;
 
+import com.mysql.jdbc.StringUtils;
 import com.spring.start.service.dto.CarDto;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -64,14 +66,21 @@ public class Car extends BaseEntity<Car>{
     @Column(name = "name")
     private String name;
 
-//    @OneToMany(mappedBy = "car", fetch = FetchType.LAZY)
-//    Collection<Service> service = new ArrayList<>();
-
     @Column(name = "is_trailer")
     private Boolean isTrailer = Boolean.FALSE;
 
     public String getFullName() {
-        return this.getBrand() + " " + this.getModel() + "'" + this.getName() + "'";
+        StringBuilder sb = new StringBuilder();
+        return this.getBrand() + " " + Objects.toString(this.getModel(), "") + addQuotesToNameIfNotNull();
+    }
+
+    private String addQuotesToNameIfNotNull() {
+        String name = "";
+        if (!StringUtils.isNullOrEmpty(this.name)) {
+            name = " '" + this.name + "'";
+        }
+
+        return name;
     }
 
     @PrePersist
