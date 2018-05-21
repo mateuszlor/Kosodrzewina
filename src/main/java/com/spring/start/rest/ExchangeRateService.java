@@ -40,8 +40,7 @@ public class ExchangeRateService {
             Client client = Client.create();
             WebResource resource = client.resource(url);
             ClientResponse response = resource.get(ClientResponse.class);
-            String responseJson = response.getEntity(String.class);
-            System.out.printf(responseJson);
+            jsonResponse = response.getEntity(String.class);
         } catch (Exception e) {
             log.error(e);
         }

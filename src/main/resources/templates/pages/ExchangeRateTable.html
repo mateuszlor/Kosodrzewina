@@ -1,0 +1,37 @@
+<th:block th:fragment="exchangeRate" xmlns:th="http://www.thymeleaf.org">
+
+    <script>
+        $(document).ready(function() {
+
+            var table = $('#exchangeRateTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Polish.json"
+                },
+                "sAjaxSource": "/api/getExchangeRates",
+                "sAjaxDataProp": "",
+                "order": [[ 0, "asc" ]],
+                "aoColumns": [
+                    { "mData": "currencyCode" },
+                    { "mData": "buy" },
+                    { "mData": "sell" },
+                ],
+                "paging" : false,
+                "searching" : false,
+                "info" : false
+            });
+
+        });
+    </script>
+
+
+    <table id="exchangeRateTable" class="table table-striped table-borderd">
+        <!-- Header Table -->
+        <thead>
+        <tr>
+            <th>Nazwa</th>
+            <th>Kupno</th>
+            <th>Sprzedaż</th>
+        </tr>
+        </thead>
+    </table>
+</th:block>
