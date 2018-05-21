@@ -4,13 +4,17 @@
     <th:block th:include="/fragments/elements :: head"/>
     <title>Home Page</title>
 
-    <script type="text/javascript">
+    <script th:inline="javascript" type="text/javascript">
         $(document).ready( function () {
+
+            var cars = [[${cars}]];
+
             var table = $('#carsTable').DataTable({
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Polish.json"
                 },
-                "sAjaxSource": "/rest/getCars",
+                "sAjaxSource": "/api/getCars",
+                <!--data : cars,-->
                 "sAjaxDataProp": "",
                 "order": [[ 0, "asc" ]],
                 "aoColumns": [
