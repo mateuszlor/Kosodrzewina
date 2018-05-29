@@ -1,5 +1,6 @@
 package com.spring.start.helper;
 
+import com.spring.start.service.ChangelogService;
 import com.spring.start.service.UserService;
 import com.spring.start.service.dto.UserDto;
 import lombok.experimental.var;
@@ -24,6 +25,9 @@ public class ControllerHelper {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ChangelogService changelogService;
 
     @Autowired
     private HttpServletRequest request;
@@ -86,6 +90,7 @@ public class ControllerHelper {
 
         model.addAttribute("user", user);
         addPomInformationToSession();
+        addVersionInfo();
     }
 
     public void forceReplaceUserInSession(UserDto user) {
@@ -116,5 +121,10 @@ public class ControllerHelper {
         var session = request.getSession();
         session.setAttribute("applicationName", applicationName);
         session.setAttribute("version", version);
+    }
+
+    private void addVersionInfo() {
+        var session = request.getSession();
+        session.setAttribute("versionInfo", changelogService.getLatestVersionChangelog());
     }
 }

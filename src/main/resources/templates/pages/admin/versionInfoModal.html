@@ -1,0 +1,13 @@
+<th:block th:fragment="versionInfoModal" xmlns:th="http://www.thymeleaf.org">
+    <!-- Modal -->
+    <div class="modal fade modal-default" th:id="versionInfo" tabindex="-1" role="dialog" aria-labelledby="versionInfo">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <strong><th:block th:text="#{label.version.info}"></th:block> <th:block th:text="${session.version}"></th:block></strong>
+                </div>
+                <div class="modal-body" th:utext="${session.versionInfo.description}"></div>
+            </div>
+        </div>
+    </div>
+</th:block>

@@ -2,6 +2,7 @@ package com.spring.start.controller;
 
 import com.spring.start.entity.Dictionary;
 import com.spring.start.entity.DictionaryType;
+import com.spring.start.service.ChangelogService;
 import com.spring.start.service.DictionaryService;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,12 +34,18 @@ public class DictionaryController extends BaseController{
     @Getter @Setter
     private DictionaryService dictionaryService;
 
+    @Autowired
+    @Getter
+    @Setter
+    private ChangelogService changelogService;
+
     /**
      *  Metoda wyświetlająca strone dodawania/edycji wpisu słownikowego
      * */
     @RequestMapping(value = SLASH + DICTIONARY, method = RequestMethod.GET)
     public String showDictionaryPage(Model model){
         log.info("Dodawanie nowego wpisu do słownika");
+        System.out.println(changelogService.findAll());
         return PAGES + SLASH + DICTIONARY;
     }
 

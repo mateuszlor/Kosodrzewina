@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="/fragments/elements :: head"/>
+    <title>Home Page</title>
+
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet"/>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#summernote').summernote({
+
+            });
+        });
+    </script>
+
+</head>
+<body class="skin-blue sidebar-mini">
+<div class="wrapper">
+    <div th:replace="/fragments/header :: header">Header</div>
+    <div th:replace="/fragments/menu :: menu">Menu</div>
+    <div class="content-wrapper">
+        <div class="main-container container-fluid">
+            <div th:replace="/fragments/alerts :: alerts(alertType=${alertType}, info=${info})">Alerts</div>
+        </div>
+
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                <div th:text="#{label.notification}"></div>
+            </h1>
+        </section>
+
+        <section class="content">
+
+            <form th:action="@{/admin/save-notification}" method="post">
+                <div class="form-group">
+                    <input class="form-control" type="text" th:value="*{session.version}" disabled="disabled" placeholder="Nazwa" name="version"/>
+                </div>
+                <div class="form-group">
+                    <textarea id="summernote" name="description"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" th:text="#{button.add}"/>
+            </form>
+
+        </section>
+
+    </div>
+    <div th:replace="/fragments/footer :: footer">Footer</div>
+</div>
+</body>
+</html>

@@ -1,9 +1,16 @@
 <footer class="main-footer" th:fragment="footer">
     <!-- To the right -->
-    <div class="pull-right hidden-xs">
-        Wersja:  <th:block th:text="${session.version}"/>
-        <th:block th:text="${applicationName}"/>
-    </div>
+        <div class="pull-right hidden-xs">
+            <a id="myLink" data-toggle="modal" href="#versionInfo">
+                Wersja:  <th:block th:text="${session.version}"/>
+            </a>
+        </div>
     <!-- Default to the left -->
     <strong>Copyright © 2017 <a href="#"><th:block th:text="${session.applicationName}"/></a>.</strong> All rights reserved.
+
+    <div th:replace="/pages/admin/versionInfoModal :: versionInfoModal">Version Info</div>
+
 </footer>
+
+
+

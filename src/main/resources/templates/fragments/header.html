@@ -18,6 +18,20 @@
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
                 <!-- User Account Menu -->
+                <li class="dropdown notification-menu">
+                    <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+                        <i class="fa fa-bell"></i><span class="label label-warning">5</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="header">Masz 5 powiadomień</li>
+                        <li>
+                            <ul class="menu">
+                                <li></li>
+                            </ul>
+                        </li>
+                        <li class="footer"></li>
+                    </ul>
+                </li>
                 <li class="dropdown user user-menu">
                     <!-- Menu Toggle Button -->
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -25,7 +39,7 @@
                         <img src="/img/avatar.png" class="user-image" alt="User Image"/>
                         <!-- hidden-xs hides the username on small devices so only the image appears. -->
                         <span class="hidden-xs">
-                            <th:block th:text="${user.getFullName()}"/>
+                            <!--<th:block th:text="${user.getFullName()}"/>-->
                         </span>
                     </a>
                     <ul class="dropdown-menu">
@@ -34,9 +48,9 @@
                             <img src="/img/avatar.png" class="img-circle" alt="User Image"/>
 
                             <p>
-                                <th:block th:text="${user.getFullName()}"/>
+                                <!--<th:block th:text="${user.getFullName()}"/>-->
                                 <small>
-                                    @<th:block th:text="${user.username}" />
+                                    <!--@<th:block th:text="${user.username}" />-->
                                 </small>
                             </p>
                         </li>

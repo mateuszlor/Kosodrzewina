@@ -11,15 +11,14 @@ import java.util.List;
 
 @Controller
 @Log4j
+@Getter
 public class BaseController {
 
-//    @Getter
     protected static final String SLASH = "/";
     protected static final String PAGES = "pages";
     protected static final String ADMIN = "admin";
 
     @Autowired
-    @Getter
     private Environment env;
 
     public void addMessage(RedirectAttributes redirectAttributes, MessageType type, String messageCode){
