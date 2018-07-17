@@ -25,25 +25,22 @@ public class ChangelogController extends BaseController{
 	private static final String SAVE_CHANGELOG = "save-notification";
 
 	@Autowired
-	private CarService carService;
-
-	@Autowired
 	private ChangelogService changelogService;
 
 	@RequestMapping(value = ADD_CHANGELOG, method = RequestMethod.GET)
-	public String showAddChangelogPage() {
-
+	public String showAddChangelogPage(Model model) {
+		model.addAttribute("changelog", changelogService.getLatestVersionChangelog());
 		return PAGES + SLASH + ADMIN + SLASH + ADD_CHANGELOG;
 	}
 
 	@PostMapping(value = SAVE_CHANGELOG)
-	public String saveNewChangelog(@Valid @RequestParam("version") String version,
+	public String saveNewChangelog(@Valid @RequestParam("ver") String version,
 								   @Valid @RequestParam("description") String description,
 								   Model model,
 								   RedirectAttributes redirectAttributes) {
+		log.info("cos");
 
 		try {
-
 			changelogService.saveChangelog(version, description);
 			log.info("DODANO VERSJE");
 		} catch (Exception e){

@@ -34,12 +34,13 @@
 
         <section class="content">
 
-            <form th:action="@{/admin/save-notification}" method="post">
+            <form th:action="@{/admin/save-notification}" th:object="${changelog}" method="post">
                 <div class="form-group">
-                    <input class="form-control" type="text" th:value="*{session.version}" disabled="disabled" placeholder="Nazwa" name="version"/>
+                    <input class="form-control" type="text" th:value="*{version != null} ? *{version} : *{session.version}"
+                            placeholder="Nazwa" name="ver"/>
                 </div>
                 <div class="form-group">
-                    <textarea id="summernote" name="description"></textarea>
+                    <textarea id="summernote" th:field="*{description}" name="description"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary" th:text="#{button.add}"/>
             </form>
