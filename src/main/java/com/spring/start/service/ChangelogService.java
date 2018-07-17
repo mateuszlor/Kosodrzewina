@@ -26,12 +26,22 @@ public class ChangelogService implements BasicDatabaseOperations<Changelog> {
 	}
 
 	public void saveChangelog(String version, String description) {
-		Changelog changelog = Changelog.builder()
-				.version(version)
-				.description(description)
-				.build();
+
+		Changelog changelog = getChangelogByVersion(version);
+		if (changelog != null && !changelog.isEmpty()) {
+			changelog.setDescription(description);
+		} else {
+			changelog = Changelog.builder()
+					.version(version)
+					.description(description)
+					.build();
+		}
 
 		changelogRepository.save(changelog);
+	}
+
+	public Changelog getChangelogByVersion(String version) {
+		return changelogRepository.findByVersion(version) != null ? changelogRepository.findByVersion(version) : new Changelog();
 	}
 
 	@Override

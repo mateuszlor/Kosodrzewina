@@ -7,6 +7,7 @@ import com.spring.start.service.ChangelogService;
 import lombok.extern.log4j.Log4j;
 import org.bouncycastle.ocsp.Req;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,12 +25,15 @@ public class ChangelogController extends BaseController{
 	private static final String ADD_CHANGELOG = "add-notification";
 	private static final String SAVE_CHANGELOG = "save-notification";
 
+	@Value("${build.version}")
+	private String actualVersion;
+
 	@Autowired
 	private ChangelogService changelogService;
 
 	@RequestMapping(value = ADD_CHANGELOG, method = RequestMethod.GET)
 	public String showAddChangelogPage(Model model) {
-		model.addAttribute("changelog", changelogService.getLatestVersionChangelog());
+		model.addAttribute("changelog", changelogService.getChangelogByVersion(actualVersion));
 		return PAGES + SLASH + ADMIN + SLASH + ADD_CHANGELOG;
 	}
 

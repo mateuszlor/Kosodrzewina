@@ -36,8 +36,10 @@
 
             <form th:action="@{/admin/save-notification}" th:object="${changelog}" method="post">
                 <div class="form-group">
-                    <input class="form-control" type="text" th:value="*{version != null} ? *{version} : *{session.version}"
-                            placeholder="Nazwa" name="ver"/>
+                    <input class="form-control" type="text" th:if="*{version != null}" th:value="*{version}"
+                           placeholder="Nazwa" name="ver" readonly="readonly"/>
+                    <input class="form-control" type="text" th:unless="*{version != null}" th:value="${session.version}"
+                    placeholder="Nazwa" name="ver" readonly="readonly"/>
                 </div>
                 <div class="form-group">
                     <textarea id="summernote" th:field="*{description}" name="description"></textarea>

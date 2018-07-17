@@ -1,5 +1,6 @@
 package com.spring.start.entity;
 
+import com.mysql.jdbc.StringUtils;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,10 @@ public class Changelog extends BaseEntity<Changelog>{
 		super(id, deleted, createdDate, modificationDate, creationUser, modificationUser);
 		this.version = version;
 		this.description = description;
+	}
+
+	public boolean isEmpty() {
+		return StringUtils.isNullOrEmpty(version) && StringUtils.isNullOrEmpty(description);
 	}
 
 }

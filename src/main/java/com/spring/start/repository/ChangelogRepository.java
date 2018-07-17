@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ChangelogRepository extends CrudRepository<Changelog, Long>, ChangelogRepositoryAdditional {
 
+	Changelog findByVersion(String version);
+
 }
