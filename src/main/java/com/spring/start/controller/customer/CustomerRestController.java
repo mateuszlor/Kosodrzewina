@@ -1,5 +1,6 @@
 package com.spring.start.controller.customer;
 
+import com.spring.start.annotations.RestAPIController;
 import com.spring.start.entity.Customer;
 import com.spring.start.service.CustomerService;
 import lombok.Getter;
@@ -7,18 +8,17 @@ import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController
+@RestAPIController
 @Log4j
 public class CustomerRestController{
 
-    private static final String SLASH = "/";
-    private static final String REST = "rest";
     private static final String GET_CUSTOMERS = "getCustomers";
 
     @Autowired
@@ -26,7 +26,7 @@ public class CustomerRestController{
     @Setter
     private CustomerService customerService;
 
-    @RequestMapping(value = SLASH + REST + SLASH + GET_CUSTOMERS, method = RequestMethod.GET)
+    @GetMapping(value = GET_CUSTOMERS)
     public List<Customer> getCustomersByRest(Model model){
         log.info("REST: Pobrano liste klientów");
        return customerService.findAllActive();
