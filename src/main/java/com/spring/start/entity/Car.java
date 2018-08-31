@@ -60,7 +60,7 @@ public class Car extends BaseEntity<Car>{
     @Column(name = "model")
     private String model;
 
-    @Column(name = "registration_number", nullable = false)
+//    @Column(name = "registration_number", nullable = false)
     private String registrationNumber;
 
     @Column(name = "name")
