@@ -22,7 +22,7 @@ public class ChangelogService implements BasicDatabaseOperations<Changelog> {
 	private ChangelogRepository changelogRepository;
 
 	public Changelog getLatestVersionChangelog() {
-		return changelogRepository.getLatestChangelog();
+		return changelogRepository.getLatestChangelog() != null ? changelogRepository.getLatestChangelog() : new Changelog();
 	}
 
 	public void saveChangelog(String version, String description) {
